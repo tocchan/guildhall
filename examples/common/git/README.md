@@ -26,7 +26,7 @@ First, go to your homepage in GitHub, and select Repositories, and click "New".
 
 Next, create your Repot. 
 
-![Create](create.PNG)
+![Create](create.png)
 
 ### (Optional) Download Atlassian SourceTree
 To make this easier - I recommend getting this GUI client for Git.
