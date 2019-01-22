@@ -1,0 +1,101 @@
+# Compiled Object files
+# This stile ignores all files with this extension
+*.slo
+*.lo
+*.o
+*.obj
+*.gch
+*.pch
+*.so
+*.dylib
+*.dll
+*.mod
+*.lai
+*.la
+*.a
+*.lib
+*.exe
+*.out
+*.app
+*.db
+*.sdf
+*.opensdf
+
+# The ! reverses a rule - so we're not ignoring
+# obj files anywhere in the data folder; Or DLLs in my 
+# defualt exe folder; 
+!data/**/*.obj
+!data/*.dll
+
+
+# Ignoring a complete folder (don't want my screenshot folder)
+data/screenshot/
+
+# =========================
+# Rest is just common ignores for most
+# of my C++ projects. 
+
+# =========================
+# Build Folder
+build/
+src/.vs/
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+# =========================
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+*.db
+*.opendb
+*.history
+data/log/
+*.suo
+*.TMP
+
+*.log
+data/config/user.config
