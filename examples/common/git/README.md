@@ -22,8 +22,11 @@ We will leave them empty for now;
 
 First, go to your homepage in GitHub, and select Repositories, and click "New".
 
+![Create Repot](newproject.png)
+
 Next, create your Repot. 
 
+![Create](create.PNG)
 
 ### (Optional) Download Atlassian SourceTree
 To make this easier - I recommend getting this GUI client for Git.
@@ -37,10 +40,14 @@ Make your Protogame project.  Just copy into a new folder, preferably not under 
 
 Open up SourceTree, and create a new repot, and point it at this folder.
 
+![Create Local](sourcetree_create.png)
+
 This is setting up Git to track this folder.  Now, Git is purely a local source control, that can be mirrored on a service like github.  Currently, we just have a local repot.  Next we're going to make our initial commit, and this push it to our remote host.  Only once this is done are our changes backed up. 
 
 ### Initial Commit
 After you created your project, you should be brought to a screen that looks like the following; 
+
+![Initial Checkin](initialcheckin.png)
 
 The left side shows our current working branch - we'll get more into that later. 
 
@@ -64,13 +71,21 @@ Currently, our repot isn't tied to a remote branch, so we're going to add a remo
 
 Select Repository from the top of SourceTree, and select Repository Settings, and select add. 
 
+![Remote Create](reposettings.PNG)
+
 Next, go to your github page, and find your repots git address;
 
+![GitLink](repotname.PNG)
+
 Copy this to your clipboard, and go back to SourceTree.  Put this into the URL/Path, and select "Default Remote", ie, the origin. 
+
+![Remote Create](remotecreate.PNG)
 
 Click OK. 
 
 You should see "origin" appear until Remotes on the left side.  Next, we're going to tie "master" to this.  So right-click on **master** (it should be bold as this is your current branch), and select "push to", and select origin. Click Push. 
+
+![Push](pushtoorigin.PNG)
 
 This will tie the local repot to the remote repot.  Click Push.  
 
@@ -81,6 +96,8 @@ Go to your github page and you should see it updated.
 You can now pull this remote repot to any other folder on your machine, to make a buddy build.  This should be your Engine, and it should be able to compile by itself.  
 
 So go to SourceTree, and we're going to open a new tab and clone a repot.  All you need is your git link that you used in the above step.  
+
+![Clone](clone.png)
 
 Once cloned, you should be able to navigate to that folder, and compile.  If all went well, you should still be able to compile your Engine. 
 
