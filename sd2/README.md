@@ -53,19 +53,27 @@ Assignments will be due at the end of your Lab Section each week starting the we
 - *2019/02/14*: **ICC**: Debug Draw System (2D)
 - *2019/02/21*: **ICC**: Vertex Lit 3D Cube
 - *2019/02/28*: **ICC**: Developer Console & Normal Mapped Cube & Sphere
-                **CRS**: Render System
+  
+  **CRS**: Render System
+  
 - *2019/03/07*: **ICC**: Terrain and Basic Camera Movement
 - *2019/03/14*: **ICC**: Units, Selection, and Basic movement. 
 - *2019/03/21*: **SPRING BREAK**
 - *2019/03/28*: **ICC**: Buildings and Objects, Enemies, and Combat
-                **CRC**: Render System
+  
+  **CRC**: Render System
+
 - *2019/04/04*: **ICC**: Minimap and Basic UI, Unit Construction
 - *2019/04/11*: **ICC**: Data backed tech tree, Resource Gathering 
-                **CRS**: Users Choice
+     
+  **CRS**: Users Choice
+                
 - *2019/04/18*: **ICC**: 2 Additional Player Unit Types and 2 Additional Enemy Types
 - *2019/04/25*: **ICC**: Gold Checkin 1
 - *2019/04/02*: **ICC**: Gold Checkin 2
-                **CRC**: Users Choice
+                
+  **CRC**: Users Choice
+                
 - *2019/05/09*: **Gold Final Presentations** 
 
 
