@@ -48,25 +48,25 @@ Assignments will be due at the end of your Lab Section each week starting the we
 
 **CRS & CRC**:  Code Review Start and Code Review Check.  Two additional grades for code reviews will happen throughout the semester.  CRS is the date in which I will start the code review and get you feedback within a week.  You will then have a week to apply whatever changes were requested (if needed), due by the CRC date.
 
-- 2019/01/28: ICC: Shader Triangle
-- 2019/02/04: ICC: Textured VBO backed quad
-- 2019/02/11: ICC: Debug Draw System (2D)
-- 2019/02/18: ICC: Vertex Lit 3D Cube
-- 2019/02/25: ICC: Developer Console & Normal Mapped Cube & Sphere
+- 2019/01/31: ICC: [Shader Triangle](assignments/a01_setup/)
+- 2019/02/07: ICC: Textured VBO backed quad
+- 2019/02/14: ICC: Debug Draw System (2D)
+- 2019/02/21: ICC: Vertex Lit 3D Cube
+- 2019/02/28: ICC: Developer Console & Normal Mapped Cube & Sphere
               CRS: Render System
-- 2019/03/04: ICC: Terrain and Basic Camera Movement
-- 2019/03/11: ICC: Units, Selection, and Basic movement. 
-- 2019/03/18: **SPRING BREAK**
-- 2019/03/25: ICC: Buildings and Objects, Enemies, and Combat
+- 2019/03/07: ICC: Terrain and Basic Camera Movement
+- 2019/03/14: ICC: Units, Selection, and Basic movement. 
+- 2019/03/21: **SPRING BREAK**
+- 2019/03/28: ICC: Buildings and Objects, Enemies, and Combat
               CRC: Render System
-- 2019/04/01: ICC: Minimap and Basic UI, Unit Construction
-- 2019/04/08: ICC: Data backed tech tree, Resource Gathering 
+- 2019/04/04: ICC: Minimap and Basic UI, Unit Construction
+- 2019/04/11: ICC: Data backed tech tree, Resource Gathering 
               CRS: Users Choice
-- 2019/04/15: ICC: 2 Additional Player Unit Types and 2 Additional Enemy Types
-- 2019/04/22: ICC: Gold Checkin 1
-- 2019/04/29: ICC: Gold Checkin 2
+- 2019/04/18: ICC: 2 Additional Player Unit Types and 2 Additional Enemy Types
+- 2019/04/25: ICC: Gold Checkin 1
+- 2019/04/02: ICC: Gold Checkin 2
               CRC: Users Choice
-- 2019/05/06: Gold Final Presentations 
+- 2019/05/09: Gold Final Presentations 
 
 
 ## Hopeful Topics
