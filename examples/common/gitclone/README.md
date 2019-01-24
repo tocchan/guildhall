@@ -2,7 +2,7 @@ Mirroring Protogame
 ======
 
 ## Mirror a Repot
-From the following tutorial; (Duplicating a repository, help.github.com)[https://help.github.com/articles/duplicating-a-repository/]
+From the following tutorial; [Duplicating a repository, help.github.com](https://help.github.com/articles/duplicating-a-repository/)
 
 This will create a copy of your repot as another repot, maintaining submodule links and all history; 
 
@@ -70,5 +70,5 @@ SourceTree seems to automatically do the above step when switching branches, but
 
 
 ## Resource
-- (Duplicating a repository, help.github.com)[https://help.github.com/articles/duplicating-a-repository/]
-- (Shallow Copies, perforce.com)[https://www.perforce.com/blog/vcs/git-beyond-basics-using-shallow-clones]
+- [Duplicating a repository, help.github.com](https://help.github.com/articles/duplicating-a-repository/)
+- [Shallow Copies, perforce.com](https://www.perforce.com/blog/vcs/git-beyond-basics-using-shallow-clones)
