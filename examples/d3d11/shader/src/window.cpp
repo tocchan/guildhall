@@ -7,7 +7,7 @@
 // DEFINES
 //
 //------------------------------------------------------------------------
-#define WNDCLASS_GAME_NAME    ("GameWindowClass")
+#define WNDCLASS_GAME_NAME   TEXT("GameWindowClass")
 
 //------------------------------------------------------------------------
 //
@@ -187,11 +187,11 @@ bool RegisterGameWindowClass()
 {
    Log( "Registering Window Class" );
 
-   WNDCLASSEXA wc;
+   WNDCLASSEX wc;
    memset( &wc, 0, sizeof(wc) );
 
    // Setup the definition for this window class
-   wc.cbSize = sizeof(WNDCLASSEXA);
+   wc.cbSize = sizeof(WNDCLASSEX);
 
    // This sets that it will redraw for vertical or horizontal changes
    // and it also owns its own device context handle (more effecient if we're
@@ -216,7 +216,7 @@ bool RegisterGameWindowClass()
    // Name to use when creating windows so it knows to use this class
    wc.lpszClassName = WNDCLASS_GAME_NAME;
 
-   ATOM result = RegisterClassExA( &wc );
+   ATOM result = RegisterClassEx( &wc );
    if (NULL == result) {
       Logf( "Failed to register window class [ErrNo: %u]", GetLastError() );
       return false;
@@ -257,7 +257,7 @@ HWND CreateTheWindow( char const *title, int x, int y, int res_x, int res_y )
    int w = win_rect.right - win_rect.left;
    int h = win_rect.bottom - win_rect.top;
    
-   HWND hwnd = CreateWindowExA( extended_style, // Extended style (not used)
+   HWND hwnd = CreateWindowEx( extended_style,  // Extended style (not used)
       WNDCLASS_GAME_NAME,                       // Windows Class to use
       title,                                    // title      
       style,                                    // Style to start this with
