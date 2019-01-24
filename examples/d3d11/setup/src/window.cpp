@@ -221,7 +221,7 @@ bool RegisterGameWindowClass()
    wc.hIconSm = NULL;
 
    // Cursor to use (can be set later if needed)
-   wc.hCursor = ::LoadCursorA( NULL, IDC_ARROW );
+   wc.hCursor = ::LoadCursor( NULL, IDC_ARROW );
    wc.hbrBackground = (HBRUSH) 0;
    wc.lpszMenuName = NULL;
 
