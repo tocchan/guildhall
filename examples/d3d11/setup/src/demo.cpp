@@ -129,11 +129,16 @@ bool D3D11Setup( HWND hwnd )
    swap_desc.OutputWindow = hwnd;                                // the window to be copied to on present
    swap_desc.SampleDesc.Count = 1;                               // how many multisamples (1 means no multi sampling)
 
+   RECT client_rect; 
+   ::GetClientRect( hwnd, &client_rect ); 
+   uint width = client_rect.right - client_rect.left; 
+   uint height = client_rect.bottom - client_rect.top; 
+
    // Default options.
    swap_desc.Windowed = TRUE;                                    // windowed/full-screen mode
    swap_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
-   swap_desc.BufferDesc.Width = WINDOW_RES_X;
-   swap_desc.BufferDesc.Height = WINDOW_RES_Y;
+   swap_desc.BufferDesc.Width = width;
+   swap_desc.BufferDesc.Height = height;
 
    
    // Actually Create
