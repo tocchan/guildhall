@@ -1,6 +1,11 @@
 Mirroring Protogame
 ======
 
+I will be doing this through command line.  If you do not have a bash terminal setup on your machine, SourceTree does come with one you can use; 
+
+![button](terminal_sourcetree.PNG)
+
+
 ## Mirror a Repot
 From the following tutorial; [Duplicating a repository, help.github.com](https://help.github.com/articles/duplicating-a-repository/)
 
