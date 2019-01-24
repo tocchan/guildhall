@@ -66,6 +66,8 @@ git checkout feature/pathfinding
 git submodule update 
 ```
 
+SourceTree seems to automatically do the above step when switching branches, but do be careful that the submodule will be headless, so be sure, if doing work in the submodule that a branch is either checkout or created for the work you're doing. 
+
 
 ## Resource
 - (Duplicating a repository, help.github.com)[https://help.github.com/articles/duplicating-a-repository/]
