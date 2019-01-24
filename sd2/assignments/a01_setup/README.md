@@ -14,6 +14,7 @@ Get the basic D3D11 Objects into your engine.  This includes;
 Due: 2019/01/21
 
 ## Class Notes
+- [Duplicating Protogame & Git Notes](../../../examples/common/gitclone)
 - [2019/01/23](CLASS_00.md)
 
 ## Sample Code
