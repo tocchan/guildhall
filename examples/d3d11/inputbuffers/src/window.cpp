@@ -187,11 +187,11 @@ bool RegisterGameWindowClass()
 {
    Log( "Registering Window Class" );
 
-   WNDCLASSEX wc;
+   WNDCLASSEXA wc;
    memset( &wc, 0, sizeof(wc) );
 
    // Setup the definition for this window class
-   wc.cbSize = sizeof(WNDCLASSEX);
+   wc.cbSize = sizeof(WNDCLASSEXA);
 
    // This sets that it will redraw for vertical or horizontal changes
    // and it also owns its own device context handle (more effecient if we're
@@ -216,7 +216,7 @@ bool RegisterGameWindowClass()
    // Name to use when creating windows so it knows to use this class
    wc.lpszClassName = WNDCLASS_GAME_NAME;
 
-   ATOM result = RegisterClassEx( &wc );
+   ATOM result = RegisterClassExA( &wc );
    if (NULL == result) {
       Logf( "Failed to register window class [ErrNo: %u]", GetLastError() );
       return false;
