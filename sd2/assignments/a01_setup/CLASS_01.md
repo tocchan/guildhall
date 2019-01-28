@@ -116,9 +116,9 @@ class Renderer
 //------------------------------------------------------------------------
 class ColorTargetView
 {
-   public: // a renderable view of a texture 
+   public: // a renderable view of a texture // private
       ID3D11RenderTargetView *m_rtv; 
-}
+}; 
 
 //------------------------------------------------------------------------
 // Camera.hpp/cpp
@@ -139,8 +139,14 @@ class Camera
 class ShaderStage
 {
    public:
-      ShaderStage(); 
-      ~ShaderStage();
+      ShaderStage()
+         : m_handle(nullptr) {}
+
+      ~ShaderStage()
+      {
+         DX_SAFE_RELEASE(m_handle); 
+      } 
+
 
    public:
       union {
@@ -148,13 +154,16 @@ class ShaderStage
          ID3D11VertexShader *m_vs; 
          ID3D11PixelShader *m_ps; 
       };
+
+      // m_vs = nullptr;
+      // m_handle = 0xDEADBEEF; 
 }; 
 
 //------------------------------------------------------------------------
 class Shader 
 {
    public:
-      bool create_from_file 
+      bool create_from_file( std::string const &filename ); 
 
    public:
       ShaderStage m_vertex_shader; 
@@ -352,3 +361,103 @@ The stages required, and that we'll be working with in this class are listed bel
 - **Pixel Shader** (P):  Given a single set of input for a pixel, determine the output color(s).
 - **Output-Merger Stage** (C):  Given the output color(s) from the previous stage, how do we combine them the output texture.  
 
+## Shader
+
+```cpp
+
+// RenderContext
+Shader* RenderContext::GetOrCreateShader( std::string const &filename ) 
+{
+   // similar to texture UNLESS i need make it; 
+
+   // ... oh, gotta make it;
+   { 
+      Shader *shader = new Shader(); 
+      shader->CreateFromFile( filename ); 
+
+      if (shader->IsValid()) {
+         m_shaderMap.set( filename, shader ); 
+      }
+   }
+}
+
+// Shader.cpp
+bool Shader::CreateFromFile( std::string const &filename ) 
+{
+   void *buffer = CreateBufferForFile( filename ); 
+
+   m_vertexShader.LoadShaderFromSource( filename, buffer, SHADER_STAGE_VERTEX );
+   m_pixelShader.LoadShaderFromSource( filename, buffer, SHADER_STAGE_FRAGMENT ); 
+}
+
+enum eShaderStage
+{
+   SHADER_STAGE_VERTEX, 
+   SHADER_STAGE_FRAGMENT, 
+};
+
+static char const* GetEntryForStage( eShaderstage stage ) 
+{
+   switch (stage) {
+      case SHADER_STAGE_VERTEX: return "VertexFunction"; 
+      case SHADER_STAGE_FRAGMENT: return "FragmentFunction";
+      default: GUARANTEE_OR_DIE(false, "Unknown shader stage"); 
+   }
+}
+
+
+static char const* GetShaderModelForStage( eShaderstage stage ) 
+{
+   switch (stage) {
+      case SHADER_STAGE_VERTEX: return "vs_5_0"; 
+      case SHADER_STAGE_FRAGMENT: return "ps_5_0";
+      default: GUARANTEE_OR_DIE(false, "Unknown shader stage"); 
+   }
+}
+
+class ShaderStage
+{
+   public:
+      bool LoadShaderFromSource( RenderContext *ctx, std::string const &filename, void const *source, eShaderStage stage )
+      {
+         m_stage = stage; 
+         ID3DDevice *device = ctx->m_device; 
+
+         ID3DBlob *bytecode = HLSLCompileToByteCode( filename, source, GetEntryForStage(stage), GetShaderModelForStage(stage) ); 
+         if (bytecode == nullptr) {
+            return false; 
+         }
+
+         switch (stage) {
+            case SHADER_STAGE_VERTEX:    // Compile the byte code to the final shader (driver/hardware specific program)
+               device->CreateVertexShader( bytecode->GetBufferPointer(), 
+                  bytecode->GetBufferSize(), 
+                  nullptr, 
+                  &m_vs );
+               break;
+
+            case SHADER_STAGE_FRAGMENT: 
+               device->CreatePixelShader( bytecode->GetBufferPointer(), 
+                  bytecode->GetBufferSize(), 
+                  nullptr, 
+                  &m_fs );
+               break; 
+            }
+         }
+
+         DX_SAFE_RELEASE(byte_code); 
+         return IsValid();
+      }
+
+      inline bool IsValid() const { return m_handle != nullptr; }
+
+   public:
+      eShaderStage m_stage; 
+      union {
+         ID3D11Resource *m_handle; 
+         ID3D11VertexShader *m_vs; 
+         ID3D11FragmentShader *m_vs; 
+      };
+}
+
+```

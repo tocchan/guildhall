@@ -230,6 +230,8 @@ static ID3DBlob* CompileHLSLToShaderBlob( char const *opt_filename,  // optional
             opt_filename, 
             error_string );
          DX_SAFE_RELEASE(errors);
+      } else {
+         Logf( "Failed with HRESULT: %u", hr ); 
       }
    } 
 
@@ -261,6 +263,7 @@ void CreateShaders( char const *filename )
       nullptr, 
       &gD3DFragmentShader );
 
+   free( source_code ); 
    DX_SAFE_RELEASE( vs_bytecode );
    DX_SAFE_RELEASE( fs_bytecode );
 }
