@@ -15,7 +15,8 @@ Due: 2019/01/21
 
 ## Class Notes
 - [Duplicating Protogame & Git Notes](../../../examples/common/gitclone)
-- [2019/01/23](CLASS_00.md)
+- [2019/01/23](CLASS_00.md): Git Setup
+- [2019/01/28](CLASS_01.md): Shaders and Cameras
 
 ## Sample Code
 - [Window Creation](../../../examples/window/create/)
