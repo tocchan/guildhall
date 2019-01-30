@@ -29,7 +29,7 @@ class ShaderStage
       union {
          ID3D11Resource *m_handle; 
          ID3D11VertexShader *m_vs; 
-         ID3D11FragmentShader *m_vs; 
+         ID3D11PixelShader *m_ps; 
       };
 }
 
@@ -206,6 +206,8 @@ bool Shader::CreateFromFile( RenderContext *ctx, std::string const &filename )
 
    m_vertexShader.LoadShaderFromSource( ctx, filename, buffer, buffer_len, SHADER_STAGE_VERTEX );
    m_pixelShader.LoadShaderFromSource( ctx, filename, buffer, buffer_len, SHADER_STAGE_FRAGMENT ); 
+
+   delete buffer; 
 
    return m_vertexShader.IsValid()
       && m_pixelShader.IsValid(); 

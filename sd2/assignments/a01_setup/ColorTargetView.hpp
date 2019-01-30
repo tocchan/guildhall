@@ -1,3 +1,5 @@
+#define DX_SAFE_RELEASE(dx_obj)  if (dx_obj != nullptr) { dx_obj->Release(); dx_obj = nullptr; }
+
 //------------------------------------------------------------------------
 // *new* ColorTargetView.hpp
 //------------------------------------------------------------------------

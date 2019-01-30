@@ -15,7 +15,6 @@ struct VertexToFragment_t
    // SV_POSITION denotes that this is output in clip space, and will be 
    // use for rasterization.  When it is the input (pixel shader stage), it will
    // actually hold the pixel coordinates.
-   float3 ndc_position : GARBAGE_NAME_OHMAHGAWD;
    float4 position : SV_POSITION;
 };
 
@@ -36,15 +35,12 @@ static float3 SOME_POSITIONS[3] = {
 //--------------------------------------------------------------------------------------
 VertexToFragment_t VertexFunction(vs_input_t input)
 {
-
     VertexToFragment_t v2f = (VertexToFragment_t)0;
     
     // The output of a vertex shader is in clip-space, which is a 4D vector
     // so we need to convert out input to a 4D vector.
-    v2f.ndc_position = SOME_POSITIONS[input.vidx];  
     v2f.position = float4( SOME_POSITIONS[input.vidx], 1.0f );
     
-
     // And return - this will pass it on to the next stage in the pipeline;
     return v2f;
 }
@@ -59,5 +55,5 @@ VertexToFragment_t VertexFunction(vs_input_t input)
 float4 FragmentFunction(VertexToFragment_t input) : SV_Target0 // semeantic of what I'm returning
 {
    // We just output a solid colour - in this case, white. 
-   return float4( input.ndc_position, 1.0f );
+   return float4( 1.0f, 1.0f, 1.0f, 1.0f );
 }
