@@ -11,6 +11,9 @@ Objects will be colored based on their state;
 - **RED** - Dynamic Object in contact with another object.
 - **WHITE** - Selected
 
+## Class Notes
+- [2019-01-29 Notes](NOTES.md)
+
 ## Controls
 By default, arrow keys should control a cursor.  While in this cursor mode, when the user presses F1 through F4 it should spawn an object at the cursor of random size (extents somewhere between 0.25 and 2.00). 
 

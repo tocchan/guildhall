@@ -118,6 +118,8 @@ First, let's start with `PhysicsSystem` since it is to physics what `RenderConte
 ```cpp
 class PhysicsSystem 
 {
+	friend class Rigidbody2D; 
+
 	public:
 		// recommend doing the factory pattern
 		// gives us options for optimizing memory later
@@ -125,16 +127,33 @@ class PhysicsSystem
 		Rigidbody2D* create_rigidbody(); 
 		void destroy_rigidbody( Rigidbody2D *rb ); 
 
+		void BeginFrame()
+		{
+			// reset per frame stuff; 
+			// copy all transforms over; 
+		}
+
+		void PreRender()
+		{
+			// figure out movement, apply to actual game object;
+
+			// whatever else you may want to do end frame; 
+		}
 
 		void update( float dt ) 
 		{
+			BeginFrame(); 
 			// debug: clear all frame information
 			// such as if they are currently touching another object; 
 
 			// we'll eventually switch to fixed-step updates, so we'll call down immediately to a run_step to make
 			// that port easier; 
-			run_step( dt ); 
+			run_step( dt );
+
+			PreRender();  
 		}
+
+		void debug_render( RenderContext *ctx ); 
 
 	private: 
 		// would also prefer a factory pattern here
@@ -156,7 +175,7 @@ class PhysicsSystem
 			// TODO - for now just tell me if they're touching; 
 			foreach (collider) {
 				foreach (other collider) {
-					if (collider->is_touching(other_colloder)) {
+					if (collider->is_touching(other_collider)) {
 						collider->set_has_collision(true); 
 						other_collider->set_has_collision(true); 
 					}
@@ -184,7 +203,15 @@ class Rigidbody2D
 {
 	public:
 		// apply a single step of movement to this object
-		void move( float dt ); 
+		void move( float dt )
+		{
+			// calculate acceleration; 
+			vec2 acc = m_system->get_gravity() * m_gravity_scale; 
+
+			// next step - apply to velocity
+			m_velocity += acc * dt; 
+			m_transform.position += m_velocity * dt; 
+		}
 
 		// show it on screen;
 		void debug_render( RenderContext *ctx, rgba const &color ); 
@@ -196,6 +223,7 @@ class Rigidbody2D
 
 		transform2 m_transform; // rigidbody transform (mimics the object at start of frame, and used to tell the change to object at end of frame)
 		vec2 m_gravity_scale;	// how much are we affected by gravity
+		vec2 m_velocity; 
 		float m_mass;  			// how heavy am I
 
 		Collider2D *m_collider; // my shape; (could eventually be made a set)
@@ -209,11 +237,21 @@ enum eColliderType2D
 {
 	COLLIDER_AABB2, 
 	COLLIDER_DISC,
-	// more to come;  
+
+	// more to come;
+	// COLLIDER_CAPSULE, 
+	// COLLIDER_BOX,   
 };
 
 class Collider2D
 {
+	public:
+		bool is_touching( Collider2D *other )
+		{
+			collision2d collision; 
+			return GetCollisionInfo( &collision, this, other ); 
+		}
+
 	public:
 		Rigidbody2D *m_rigidbody;   // rigidbody I belong to
 		eColliderType2D m_type; 	 
@@ -223,7 +261,12 @@ class AABBCollider2D : public Collider2D
 {
 	public:
 		aabb2 get_local_shape(); // what is my shape relative to my rigidbody
-		aabb2 get_world_shape(); // what is my shape relative to my the world
+		aabb2 get_world_shape()
+		{
+			aabb2 shape = get_local_shape(); 
+			shape.translate_by( m_rigidbody->get_position() ); 
+			return shape; 	
+		} 
 
 	public:
 		aabb2 m_local_shape; 
@@ -245,5 +288,69 @@ struct collision2d
 	// for correction; 
 };
 
-bool GetCollisionInfo( collision2d *out, Collider2D *obja, Collider2D *objb ); 
+//------------------------------------------------------------------------
+// Doing this by lookup - as it is a good intro to callbacks
+// but could also do this by double dispatch:  a->collides_with( b )
+bool GetCollisionInfo( collision2d *out, Collider2D * a, Collider2D *b )
+{
+   // 2D arrays are [Y][X] remember
+   static collision2d_check_cb COLLISION_LOOKUP_TABLE[COLLIDER2D_COUNT][COLLIDER2D_COUNT] = {
+      /*******| aabb2 | disc  | point | capsl | line  | obb2  */
+      /*aabb2*/ CheckAABB2ByAABB2, CheckAABB2ByDisc, nullptr,           nullptr, nullptr, nullptr, 
+      /*disc */ CheckDiscByAABB2,  CheckDiscByDisc,  nullptr,           nullptr, nullptr, nullptr,
+      /*point*/ nullptr,           nullptr,          nullptr,           nullptr, nullptr, nullptr,
+      /*capsl*/ nullptr,           nullptr,          nullptr,           nullptr, nullptr, nullptr, 
+      /*line */ nullptr,           nullptr,          nullptr,           nullptr, nullptr, nullptr, 
+      /*obb2 */ nullptr,           nullptr,          nullptr,           nullptr, nullptr, nullptr, 
+   }; 
+
+   uint a_type = a->get_type(); 
+   uint b_type = b->get_type(); 
+   ASSERT_RETURN_VALUE( (a_type < COLLIDER2D_COUNT) && (b_type < COLLIDER2D_COUNT), false ); 
+
+   collision2d_check_cb cb = COLLISION_LOOKUP_TABLE[a_type][b_type]; 
+   if (cb == nullptr) {
+      return false; // no known collision; 
+   } else {
+      out->me = a; 
+      out->them = b; 
+      return cb( out, a, b ); 
+   }
+}
+```
+
+#### Double Dispatch Method
+**DON'T DO THIS**
+
+```cpp
+class Base 
+{
+	virtual bool get_collision( Base *other ) = 0; 
+
+	virtual bool collides_with( A* ); 
+	virtual bool collides_with( B* ); 
+};
+
+class A : public Base
+{
+	virtual bool get_collision( Base *other )
+	{
+		other->collides_with(this); 	
+	}
+};
+
+class B : public Base
+{
+	virtual bool get_collision( Base *other ) = 0; 
+};
+
+
+void Foo()
+{
+	A *a = new A(); 
+	B *b = new B(); 
+
+	a->get_collision( other_a ); 
+	a->get_collision( b ); 
+}
 ```
