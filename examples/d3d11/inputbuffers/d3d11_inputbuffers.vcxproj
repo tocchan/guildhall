@@ -117,7 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(ProjectDir)hlsl $(OutDir)hlsl /i /s /y</Command>
+      <Command>xcopy "$(ProjectDir)hlsl" "$(OutDir)hlsl" /i /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -159,7 +159,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(ProjectDir)hlsl $(OutDir)hlsl /i /s /y</Command>
+      <Command>xcopy "$(ProjectDir)hlsl" "$(OutDir)hlsl" /i /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
