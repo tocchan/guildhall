@@ -44,37 +44,6 @@ typedef unsigned int uint;
 #define DX_SAFE_RELEASE(dx_resource)   if ((dx_resource) != nullptr) { dx_resource->Release(); dx_resource = nullptr; }
 
 //------------------------------------------------------------------------
-// Types
-//------------------------------------------------------------------------
-struct vec3
-{
-   float x; 
-   float y;
-   float z;
-
-   vec3() 
-      : x(0.0f)
-      , y(0.0f)
-      , z(0.0f)
-   {}
-   vec3( float _x, float _y, float _z ) 
-      : x(_x)
-      , y(_y)
-      , z(_z) 
-   {}
-};
-
-struct vertex_t 
-{
-   vec3 position;
-
-   vertex_t() {}
-   vertex_t( vec3 const &p ) 
-      : position(p) 
-   {}
-};
-
-//------------------------------------------------------------------------
 // GLOBALS
 //------------------------------------------------------------------------
 static HWND gHWND = NULL;
@@ -89,9 +58,6 @@ IDXGISwapChain *gD3DSwapChain = nullptr;
 ID3D11RenderTargetView *gD3DRenderTargetView = nullptr;
 ID3D11VertexShader *gD3DVertexShader = nullptr;
 ID3D11PixelShader *gD3DFragmentShader = nullptr;
-ID3D11InputLayout *gD3DInputLayout = nullptr;
-ID3D11Buffer *gD3DVertexBuffer = nullptr;
-
 
 //------------------------------------------------------------------------
 // Declare functions this demo uses
@@ -348,10 +314,6 @@ void DemoRun()
    // Clenaup our shader
    DX_SAFE_RELEASE(gD3DVertexShader);
    DX_SAFE_RELEASE(gD3DFragmentShader);
-   DX_SAFE_RELEASE(gD3DInputLayout);
-   // Cleanup our buffer
-   DX_SAFE_RELEASE(gD3DVertexBuffer);
-   // Clean up our view.
    DX_SAFE_RELEASE(gD3DRenderTargetView);
 
   

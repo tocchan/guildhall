@@ -6,7 +6,7 @@ D3D11 Initialization
 ## Overview
 __Requires Windows 10 SDK if you want to create a Debug Context!!!__
 
-Builds off of [window/create](https://github.com/tocchan/guildhall_samples/tree/master/window/create) to setup a debug D3D11 Instance.
+Builds off of [window/create](../../window/create) to setup a debug D3D11 Instance.
 
 This sample demonstrates...
 - Create a D3D11 Device and Immediate Context

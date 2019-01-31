@@ -114,6 +114,21 @@ void RenderContext::EndCamera( Camera *cam )
 }
 
 //------------------------------------------------------------------------
+void RenderContext::ClearColorTargets( rgba const &color )
+{
+   // GUARANTEE_OR_DIE possibly
+   if (m_currentCamera == nullptr ) {
+      return; 
+   }
+
+   ColorTargetView *ctv = m_currentCamera->m_colorTargetView; 
+   // TODO: if ctv == nullptr, use the backbuffer
+
+   float clear_color[4] = { color.r, color.g, color.b, color.a };
+   m_context->ClearRenderTargetView( ctv->m_rtv, clear_color );
+}
+
+//------------------------------------------------------------------------
 void RenderContext::BindShader( Shader *shader ) 
 {
    // Binding a shader for now is just binding
@@ -136,7 +151,6 @@ void RenderContext::Draw( uint vertexCount, uint byteOffset /*= 0U*/ )
    // number of times)
    m_context->Draw( vertexCount, byteOffset ); 
 }
-
 
 //------------------------------------------------------------------------
 // RenderContext

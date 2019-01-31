@@ -29,7 +29,7 @@ class ShaderStage
       union {
          ID3D11Resource *m_handle; 
          ID3D11VertexShader *m_vs; 
-         ID3D11PixelShader *m_ps; 
+         ID3D11PixelShader *m_fs; 
       };
 }
 
@@ -164,7 +164,7 @@ bool ShaderStage::LoadShaderFromSource( RenderContext *ctx,
    // note: this byte code can be saved to disk and loaded from
    // instead of having to recompile the shader - this is 
    // usually done during shader-caching (or done at ship for D3D titles)
-   ID3DBlob *bytecode = HLSLCompileToByteCode( filename, source, entrypoint, target ); 
+   ID3DBlob *bytecode = HLSLCompileToByteCode( filename, source, source_len, entrypoint, target ); 
    if (bytecode == nullptr) {
       return false; 
    }

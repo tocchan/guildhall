@@ -6,7 +6,7 @@ D3D11 Textures
 ## Overview
 __Requires Windows 10 SDK if you want to create a Debug Context!!!__
 
-Builds off of [d3d11/shader](../d3d11/inputbuffers) to add texturing to our toolbox of shader capability.
+Builds off of [d3d11/shader](../inputbuffers) to add texturing to our toolbox of shader capability.
 
 This example covers...
 - Creating a *Texture* Object.
