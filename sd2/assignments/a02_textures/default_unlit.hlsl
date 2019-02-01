@@ -20,20 +20,7 @@ struct vs_input_t
    float2 uv            : TEXCOORD; 
 }; 
 
-// Vertex to Fragment data
-// What is output from the vertex stage
-// and then passed to the fragment stage
-//
-// Notice SV_POSITION.  This special name
-// denotes positions used by the rasterizer to 
-// calculate pixels.  It is a required output before
-// the rasterizer stage. 
-struct v2f_t 
-{
-   float4 position      : SV_POSITION; 
-   float4 color         : COLOR;
-   float2 uv            : TEXCOORD; 
-}; 
+
 
 //--------------------------------------------------------------------------------------
 // Uniform Input
@@ -76,6 +63,7 @@ SamplerState sAlbedo : register(s0);      // sampler I'm using for the Albedo te
 //--------------------------------------------------------------------------------------
 // Programmable Shader Stages
 //--------------------------------------------------------------------------------------
+
 //--------------------------------------------------------------------------------------
 // Vertex Shader
 v2f_t VertexFunction(vs_input_t input)
@@ -90,13 +78,16 @@ v2f_t VertexFunction(vs_input_t input)
    // [-1, 1] on the y (bottom to top)
    // [ 0, 1] on the z 
 
+   float clip_x = RangeMap( input.x, ORTHO_MIN.x, ORTHO_MAX.x, -1, 1 ); 
+   float clip_y = RangeMap( input.y, ORTHO_MIN.y, ORTHO_MAX.y, -1, 1 ); 
+
    // (note: technically clip_space is a homogeneous coordinate
    //  so the above is not 100% accurate, but more on that later)
 
    // For now, we'll just set w to 1, and forward.
    // TODO: Use ortho information to map our input coordinate 
    // into renderable clip space; 
-   v2f.position = float4( input.position, 1.0f ); 
+   v2f.position = float4( clip_x, clip_y, 0.0f, 1.0f ); 
 
    // The other two inputs we'll just forward on to the pixel shader
    v2f.color = input.color; 

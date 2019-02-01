@@ -32,12 +32,16 @@ class RenderBuffer
       RenderBuffer();
       ~RenderBuffer(); 
 
+
+      size_t GetSize() const;    // return max byte size of this buffer; 
+      bool IsStatic() const;     // has static usage?
+      bool IsDynamic() const; 
       
    protected:
       // for doing initial setup - we'll mark 
       // it as protected as the higher level classes
       // will help limit the number of options; 
-      void Create( void const *initialData, 
+      bool Create( void const *initialData, 
          size_t bufferSize, 
          siez_t elementSize, 
          eRenderBufferUsageBits usage, 
@@ -45,7 +49,7 @@ class RenderBuffer
 
       // Assumes a buffer is already created, and copies this data into it; 
       // Only valid for DYNAMIC buffers; 
-      void CopyCPUToGPU( void const *data, size_t const byteSize ); 
+      bool CopyCPUToGPU( void const *data, size_t const byteSize ); 
 
    public:
       RenderContext *m_owner; 
@@ -103,7 +107,7 @@ static uint DXBufferUsageFromBufferUsage( eRenderBufferUsageBits const usage )
 
 //------------------------------------------------------------------------
 // Creates a buffer; 
-void RenderBuffer::Create( void const *initialData, 
+bool RenderBuffer::Create( void const *initialData, 
          size_t bufferSize, 
          siez_t elementSize, 
          eRenderBufferUsageBits usage, 
@@ -150,7 +154,7 @@ void RenderBuffer::Create( void const *initialData,
       data_ptr = &data;
    }
 
-   // Create it
+   // Create it - devices create resources; 
    ID3D11Device *dev = m_owner->m_device; 
    HRESULT hr = dev->CreateBuffer( &bd, data_ptr, &m_handle );
 
@@ -163,5 +167,39 @@ void RenderBuffer::Create( void const *initialData,
       return true;
    } else {
       return false;
+   }
+}
+
+//------------------------------------------------------------------------
+bool RenderBuffer::CopyCPUToGPU( void const *data, size_t const byteSize )
+{
+   // staging or dynamic only & we better have room; 
+   ASSERT( !IsStatic() ); 
+   ASSERT( byteSize <= m_bufferSize ); 
+
+   // Map and copy
+   // This is a command, so runs using the context
+   ID3D11DeviceContext *ctx = m_owner->m_context; 
+
+   // Map (ie, lock and get a writable pointer)
+   // Be sure to ONLY write to what you locked
+   D3D11_MAPPED_SUBRESOURCE resource; 
+   HRESULT hr = ctx->Map( GetHandle(), 
+      0,    // resource index (for arrays/mip layers/etc...)
+      D3D11_MAP_WRITE_DISCARD,  // says to discard (don't care) about the memory the was already there
+      0U,   // option to allow this to fail if the resource is in use, 0U means we'll wait...
+      &resource ); 
+
+   if (SUCCEEDED(hr)) {
+      // we're mapped!  Copy over
+      memcpy( resource.pData, data, byteSize ); 
+
+      // unlock the resource (we're done writing)
+      ctx->Unamp( GetHandle(), 0 ); 
+      
+      return true; 
+
+   } else {
+      return false; 
    }
 }

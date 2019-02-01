@@ -68,3 +68,26 @@ class RenderContext
 //------------------------------------------------------------------------
 // RenderContext.cpp
 //------------------------------------------------------------------------
+
+
+void RenderContext::DrawVertexArrays( VertexPCU const *vertices, uint count )
+{
+   m_immediateVBO->CopyCPUToGPU( vertcies, count * sizeof(VertexPCU) );
+
+   // 1. What are we drawing - so input data.  In this case, we're going to 
+   // be drawing some vertices stored in a Vertex Buffer Object (VBO)
+   uint stride = sizeof(VertexPCU);
+   uint offset = 0U;
+   m_context->IASetVertexBuffers( 0,    // Start slot index
+      1,                            // Number of buffers we're binding
+      &m_immediateVBO->GetHandle(), // Array of buffers
+      &stride,                // Stride (read: vertex size, or amount we move forward each vertex) for each buffer
+      &offset );             // Offset into each buffer (array - we are only passing one. 
+  
+   // Bind VertexBufferToShader
+   // ...
+   m_inputLayout->BindLayoutToShader( VertexPCU::LAYOUT, m_currentShader ); 
+   m_context->IASetInputLayout( m_inputLayout );
+
+   Draw( count ); 
+}
