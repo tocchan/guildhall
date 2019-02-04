@@ -49,7 +49,7 @@ Assignments will be due at the end of your Lab Section each week starting the we
 **CRS & CRC**:  Code Review Start and Code Review Check.  Two additional grades for code reviews will happen throughout the semester.  CRS is the date in which I will start the code review and get you feedback within a week.  You will then have a week to apply whatever changes were requested (if needed), due by the CRC date.
 
 - *2019/01/31*: **ICC**: [Shader Triangle](assignments/a01_setup/)
-- *2019/02/07*: **ICC**: Textured VBO backed quad
+- *2019/02/07*: **ICC**: [VBOs and Uniforms](assignment/a02_buffers/)
 - *2019/02/14*: **ICC**: Debug Draw System (2D)
 - *2019/02/21*: **ICC**: Vertex Lit 3D Cube
 - *2019/02/28*: **ICC & CRS**: Developer Console & Normal Mapped Cube & Sphere.  **CRS** for rendering system; 
