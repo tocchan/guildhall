@@ -6,8 +6,8 @@ Get orthographic camera and vertex buffers back into our Engine.
 Finish out by adding TIME data as information our shaders can use; 
 
 ## Grading
-- The below code works and I see that quad;  
-- The quad is animated in the shader using time (make it move back and forth, or in a circle)
+- (80%) The below code works and I see that quad;  
+- (20%) The quad is animated in the shader using time (make it move back and forth, or in a circle)
 
 ## New Classes
 
