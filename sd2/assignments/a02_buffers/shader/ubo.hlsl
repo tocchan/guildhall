@@ -29,8 +29,9 @@ struct vs_input_t
 //--------------------------------------------------------------------------------------
 cbuffer camera_constants : register(b2)
 {
-   float2 ORTHO_MIN; 
-   float2 ORTHO_MAX; 
+   float4x4 PROJECTION; 
+   // float2 ORTHO_MIN; 
+   // float2 ORTHO_MAX; 
 };
 
 
@@ -77,11 +78,11 @@ v2f_t VertexFunction(vs_input_t input)
    // (note: technically clip_space is a homogeneous coordinate
    //  so the above is not 100% accurate, but more on that later)
 
-   float clip_x = RangeMap( inPos.x, ORTHO_MIN.x, ORTHO_MAX.x, -1, 1 ); 
-   float clip_y = RangeMap( inPos.y, ORTHO_MIN.y, ORTHO_MAX.y, -1, 1 ); 
+   float4 localPos = float4( inPos, 1.0f ); 
+   float4 clipPos = mul( PROJECTION, localPos ); 
 
    // For now, we'll just set w to 1, and forward.
-   v2f.position = float4( clip_x, clip_y, 0.0f, 1.0f ); 
+   v2f.position = clipPos; 
 
    return v2f;
 }

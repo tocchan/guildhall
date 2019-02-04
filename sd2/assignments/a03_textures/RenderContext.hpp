@@ -33,7 +33,7 @@ struct frame_buffer_t
    float time; 
    float halfTime; 
    float doubleTime; 
-   float quadTime; 
+   float quadTie; 
 }; 
 
 //------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void RenderContext::DrawVertexArrays( VertexPCU const *vertices, uint count )
    m_immediateVBO->CopyCPUToGPU( vertcies, count * sizeof(VertexPCU) );
 
    // bind that vertex buffer
-   BindVertexStream( m_immediateVBO ); 
+   BindVertexBuffer( m_immediateVBO ); 
 
    Draw( count ); 
 }
@@ -155,7 +155,7 @@ void RenderContext::Draw( uint vertCount, uint byteOffset )
    // TODO: only create an input layout if the vertex type changes; 
    // TODO: When different vertex types come on-line, look at the current bound
    //       input streams (VertexBuffer) for the layout
-   bool result = m_currentShader->CreateInputLayoutForVertexPCU(); 
+   m_currentShader->CreateInputLayoutForVertexPCU(); 
    // TODO: m_currentShader->CreateInputLayoutFor( VertexPCU::LAYOUT ); 
 
    if (result) {

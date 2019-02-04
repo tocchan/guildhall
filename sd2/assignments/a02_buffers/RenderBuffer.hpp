@@ -26,6 +26,7 @@ enum eGPUMemoryUsage
 
 
 //------------------------------------------------------------------------
+// GPU memory allocation; 
 class RenderBuffer
 {
    public:
@@ -196,7 +197,7 @@ bool RenderBuffer::CopyCPUToGPU( void const *data, size_t const byteSize )
       memcpy( resource.pData, data, byteSize ); 
 
       // unlock the resource (we're done writing)
-      ctx->Unamp( GetHandle(), 0 ); 
+      ctx->Unmap( GetHandle(), 0 ); 
       
       return true; 
 
