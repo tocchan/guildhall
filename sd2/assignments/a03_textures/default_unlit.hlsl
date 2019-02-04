@@ -65,31 +65,30 @@ SamplerState sAlbedo : register(s0);      // sampler I'm using for the Albedo te
 //--------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------
+// for passing data from vertex to fragment (v-2-f)
+struct v2f_t 
+{
+   float3 position : SV_POSITION; 
+   float4 color : COLOR; 
+   float2 uv : UV; 
+}; 
+
+//--------------------------------------------------------------------------------------
+float RangeMap( float v, float inMin, float inMax, float outMin, float outMax ) 
+{ 
+   ...
+}
+
+//--------------------------------------------------------------------------------------
 // Vertex Shader
 v2f_t VertexFunction(vs_input_t input)
 {
    v2f_t v2f = (v2f_t)0;
 
-   // we'll be getting a float3, but have to output a float4
-   // which is the output in "clip space". 
-   //
-   // Only outputs in the following ranges will display..
-   // [-1, 1] on the x (left to right)
-   // [-1, 1] on the y (bottom to top)
-   // [ 0, 1] on the z 
-
    float clip_x = RangeMap( input.x, ORTHO_MIN.x, ORTHO_MAX.x, -1, 1 ); 
    float clip_y = RangeMap( input.y, ORTHO_MIN.y, ORTHO_MAX.y, -1, 1 ); 
-
-   // (note: technically clip_space is a homogeneous coordinate
-   //  so the above is not 100% accurate, but more on that later)
-
-   // For now, we'll just set w to 1, and forward.
-   // TODO: Use ortho information to map our input coordinate 
-   // into renderable clip space; 
    v2f.position = float4( clip_x, clip_y, 0.0f, 1.0f ); 
 
-   // The other two inputs we'll just forward on to the pixel shader
    v2f.color = input.color; 
    v2f.uv = input.uv; 
     
@@ -106,7 +105,7 @@ float4 FragmentFunction( v2f_t input ) : SV_Target0
    // First, we sample from our texture
    float4 texColor = tAlbedo.Sample( sAlbedo, input.uv ); 
 
-   // comonent wise multiply to "tint" the output
+   // component wise multiply to "tint" the output
    float4 finalColor = texColor * input.color; 
 
    // output it; 

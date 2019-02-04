@@ -38,6 +38,8 @@ void VertexBuffer::CreateStaticFor( VertexPCU const *vertices, uint const count 
 }
 
 //------------------------------------------------------------------------
+// Similar to UBO - since we are assuming if they are using this method 
+// it is dynamic, and we only need to remake if the size changes; 
 void VertexBuffer::CopyCPUToGPU( VertexPCU const *vertices, uint const count )
 {
    // how many bytes do we need
