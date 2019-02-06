@@ -40,8 +40,7 @@ bool UniformBuffer::CopyCPUToGPU( void const *data, size_t const byteSize )
       // to our base classes CopyGPUToGPU that assumes
       // enough room is already allocated; 
       ASSERT( IsDynamic() ); 
-      if (RenderBuffer::CopyCPUToGPU( vertices, sizeNeeded )) {
-         m_vertexCount = count; 
+      if (RenderBuffer::CopyCPUToGPU( vertices, byteSize )) {
          return true; 
       }
    }
