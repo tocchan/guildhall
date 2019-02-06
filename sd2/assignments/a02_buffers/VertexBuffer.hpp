@@ -7,6 +7,10 @@
 class VertexBuffer : public RenderBuffer
 {
    public:
+      // Future: creating a static unchanging vertex buffer
+      void CreateStaticFor( VertexPCU const *vertices, uint const count );
+
+      // Used now - creates dyanmic vertex buffer meant to be changed often
       void CopyCPUToGPU( VertexPCU const *vertices, uint const count ); 
 
    public: 

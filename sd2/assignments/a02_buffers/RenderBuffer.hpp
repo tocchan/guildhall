@@ -140,7 +140,7 @@ bool RenderBuffer::Create( void const *initialData,
    bd.CPUAccessFlags = 0U;
    if (memUsage == GPU_MEMORY_USAGE_DYNAMIC) {
       bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-   } else if (ci.usage == GPU_MEMORY_USAGE_STAGING) {
+   } else if (memUsage == GPU_MEMORY_USAGE_STAGING) {
       bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
    }
 

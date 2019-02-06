@@ -71,7 +71,7 @@ bool Shader::CreateInputLayoutForVertexPCU()
    ID3D10Blob *vs_bytecode = m_vertexStage.GetByteCode(); 
 
    // Final create the layout
-   HRESULT hr = gD3DDevice->CreateInputLayout( m_inputLayout, 
+   HRESULT hr = gD3DDevice->CreateInputLayout( input_description, 
       ARRAYSIZE(input_description),
       vs_bytecode->GetBufferPointer(), 
       vs_bytecode->GetBufferSize(), 
