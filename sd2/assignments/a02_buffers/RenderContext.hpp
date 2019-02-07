@@ -62,8 +62,9 @@ class RenderContext
    public:
       //...
 
-      // BINDING  *new methods*
-      
+      // updated
+      void Startup(); 
+      void Shutdown(); 
    
       // Changed methods
       void BeginCamera( Camera *cam ); 
@@ -81,18 +82,59 @@ class RenderContext
       // Resurrected Functions
       void DrawVertexArrays( VertexPCU const *vertices, uint count ); 
 
+   private:
+      void CreateAndSetDefaultRasterState(); 
 
    public:
       //...
 
       // *new* members
       VertexBuffer *m_immediateVBO; 
+      ID3D11RasterizerState *m_defaultRasterState; 
 }; 
 
 //------------------------------------------------------------------------
 // RenderContext.cpp
 //------------------------------------------------------------------------
 
+//------------------------------------------------------------------------
+void RenderContext::Startup()
+{
+   // ...
+
+	// Change default behaviour to be counter-clockwise is front-face to match GL
+   // (plus most meshes are built with this convention)
+	CreateAndSetDefaultRasterState(); 
+}
+
+//------------------------------------------------------------------------
+void RenderContext::Shutdown()
+{
+   // ...
+
+	DX_SAFE_RELEASE( m_defaultRasterState ); 
+}
+
+//------------------------------------------------------------------------
+void RenderContext::CreateAndSetDefaultRasterState()
+{
+	D3D11_RASTERIZER_DESC desc; 
+
+	desc.FillMode = D3D11_FILL_SOLID;
+	desc.CullMode = D3D11_CULL_BACK;
+	desc.FrontCounterClockwise = TRUE; // the only reason we're doing this; 
+	desc.DepthBias = 0U; 
+	desc.DepthBiasClamp = 0.0f; 
+	desc.SlopeScaledDepthBias = 0.0f; 
+	desc.DepthClipEnable = TRUE; 
+	desc.ScissorEnable = FALSE; 
+	desc.MultisampleEnable = FALSE; 
+	desc.AntialiasedLineEnable = FALSE; 
+
+	// ID3D11RasterizerState *m_defaultRasterState; 
+	m_device->CreateRasterizerState( &desc, &m_defaultRasterState );
+	m_context->RSSetState( m_defualtRasterState ); 
+}
 
 //------------------------------------------------------------------------
 void RenderContext::BeginCamera( Camera *cam ) 
