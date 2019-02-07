@@ -57,6 +57,7 @@ struct v2f_t
 //--------------------------------------------------------------------------------------
 float RangeMap( float v, float inMin, float inMax, float outMin, float outMax ) 
 { 
+   // implement me!
    ...
 }
 
@@ -67,7 +68,7 @@ v2f_t VertexFunction( vs_input_t input )
    v2f_t v2f = (v2f_t)0;
 
    // can no grab it from the input stream; 
-   vec3 inPos = input.position; 
+   float3 inPos = input.position; 
     
    float clip_x = RangeMap( inPos.x, ORTHO_MIN.x, ORTHO_MAX.x, -1, 1 ); 
    float clip_y = RangeMap( inPos.y, ORTHO_MIN.y, ORTHO_MAX.y, -1, 1 ); 

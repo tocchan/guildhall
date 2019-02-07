@@ -44,8 +44,7 @@ struct frame_buffer_t
 // camera slot I usually bind all constants that change per view; 
 struct camera_buffer_t 
 {
-   vec2 orthoMin; 
-   vec2 orthoMax; 
+   mat44 projection; 
 };
 
 // I start at slot 1 out of habit.  I reserve slot 0 for what I call the "SYTEM" buffer, which
@@ -62,25 +61,16 @@ class RenderContext
    public:
       //...
 
-      // BINDING  *new methods*
-      
-   
-      // Changed methods
-      void BeginCamera( Camera *cam ); 
-      void EndCamera(); 
+      // New Methods
+      void BindTextureView( uint slot, TextureView *view ); 
+      void BindSampler( uint slot, Sampler *sampler ); 
 
-      // Stream Data
-      void BindVertexStream( VertexBuffer *vbo ); 
+   public:
+      // changed methods
 
-      // Uniform/Constant Data
-      void BindUniformBuffer( uint slot, UniformBuffer *ubo ); 
-
-
-      void Draw( uint vertex_count, uint byte_offset = 0U ); 
-
-      // Resurrected Functions
-      void DrawVertexArrays( VertexPCU const *vertices, uint count ); 
-
+      // This was GetOrCreateTexture
+      // Since we usually want just views of a texture
+      TextureView2D* GetOrCreateTextureView2D( std::string const &filename ); 
 
    public:
       //...
@@ -89,7 +79,11 @@ class RenderContext
       VertexBuffer *m_immediateVBO; 
 
       Sampler *m_defaultPoint; 
-      Sampler *m_defaultBilinear; 
+      Sampler *m_defaultBilinear;
+
+      // also change your texture database; 
+
+
 }; 
 
 //------------------------------------------------------------------------

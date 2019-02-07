@@ -33,7 +33,7 @@ class RenderBuffer
       // for convenience - we'll have the RenderBuffer hold onto
       // the RenderContext used to create it so we're not constantly passing it in; 
       RenderBuffer( RenderContext *owner );
-      ~RenderBuffer(); 
+      ~RenderBuffer();  // be sure to release any buffers you created!
 
       size_t GetSize() const;    // return max byte size of this buffer; 
       bool IsStatic() const;     // has static usage?

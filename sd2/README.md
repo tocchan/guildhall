@@ -68,4 +68,6 @@ Assignments will be due at the end of your Lab Section each week starting the we
 ## Hopeful Topics
 A list of topics I hope to cover in the above weeks as we go over the above systems, and depending what falls out of the project.  If we ever have a lull for topics, we can pull from this list as well. 
 
-- ...
+- [MSDN: How to Use Direct3D 11](https://docs.microsoft.com/en-us/windows/desktop/direct3d11/how-to-use-direct3d-11)
+- [DirectXTutorial](http://www.directxtutorial.com/)
+- [D3D11 Debug API Tricks](https://seanmiddleditch.com/direct3d-11-debug-api-tricks/)

@@ -87,9 +87,6 @@ class RenderContext
 
       // *new* members
       VertexBuffer *m_immediateVBO; 
-
-      Sampler *m_defaultPoint; 
-      Sampler *m_defaultBilinear; 
 }; 
 
 //------------------------------------------------------------------------
