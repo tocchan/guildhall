@@ -36,7 +36,7 @@ bool Shader::CreateInputLayoutForVertexPCU()
    // Early out - we've already created it; 
    // TODO: If vertex type changes, we need to rebind; 
    if (m_inputLayout != nullptr) {
-      return; 
+      return true; 
    }
 
    // This describes the input data to the shader

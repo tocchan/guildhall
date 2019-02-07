@@ -122,7 +122,7 @@ void RenderContext::BindUniformBuffer( uint slot, UniformBuffer *ubo )
 void RenderContext::DrawVertexArrays( VertexPCU const *vertices, uint count )
 {
    // copy to a vertex buffer
-   m_immediateVBO->CopyCPUToGPU( vertcies, count * sizeof(VertexPCU) );
+   m_immediateVBO->CopyCPUToGPU( vertcies, count );
 
    // bind that vertex buffer
    BindVertexStream( m_immediateVBO ); 
