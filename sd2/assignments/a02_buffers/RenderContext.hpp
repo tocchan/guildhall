@@ -157,7 +157,7 @@ void RenderContext::Draw( uint vertCount, uint byteOffset )
 
    if (result) {
       m_context->IASetInputLayout( m_currentShader->m_inputLayout );
-      Draw( vertCount, byteOffset ); 
+      m_context->Draw( vertCount, byteOffset ); 
    } else {
       // error/warning
    }
