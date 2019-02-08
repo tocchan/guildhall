@@ -25,6 +25,15 @@ Suggested tasks and order to do them;
 
 ## Buckets
 
+```cpp
+class RigidbodyBudcket
+{
+  public:
+    std::vector<Rigidbody2D*> m_rigidbodies; 
+    // std::vector<Collider2D*> 
+}
+```
+
 ## Manifold Generation
 
 ## Correction

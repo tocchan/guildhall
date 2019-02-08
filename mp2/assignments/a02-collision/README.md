@@ -5,8 +5,9 @@ MP2-A02: Collision Response
 To have a basic 2D Physics engine with elastic collision response with adjustable restitution and mass. 
 
 ## Goals
+- Object only destroy when fully off screne (use AABB intersect check - destroy if false).
 - [One Week Demo](mp2.a02.week1.zip): By 2019-02-12 get to a point where objects push out of each other; 
-- [Final Demo](mp2.a02.week2.zip): By 2019-02-19 the
+- [Final Demo](mp2.a02.week2.zip): By 2019-02-19 should have collision response working. 
 
 ## Class Notes
 - [2019-02-12 Notes](NOTES.md)
@@ -32,5 +33,7 @@ The user should also be able to possess one of the objects.  Pressing TAB should
 
 ## Additional Notes
 - Our physics system is fairly simple - you may notice *bugs* such as heavy objects able to push smaller objects through a floor.  This requires a bit more work to fix and would be a good vector for additional exploration.  This class though will focus mostly on objects the same mass so we'll ignore the issue. 
-- Test thororoughly once you have it working.  There a 
+- Test thororoughly once you have it working.  These are a few things to check; 
+  - Spawn a dynamic objects ontop of each other with 0.5 restitution, make sure they fall and don't stick together.
+  - 0.0 restituion balls should slide off other balls, but maintain horiztonal movement and move off the edge the screen.
 

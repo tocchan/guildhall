@@ -20,10 +20,12 @@ typedef uint eTextureUsageBits;
 class Texture
 {
    public:
-      Texture(); 
+      Texture( RenderContext *ctx ); 
       virtual ~Texture(); // virtual, as this will release the resource; 
 
    public:
+      RenderContext *m_owner; 
+
       // D3D11 objets; 
       ID3D11Resource *m_handle; 
       eGPUMemoryUsage m_memoryUsage; 
@@ -55,6 +57,23 @@ class Texture2D : public Texture
 //------------------------------------------------------------------------
 // Texture2D.cpp
 //------------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+static uint DXBindFromUsage( uint usage ) 
+{
+   uint binds = 0U; 
+   if (usage & TEXTURE_USAGE_TEXTURE_BIT) {
+      binds |= D3D11_BIND_SHADER_RESOURCE; 
+   }
+   if (usage & TEXTURE_USAGE_COLOR_TARGET_BIT) {
+      binds |= D3D11_BIND_RENDER_TARGET; 
+   }
+   if (usage & TEXTURE_USAGE_DEPTH_STENCIL_TARGET_BIT) {
+      binds |= D3D11_BIND_DEPTH_STENCIL_TARGET; 
+   }
+
+   return binds; 
+}
 
 //------------------------------------------------------------------------
 bool Texture2D::LoadFromFile( std::string const &filename ) 
@@ -96,7 +115,7 @@ bool Texture2D::LoadTextureFromImage( Image const &image )
    texDesc.ArraySize = 1; // only one texture
    texDesc.Usage = DXUsageFromMemoryUsage(m_memoryUsage);  // loaded from image - probably not changing
    texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;            // if you support different image types  - this could change!  
-   texDesc.BindFlags = DXUsageFromUsage(m_textureUsage);   // only allowing rendertarget for mipmap generation
+   texDesc.BindFlags = DXBindFromUsage(m_textureUsage);   // only allowing rendertarget for mipmap generation
    texDesc.CPUAccessFlags = 0U;                            // Determines how I can access this resource CPU side 
    texDesc.MiscFlags = 0U;  
    
