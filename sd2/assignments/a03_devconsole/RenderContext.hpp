@@ -94,6 +94,7 @@ class RenderContext
       // sampler I'm storing with the view in this design - but still giving
       // the context the option of binding a view with a different sampler if we so choose; 
       void BindTextureViewWithSampler( uint slot, TextureView *view ); 
+      void BindTextureViewWithSampler( uint slot, std::string const &name ); 
       void BindTextureViewWithSampler( uint slot, TextureView *view, Sampler *sampler ); 
       void BindTextureViewWithSampler( uint slot, TextureView *view, eSampleMode mode ); 
       void BindTextureViewWithSampler( uint slot, std::string const &name, eSampleMode mode ); 
@@ -154,6 +155,7 @@ void RendreContext::Shutdown()
    IMPLEMENT_ME!
 }
 
+//------------------------------------------------------------------------
 void RenderContext::BindShader( Shdaer *shader )
 {
    // ...

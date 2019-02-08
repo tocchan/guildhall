@@ -8,6 +8,8 @@ class TextureView
       TextureView(); 
       ~TextureView(); // be sure to release your D3D11 resources (view and source)
 
+      void SetSampler( Sampler *samp )       { m_sampler = samp; }
+
    public:
       // things this holds onto
       ID3D11ShaderResourceView *m_view = nullptr;  // D3D11 view we bind

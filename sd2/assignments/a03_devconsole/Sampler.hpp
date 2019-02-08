@@ -93,5 +93,7 @@ void Sampler::CreateStateIfDirty( RenderContext *ctx )
 
    // Create!
    ctx->Create( &desc, &m_handle ); 
+
+   m_isDirty = false; 
    ASSERT( m_handle != nullptr );   // this should honestly never fail.  If it does - check your output!
 }; 
