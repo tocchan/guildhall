@@ -130,6 +130,13 @@ class RenderContext
 //------------------------------------------------------------------------
 
 
+// raw character string
+static char const* DEFAULT_HLSL_SHADER = R"(
+   
+// shader code; 
+
+   )"; 
+
 //------------------------------------------------------------------------
 void RenderContext::Startup()
 {
@@ -143,6 +150,13 @@ void RenderContext::Startup()
    Sampler *linear = new Sampler(); 
    linear->SetFilterModes( FILTER_MODE_LINEAR, FILTER_MODE_LINEAR ); 
    m_cachedSamplers[SAMPLE_MODE_LINEAR] = linear; 
+
+   // premake defaults 
+   Image image;
+   image.Create( 1, 1 ); 
+   image.SetPixel( 0, 0, RGBA::WHITE ); 
+   TextureView2D *white = TextureView2D::ForImage( image ); 
+   RegisterTextureView2D( "white", white ); 
 }
 
 //------------------------------------------------------------------------
@@ -179,6 +193,7 @@ void RenderContext::BindTextureView( uint slot, TextureView *view )
    if (view != nullptr) {
       srv = view->GetHandle(); 
    } else {
+      srv = GetOrCreateTextureView2D("white"); 
       // TODO - if view is nullptr, default to something
       // that makes since for the slot
       // For now - bind a solid "WHITE" texture if slot == 0; 

@@ -62,6 +62,7 @@ class Texture2D : public Texture
 static uint DXBindFromUsage( uint usage ) 
 {
    uint binds = 0U; 
+
    if (usage & TEXTURE_USAGE_TEXTURE_BIT) {
       binds |= D3D11_BIND_SHADER_RESOURCE; 
    }

@@ -22,7 +22,7 @@ void Game::Render()
 	ctx->BeginCamera( m_camera ); 
 
 	ctx->BindShader( "shader/default_unlit.hlsl" ); 
-	ctx->BindTextureViewWithSampler( "image/someImage.jpg" ); 
+	ctx->BindTextureViewWithSampler( 0, "image/someImage.jpg" ); 
 
 	// draw a quad wiht a texture, tinted light blue and with 75% opacity. 
 	std::vector<VectorPCU> quad; 
@@ -67,7 +67,7 @@ void Game::Render()
   - [ ] If input field is already empty, Escape should close the dev-console; 
 
 ### Dev Console Bonus Features
-The last 20% of the grade is from optional tasks.  Some are highly recommended, but all of guildhall can be done without them.  
+The last 10% of the grade is from optional tasks.  Some are highly recommended, but all of guildhall can be done without them.  
 
 *Note:  Extras are usable on any assignment with an **Extras** section.  So if there are dev console features you want, but don't have time, you may do them on a later assignment instead of the listed extras there at a 50% point penalty (ie, an extra worth 8 points here, is only worth four on a future assignment).  I do this so you can pick things that interest you - please don't use it as a way to just get out of work you don't want to do.*
 
@@ -77,19 +77,19 @@ The last 20% of the grade is from optional tasks.  Some are highly recommended, 
 - [ ] X03.01: [5%] AutoComplete
 - [ ] X03.02: [4%] Command History
 - [ ] X03.03: [3%] Persistant Command History (requires X03.02)
-- [ ] x03.04: [5%] Text Selection 
+- [ ] X03.04: [5%] Text Selection 
 
 #### Recommended
 - [ ] X03.10: [4%] Cut, Copy & Paste from Window's Clipboard (Requires X03.04)
 - [ ] X03.11: [2%] Text Scrolling
 - [ ] X03.12: [2%] Scroll Bar (Requires X03.11)
-- [ ] X03.13: [6%] Contextual Auto Complete (Requies X03.03)
+- [ ] X03.13: [6%] Contextual Auto Complete (Requies X03.01)
 
 #### Fun Suggestions
 - [ ] X03.20: [4%] Text Color Markup
 - [ ] X03.21: [2%] Command Scripts
 - [ ] X03.22: [2%] Mouse Input
-- [ ] X03.23: [4%] Mouse Selection (Requires X03.04 and X03.23)
+- [ ] X03.23: [4%] Mouse Selection (Requires X03.04 and X03.22)
 - [ ] X03.24: [2%] Navigation Hotkeys
 - [ ] X04.25: [2%] Audio Cues
 - [ ] X05.26: [2%] Open & Close Animations (Slides Open for Example)

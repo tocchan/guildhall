@@ -28,6 +28,8 @@ class Shader
       //...
 
       // **NEW STUFF**
+      void SetBlendMode( eBlendMode mode ); 
+
       bool UpdateBlendStateIfDirty(); 
 
    public:
@@ -40,8 +42,6 @@ class Shader
       eBlendMode m_blendMode                 = BLEND_MODE_ALPHA; 
       // blend_info_t m_colorBlend; 
       // blend_info_t m_alphaBlend; // eBlendOp m_blendOp; 
-      // eBlendFactor m_srcFactor;  
-      // eBlendFactor m_dstFactor; 
 
       bool m_blendStateDirty                 = true; 
 
@@ -102,7 +102,7 @@ bool Shader::UpdateBlendStateIfDirty( RenderContext *ctx )
                      // probably need to add the other cases
    };
 
-   desc.RenderTargetWriteMask       = D3D11_COLOR_WRITE_ENABLE_ALL;  // can mask off outputs;  we won't be doing that; 
+   desc.RenderTarget[0].RenderTargetWriteMask       = D3D11_COLOR_WRITE_ENABLE_ALL;  // can mask off outputs;  we won't be doing that; 
 
    // Finally, create the blend state
    ctx->CreateBlendState( desc, &m_blendState );
