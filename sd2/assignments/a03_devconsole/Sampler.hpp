@@ -2,6 +2,12 @@
 // Sampler.hpp
 //------------------------------------------------------------------------
 
+enum eFilterMode 
+{
+   FILTER_MODE_POINT,
+   FILTER_MODE_LINEAR,
+}; 
+
 class Sampler
 {
    public:

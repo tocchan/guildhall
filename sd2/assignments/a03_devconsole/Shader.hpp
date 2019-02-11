@@ -2,8 +2,21 @@
 // Shader
 //------------------------------------------------------------------------
 
-// 
+// two options for this - either you can name common blend mode configurations
+// using an enum, or you can fully expose it using a color and alpha blend operation; 
+// Believe the enum is what Squirrel is intended for your engines; 
+enum eBlendMode
+{
+                        // op,  src_factor,  dst_factor
+   BLEND_MODE_OPAQUE,   // ADD, ONE,         ZERO              (or blend disabled)
+   BLEND_MODE_ALPHA,    // ADD, SRC_ALPHA,   INV_SRC_ALPHA,
+   BLEND_MODE_ADDTIVE,  // ADD, ONE,         ONE
+}; 
 
+// other options - fully expose the options; 
+// enum eBlendOp { ... }; // maps to https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ne-d3d11-d3d11_blend_op
+// enum eBlendFactor { ... }; // maps to https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ne-d3d11-d3d11_blend
+// struct blend_info_t { eBlendOp op; eBlendFactor srcFactor;  eBlendFactor dstFactor; }; 
 
 //------------------------------------------------------------------------
 class Shader
@@ -24,8 +37,12 @@ class Shader
       // blend state - not sure how your SD1 exposes this.  Some Engines expose the blend factors
       // and some engines will expose an enum for common setups (like alpha, additive, etc...)
 
+      eBlendMode m_blendMode                 = BLEND_MODE_ALPHA; 
+      // blend_info_t m_colorBlend; 
+      // blend_info_t m_alphaBlend; // eBlendOp m_blendOp; 
       // eBlendFactor m_srcFactor;  
       // eBlendFactor m_dstFactor; 
+
       bool m_blendStateDirty                 = true; 
 
       
@@ -69,14 +86,21 @@ bool Shader::UpdateBlendStateIfDirty( RenderContext *ctx )
    // since we disabled independent blend, we only have to setup the first blend state
    // and I'm setting it up for "alpha blending"
    desc.RenderTarget[0].BlendEnable = TRUE;  // we want to blend
-   desc.RenderTarget[0].SrcBlend    = D3D11_BLEND_SRC_ALPHA;      // output color is multiplied by the output colors alpha and added to...
-   desc.RenderTarget[0].DestBlend   = D3D11_BLEND_INV_SRC_ALPHA;  // the current destination multiplied by (1 - output.a); 
-   desc.RenderTarget[0].BlendOp     = BD3D11_BLEND_OP_ADD;        // we add the two results together
+
+   if (e_blendMode == BLEND_MODE_ALPHA) {
+      desc.RenderTarget[0].SrcBlend    = D3D11_BLEND_SRC_ALPHA;      // output color is multiplied by the output colors alpha and added to...
+      desc.RenderTarget[0].DestBlend   = D3D11_BLEND_INV_SRC_ALPHA;  // the current destination multiplied by (1 - output.a); 
+      desc.RenderTarget[0].BlendOp     = BD3D11_BLEND_OP_ADD;        // we add the two results together
    
-   // you can compute alpha seperately, in this case, we'll just set it to be the max alpha between the src & destination
-   desc.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
-   desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE; 
-   desc.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_MAX;
+      // you can compute alpha seperately, in this case, we'll just set it to be the max alpha between the src & destination
+      desc.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
+      desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE; 
+      desc.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_MAX;
+   } else { 
+      // TODO: Add else_if branches for the other blend modes; 
+      ASSERT(false); // Unimplemented blend mode; 
+                     // probably need to add the other cases
+   };
 
    desc.RenderTargetWriteMask       = D3D11_COLOR_WRITE_ENABLE_ALL;  // can mask off outputs;  we won't be doing that; 
 

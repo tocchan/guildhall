@@ -13,6 +13,12 @@ Class meets...
 
 - **Tuesday 2PM-3:30PM**:  Lecture
 
+## Helpful Sites
+- (Realtime Rendering: Intersections)[http://www.realtimerendering.com/intersections.html]:  Site contains links/references to different shape intersection tests; 
+- (Geometric Tools)[https://www.geometrictools.com/]: Bunch of code samples for doing common physics operations; 
+- (EuclideanSpace.com)[https://www.euclideanspace.com/]: Wide assortment of math/physics tutorials - mostly pure math but easy to follow; 
+- (ScratchAPixel.com)[https://www.scratchapixel.com/]: Great low-level explanation of multiple rendering and math concepts we use in class.
+
 ### Special Dates
 - Jan 18 (Fri) - Start
 - Jan 21 (Mon) - Holiday (MLK)

@@ -10,7 +10,8 @@ To have a basic 2D Physics engine with elastic collision response with adjustabl
 - [Final Demo](mp2.a02.week2.zip): By 2019-02-19 should have collision response working. 
 
 ## Class Notes
-- [2019-02-12 Notes](NOTES.md)
+- [2019-02-05 Notes on Manifolds & Correction](notes.manifold.md)
+- [2019-02-12 Notes on Collision Response](notes.momentum.md)
 
 ## Controls
 By default, arrow keys should control a cursor.  While in this cursor mode, when the user presses F1 through F4 it should spawn an object at the cursor of random size (extents somewhere between 0.25 and 2.00). 
