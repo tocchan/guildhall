@@ -50,13 +50,13 @@ Assignments will be due at the end of your Lab Section each week starting the we
 
 - *2019/01/31*: **ICC**: [Shader Triangle](assignments/a01_setup/)
 - *2019/02/07*: **ICC**: [VBOs and Uniforms](assignments/a02_buffers/)
-- *2019/02/14*: **ICC**: [Dev Console](assignments/a03_devconsole/)
-- *2019/02/21*: **ICC**: Vertex Lit 3D Cube
-- *2019/02/28*: **ICC & CRS**: Developer Console & Normal Mapped Cube & Sphere.  **CRS** for rendering system; 
-- *2019/03/07*: **ICC**: Terrain and Basic Camera Movement
+- *2019/02/14*: **ICC & CRS**: [Dev Console](assignments/a03_devconsole/)
+- *2019/02/21*: **ICC**: 3D Mesh Cube & Sphere
+- *2019/02/28*: **ICC**: Normal Mapped Cube & Sphere.  **CRS** for rendering system; 
+- *2019/03/07*: **ICC & CRC**: Terrain and Basic Camera Movement
 - *2019/03/14*: **ICC**: Units, Selection, and Basic movement. 
 - *2019/03/21*: **SPRING BREAK**
-- *2019/03/28*: **ICC & CRC**: Buildings and Objects, Enemies, and Combat
+- *2019/03/28*: **ICC**: Buildings and Objects, Enemies, and Combat
 - *2019/04/04*: **ICC**: Minimap and Basic UI, Unit Construction
 - *2019/04/11*: **ICC & CRS**: Data backed tech tree, Resource Gathering.  **CRS** for user's choice;
 - *2019/04/18*: **ICC**: 2 Additional Player Unit Types and 2 Additional Enemy Types
