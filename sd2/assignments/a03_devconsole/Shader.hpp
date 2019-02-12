@@ -105,7 +105,8 @@ bool Shader::UpdateBlendStateIfDirty( RenderContext *ctx )
    desc.RenderTarget[0].RenderTargetWriteMask       = D3D11_COLOR_WRITE_ENABLE_ALL;  // can mask off outputs;  we won't be doing that; 
 
    // Finally, create the blend state
-   ctx->CreateBlendState( desc, &m_blendState );
+   ID3D11Device *dev = ctx->m_device; 
+   dev->CreateBlendState( desc, &m_blendState );
 
    m_blendStateDirty = false; 
    return (m_blendState != nullptr); 
