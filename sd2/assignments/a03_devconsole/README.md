@@ -192,9 +192,7 @@ So for example, if you were to print to your console in yellow...
 
 "Command [0000ff]net_join[-] requires an address."
 
-It would print...
-
-<span style="background-color:#333333;color:#ffff00;">Command <span style="color:#0000ff">net_join</span> requires an address.</span>
+Would print everything in yellow, except the "net_join" which would be blue. 
 
 If you prefer a different markup, that is up to you, I like this one since it is very compact. 
 
