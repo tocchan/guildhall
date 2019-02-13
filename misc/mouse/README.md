@@ -56,8 +56,9 @@ case the previous position you would use to determine relative movement would al
 ### Buttons & Mouse Wheel
 Windows messages `WM_MOUSEWHEEL` and `WM_MOUSEMOVE` are used to determine the state of the mouse, as well as when the mouse wheel is used;
 
-- (WM_MOUSEMOVE)[https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-mousemove]
-- (WM_MOUSEWHEEL)[https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-mousewheel] 
+- [WM_MOUSEMOVE](https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-mousemove)
+- [WM_MOUSEWHEEL](https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-mousewheel)
+- [WM_LBUTTONDOWN](https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-lbuttondown) & [WM_LBUTTONUP](https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-lbuttonup).  Similar for `RBUTTON`, `MBUTTON`, etc...
 
 
 ### Hiding/Showing the Mouse
@@ -103,7 +104,7 @@ This is not reference counted like cursor visibility, so you may want to do your
 
 When a window gains or loses focus, it will be sent a `WM_ACTIVATE` message to the `WindowsProcedure`. 
 
-- (WM_ACTIVATE)[https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-activate]
+- [WM_ACTIVATE](https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-activate)
 
 You can check the `LOWORD` of the `wParam` as non-zero to see if your window currently has focus.  If it is zero, you have lost focus.  Be sure to appropriately free up the mouse.   
 

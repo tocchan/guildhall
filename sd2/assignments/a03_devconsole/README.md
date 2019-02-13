@@ -175,9 +175,9 @@ If an argument is being typed - auto-complete with list of matching available ar
 
 So say I have a folder structure that is; 
 
-./shader/debug.hlsl
-./shader/debug_lit.hlsl"
-./shader_errors.txt
+- ./shader/debug.hlsl
+- ./shader/debug_lit.hlsl"
+- ./shader_errors.txt
 
 If I was to type "./sha", the only two options should be "./shader/" and "./shader_log.txt".  One I get into "./shader/", then the options would become 
 "debug.hlsl" and "debug_lit.hlsl".  
@@ -194,7 +194,7 @@ So for example, if you were to print to your console in yellow...
 
 It would print...
 
-<div style="background-color:0x333333;color:#ffff00;">Command <span style="color:#0000ff">net_join</span> requires an address.</div>
+<span style="background-color:#333333;color:#ffff00;">Command <span style="color:#0000ff">net_join</span> requires an address.</span>
 
 If you prefer a different markup, that is up to you, I like this one since it is very compact. 
 
