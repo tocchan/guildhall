@@ -91,8 +91,8 @@ The last 10% of the grade is from optional tasks.  Some are highly recommended, 
 - [ ] X03.22: [2%] Mouse Input
 - [ ] X03.23: [4%] Mouse Selection (Requires X03.04 and X03.22)
 - [ ] X03.24: [2%] Navigation Hotkeys
-- [ ] X04.25: [2%] Audio Cues
-- [ ] X05.26: [2%] Open & Close Animations (Slides Open for Example)
+- [ ] X03.25: [2%] Audio Cues
+- [ ] X03.26: [2%] Open & Close Animations (Slides Open for Example)
 
 
 ## Bonus Feature Notes
