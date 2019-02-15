@@ -6,7 +6,7 @@ So now that we can detect when something collides and correct out, the next step
 
 ## Helpful Link(s)
 - [Elastic Collision - Wikipedia](https://en.wikipedia.org/wiki/Elastic_collision):  Short and two the point on the equations we're using. 
-- [Elastic Collisions - Khan Academy)(https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/a/what-are-elastic-and-inelastic-collisions):  Good explanation of the math involved (including Restitution). 
+- [Elastic Collisions - Khan Academy](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/a/what-are-elastic-and-inelastic-collisions):  Good explanation of the math involved (including Restitution). 
 
 ## Restitution (think: Bounciness)
 The **Coeffecient of Restitution** is defined as the ratio between the final velocity and the initial velocity after a collision; 
@@ -59,11 +59,11 @@ This is similar, but now need to figure out how the momentum transfers between t
 
 So steps are similar to above for calculating **Vn** and **Vf**, but this time we calculate it for both sides (again, in 1D normal space), so we have **Vn0, Vn1, Vt0, & Vt1**.
 
-Using the elastic collision equations (found (here)[https://en.wikipedia.org/wiki/Elastic_collision]), we then solve for **Vfn0** and **Vfn1**.  Scale
+Using the elastic collision equations (found [here](https://en.wikipedia.org/wiki/Elastic_collision)), we then solve for **Vfn0** and **Vfn1**.  Scale
 both results by the collisions restitution, and then compute the final resulting velocity of each object using the same combination of terms as static (our derived velocity along the impact plane, and the unaffected tangental velocity)
 
 *Note - if you're curious on how to drive these equations - this is a great video;*
-- (KhanAcademy.com - Deriving the shortcut to solve elastic collision problems)[https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/v/deriving-the-shortcut-to-solve-elastic-collision-problems] 
+- [KhanAcademy.com - Deriving the shortcut to solve elastic collision problems](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/v/deriving-the-shortcut-to-solve-elastic-collision-problems) 
 
 
 ## Additional Notes

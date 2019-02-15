@@ -93,6 +93,7 @@ The last 10% of the grade is from optional tasks.  Some are highly recommended, 
 - [ ] X03.24: [2%] Navigation Hotkeys
 - [ ] X03.25: [2%] Audio Cues
 - [ ] X03.26: [2%] Open & Close Animations (Slides Open for Example)
+- [ ] X03.27: [3%] Undo/Redo History (Ctrl+Z, Ctrl+Y)
 
 
 ## Bonus Feature Notes
