@@ -45,7 +45,7 @@ two objects *A* and *B*, the manifold generated is the direction and istance *A*
 ```cpp
 struct manifold2 // contact2?
 {
-   vec3 normal;
+   vec2 normal;
    float penetration; 
 }; 
 ```
