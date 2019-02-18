@@ -17,12 +17,15 @@ class RenderContext
       void BeginFrame();               // A01
       void EndFrame();                 // A01
 
+      ColorTargetView* GetFrameColorTarget();               // A01
+      DepthStencilTargetView* GetFrameDepthStencilTarget(); // A04
+
       // DRAWING
-      void BeginCamera( Camera* );     // A01, A02, A03, A04, A05
+      void BeginCamera( Camera* );     // A01, A02, A03, A04
       void EndCamera();                // A01
 
       void ClearColorTargets( rgba const &color );                              // A01
-      void ClearDepthStencilTarget( float depth = 1.0f, uint8_t stencil = 0U ); // A05
+      void ClearDepthStencilTarget( float depth = 1.0f, uint8_t stencil = 0U ); // A04
 
       // State Binding
       void BindShader( Shader *shader );  // A01
@@ -68,6 +71,7 @@ class RenderContext
 
       // Stateful Data
       ColorTargetView *m_frameBackbuffer;             // A01
+      DepthStencilTargetView *m_frameDepthStencil;    // A04
       Camera *m_currentCamera;                        // A01
 
       // Immediate Drawing Utility

@@ -11,7 +11,7 @@ class Camera
 
       // Targets
       void SetColorTarget( ColorTargetView *ctv );                                                    // A04
-      void SetDepthStencilTarget( DepthStencilTargetView *dsv );                                      // A05
+      void SetDepthStencilTarget( DepthStencilTargetView *dsv );                                      // A04
 
       // Viewports
       void SetNormalizedViewport( aabb2 viewport );                                                   // ???

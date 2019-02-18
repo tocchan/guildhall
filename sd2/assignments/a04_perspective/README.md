@@ -4,9 +4,11 @@ A04: Perspective
 *Note:  This assignment will have some visual anomalies, which we'll fix next week with Depth Buffers*
 
 ## Rubric
-- [ ] **60%** Rendered 3D Spinning Cube
-- [ ] **20%** Rendered 3D UV Sphere
-- [ ] **20%** Extras
+- [ ] **30%** Rendered 3D Spinning Cube
+- [ ] **30%** Rendered 3D UV Sphere
+- [ ] **10%** Depth Buffer
+- [ ] **20%** Shader.XML
+- [ ] **10%** Extras
 
 ## Topics
 - Mouse Input
@@ -24,6 +26,13 @@ A04: Perspective
 - Basic Mesh Generation Ver.1
   - Box (AABB3)
   - UV Sphere
+- Depth Buffers
+
+## Additional Links
+- [Squirrel: Understanding Homogeneous Coordiantes (GDC2015)](https://www.youtube.com/watch?v=o1n02xKP138):  Good talk by our very own Squirrel about homogeneous coordintes and perspective matrices; 
+
+- [Wikipedia: Cramer's Rule](https://en.wikipedia.org/wiki/Cramer%27s_rule): Math behind the matrix inversion function - if you're curious how it work; 
+
 
 ## Goal(s)
 Code we want to get working; 
@@ -99,13 +108,13 @@ void Game::Startup()
 	CPUMesh mesh;
 
 	// create a cube (centered at zero, with sides 2 length)
-	AddCubeToMesh( &mesh, aabb3::ThatContains( vec3(-1.0f), vec3( 1.0f ) ) ); 
+	CPUMeshAddCube( &mesh, aabb3::ThatContains( vec3(-1.0f), vec3( 1.0f ) ) ); 
 	m_cube = new GPUMesh( ctx ); 
 	m_cube->CreateFromCPUMesh( mesh, GPU_MEMORY_USAGE_STATIC ); // we won't be updated this; 
 
 	// create a sphere, cenetered at zero, with 
 	mesh.Clear();
-	AddUVSphereToMesh( &mesh, vec3::ZERO, 1.0f );  
+	CPUMeshAddUVSphere( &mesh, vec3::ZERO, 1.0f );  
 	m_sphere = new GPUMesh( ctx ); 
 	m_sphere->CreateFromCPUMesh( mesh, GPU_MEMORY_USAGE_STATIC );
 };
@@ -136,6 +145,43 @@ void Game::Render()
 }
 ```
 
+### Depth Buffer
+Upon having the above working - you will notice a visual anomaly - we can see facings we wouldn't expect to (this manifests as a cube almost looking inverted).  This is due to currently, the last thing we draw is what shows up on screen.  We're going to introduce a depth buffer; 
+
+
+```cpp
+void Game::Startup()
+{
+	// setup the camera same as before;
+
+	m_camera->SetDepthStencilTarget( ctx->GetFrameDepthStencilTarget() ); 
+
+	// currently we can only load from hlsl, but depth stencil
+	// rules we're going to put on the shader object - so we'll precreate
+	// for now, and set it up (using a Less Or Equal rule so our old stuff works)
+	m_shader = ctx->GetOrCreateShader( "default_unlit.hlsl" ); 
+	m_shader->SetDepth( COMPARE_LEQUAL, true ); // says only write color if depth is less-equal to whatever was already there
+															  // and that we also want to update the depth when we do so; 
+}
+
+void Game::Render()
+{
+	// mostly everything same as before;
+	// ...
+
+	ctx->BeginCamera( m_camera ); 
+	ctx->ClearColorTargets( rgba::BLACK ); 
+	ctx->ClearDepthStencilTarget( 1.0f );  // we clear to 1, treating Z as going forward (hence, 1 is the farthest away)
+
+	// for now, use the shader setup above - when we get xml loading, we can use the string name again;
+	ctx->BindShader( m_shader ); 
+
+	// ... draw scene as normal; 
+	ctx->EndCamera(); 
+
+	// ...
+}
+```
 
 ### Moving Around
 Finally, let's allow the user to move around; 
@@ -190,6 +236,7 @@ void Game::UpdateInput()
 }
 ```
 
+
 ## Extras
 
 - [ ] Built-In Shaders (DefaultUnlit, Default, Invalid)
@@ -203,3 +250,5 @@ void Game::UpdateInput()
 - [ ] Shader Database Hot-Reload 
 - [ ] ShaderStage Resource Database
     - [ ] Shader Defines (database key is now based off defines and name)
+
+
