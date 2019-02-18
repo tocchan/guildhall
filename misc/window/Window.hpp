@@ -39,13 +39,12 @@ static LRESULT CALLBACK GameWndProc( HWND hwnd,
    }; 
 
    // Let app do whatever it needs to do with this message; 
-   if (wnd != nullptr) {
-      if (!wnd->m_gameCB( hwnd, msg, wparam, lparam )) {
-         return DefWndProc( hwnd, msg, wparam, lparam ); 
-      }
+   // if the callback returns false (not handled), pass it onto the default windows procedure
+   if ((wnd == nullptr) || (!wnd->m_gameCB( hwnd, msg, wparam, lparam ))) {
+      return DefWindowProc( hwnd, msg, wparam, lparam ); 
+   } else {
+      return 0; 
    }
-
-   return 0; 
 }
 
 
