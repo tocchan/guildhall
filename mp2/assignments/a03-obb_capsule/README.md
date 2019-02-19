@@ -34,14 +34,10 @@ Some tertiary goals for this assignment are as follows
 *Coming Soon*
 
 
-## Capsule2
-
-**Header**:  [Capsule2.hpp](./src/Capsule2.hpp)
-
-
-## OBB2
-
-**Header**:  [OBB2.hpp](./src/OBB2.hpp)
+## Source (Headers)
+- [Capsule2.hpp](./src/Capsule2.hpp)
+- [OBB2.hpp](./src/OBB2.hpp)
+- [Plane2.hpp](./src/Plane2.hpp)
 
 
 ## Checklist
@@ -58,6 +54,7 @@ Some tertiary goals for this assignment are as follows
     - [ ] `BoxCollider2D` for `OBB2`
     - [ ] `CapsuleCollider2D` for `Capsule2`
     - *Note: These can completely replace `AABB2` and `Disc` if you don't want to write as many collision cases.*
+- [ ] Implement `Plane2` class - will help with the manifold generation; 
 - [ ] Implement `GetManifold` for the same cases;  These will be used for collisions; 
     - [ ] `GetManifold( manifold *out, OBB2 const &a, OBB2 const &b )`
     - [ ] `GetManifold( manifold *out, Capsule2 const &a, Capsule2 const &b )`
