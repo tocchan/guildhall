@@ -23,6 +23,13 @@ Some tertiary goals for this assignment are as follows
 - [ ] *20%*:  Mouse cursor controls
 
 
+## Resources
+*Note: If you find a good resource on this - please share to help future cohorts;*
+
+- [TutsPlus: Seperating Axis Theorem](https://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169)
+- [RealTimeRendering.com: Intersections](http://www.realtimerendering.com/intersections.html)
+
+
 ## Demo
 *Coming Soon*
 
