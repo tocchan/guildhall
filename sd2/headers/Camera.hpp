@@ -57,8 +57,9 @@ class Camera
 
       // cached matrices
       mat44 m_projection;                                                                             // A02
-      mat44 m_camera;                                                                                 // A04
       mat44 m_view; // is inverse of m_camera.                                                        // A04
+      
+      mat44 m_camera;                                                                                 // A04
       mat44 m_ndcToWorld; // View to World matrix (invert(proj) * invert(view) (in row major)         // ???
 
       // Used by rendering system; 

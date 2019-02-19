@@ -5,8 +5,9 @@ Resolving Momentum
 So now that we can detect when something collides and correct out, the next step is to determine how the energy of the system resolves
 
 ## Helpful Link(s)
-- [Elastic Collision - Wikipedia](https://en.wikipedia.org/wiki/Elastic_collision):  Short and two the point on the equations we're using. 
 - [Elastic Collisions - Khan Academy](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/a/what-are-elastic-and-inelastic-collisions):  Good explanation of the math involved (including Restitution). 
+- [Elastic Collision - Wikipedia](https://en.wikipedia.org/wiki/Elastic_collision):  Simple version (no restitution)
+- [Inelastic Collisions - Wikipedia](https://en.wikipedia.org/wiki/Inelastic_collision):  Equations we should use; 
 
 ## Restitution (think: Bounciness)
 The **Coeffecient of Restitution** is defined as the ratio between the final velocity and the initial velocity after a collision; 
