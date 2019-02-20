@@ -60,7 +60,7 @@ Some tertiary goals for this assignment are as follows
     - [ ] `GetManifold( manifold *out, Capsule2 const &a, Capsule2 const &b )`
     - [ ] `GetManifold( manifold *out, OBB2 const &a, Capsule2 const &b )`
 
-### UI and Game
+### Input and Game
 - [ ] Define a `WorldBounds` AABB2 as part of your game;
 - [ ] Define a game camera that you can move around using `WASD` keys, but is contained within the world box; 
 - [ ] Move cursor control over to the mouse; 

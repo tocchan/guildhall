@@ -1,3 +1,7 @@
+//--------------------------------------------------------------------------------
+// Plane2.hpp
+//--------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 class Plane2 
 {
    public:
@@ -23,12 +27,26 @@ class Plane2
          vec3 m_data; 
          struct { 
             vec2 m_normal; 
-            vec2 m_distance; // distance along normal to get to the origin; 
+            float m_distance; // distance along normal to get to the origin; 
          }
       }
 
    public:
       // named constructors;
-      static Plane2 AtPosition( vec2 normal, vec2 pointOnPlane ); 
+      static Plane2 AtPosition( vec2 pointOnPlane, vec2 normal ); 
       static Plane2 FromPoints( vec2 p0, vec2 p1 ); 
 }; 
+
+
+
+//--------------------------------------------------------------------------------
+// Plane2.cpp
+//--------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
+STATIC Plane2 AtPosition( vec2 pos, vec2 normal ) 
+{
+   Plane2 p; 
+   p.m_normal = normal; 
+   p.m_distance = -Dot( pos, normal );    // C4
+   // p.m_distance = Dot( pos, normal );  // Squirrel
+}
