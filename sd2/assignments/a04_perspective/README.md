@@ -35,6 +35,9 @@ A04: Perspective
 
 
 ## Goal(s)
+
+**Demo App**: [./demo/a04.zip](./demo/A04.zip)
+
 Code we want to get working; 
 
 ### Setting the Scene (Perspective Camera)
