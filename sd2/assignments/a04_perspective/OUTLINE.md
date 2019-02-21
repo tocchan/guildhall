@@ -35,6 +35,7 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Create a `AppWindowsProc` method that does `App` and `Game` things with the window
   - Register this using `WindowContext::SetAppWindowsProcedure`
 
+
 ## 4: Mouse Input
 - Implement `WindowContext::GetMouseClientPosition()`
 - Button Input - ???  (depends on implementation from SD1)
@@ -46,6 +47,7 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
   - `pitch` is rotation around right, `yaw` is rotation around up.  For now this will be I and J; 
   - Update the Camera Model matrix using current yaw/pitch, should now be able to move around; 
 
+
 ## 5: Camera Relative Movement
 - Instead of moving in absolute world directions, we will now tie movement controls to `Camera`'s current 
   basis; 
@@ -55,6 +57,7 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Translate your rotation matrix;
 - Apply this as your Camera's model matrix. 
 
+
 ## 6: Constructing a Cube
 - Implement `IndexBuffer`
 - Implement `Mesh` 
@@ -62,7 +65,9 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Construct a `Mesh` for game, and draw it every frame; 
 - Should not be able to fly around a box (though it'll possibly look inverted due to no depth buffer)
 
+
 ## 7: Depth Buffer
+
 
 ## 8: UV Sphere
 
