@@ -1,4 +1,5 @@
 #include "Engine/Core/WindowContext.hpp"
+#include "Engine/Core/ErrorWarningAssert.hpp"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -18,6 +19,9 @@ static LRESULT CALLBACK GameCommonWindowProc( HWND windowHandle, UINT wmMessageC
 	
    // do Engine level message handling
    switch (wmMessageCode) {
+      case WM_ACTIVATE:
+         break; 
+
       default:
          break; 
    }; 
@@ -60,6 +64,8 @@ static void RegisterGameWindowClass()
 //-----------------------------------------------------------------------------------------------
 WindowContext::WindowContext()
 {
+   m_hwnd = nullptr; 
+
    if (gRegisterCount == 0) {
       RegisterGameWindowClass();
    }
@@ -79,7 +85,7 @@ WindowContext::~WindowContext()
 
 
 //-----------------------------------------------------------------------------------------------
-void WindowContext::Create( std::string const &title, float clientAspect, float maxClientFractionOfDesktop, window_proc_cb app_proc )
+void WindowContext::Create( std::string const &title, float clientAspect, float maxClientFractionOfDesktop, windows_proc_cb app_proc )
 {
    ASSERT_OR_DIE( !IsOpen(), "Window already open." ); 
 
@@ -139,14 +145,14 @@ void WindowContext::Create( std::string const &title, float clientAspect, float 
 		NULL );
 
    ASSERT_OR_DIE( hwnd != NULL, "Failed to create window" ); 
-   SetWindowLongPtr( hwnd, GWLP_USERDATA, this );
+
+   m_hwnd = (void*)hwnd;
+   m_gameCB = app_proc; 
+   SetWindowLongPtr( hwnd, GWLP_USERDATA, (LONG_PTR)this );
 
 	ShowWindow( hwnd, SW_SHOW );
 	SetForegroundWindow( hwnd );
 	SetFocus( hwnd );
-
-   m_hwnd = (void*)hwnd;
-   m_gameCB = app_proc; 
 
 	HCURSOR cursor = LoadCursor( NULL, IDC_ARROW );
 	SetCursor( cursor );
@@ -159,7 +165,7 @@ void WindowContext::Close()
       return; 
    }
 
-   CloseWindow( m_hwnd ); 
+   CloseWindow( (HWND)m_hwnd ); 
    m_hwnd = nullptr; 
 }
 

@@ -5,7 +5,7 @@
 
 
 typedef unsigned int uint; 
-typedef bool (*windows_proc_cb)( void*, uint msg, uint wparam, uint lparam ); 
+typedef bool (*windows_proc_cb)( void*, uint msg, uintptr_t wparam, uintptr_t lparam ); 
 
 
 //---------------------------------------------------------------
@@ -20,6 +20,8 @@ class WindowContext
       void Close(); 
 
       void BeginFrame(); 
+
+      inline bool IsOpen() const       { return m_hwnd != nullptr; }
 
    public:
       void *m_hwnd; // void* if you're avoiding Windows.h
