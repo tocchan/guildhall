@@ -8,6 +8,23 @@
 static constexpr const TCHAR* GAME_WINDOW_CLASS_NAME = TEXT("GameWindowClass");
 
 //-----------------------------------------------------------------------------------------------
+static void LockMouseToWindow( HWND hwnd )
+{
+   RECT clientRect; 
+   GetClientRect( hwnd, &clientRect ); 
+
+   POINT clientOrigin = { 0, 0 }; 
+   ClientToScreen( hwnd, &clientOrigin ); 
+
+   clientRect.left += clientOrigin.x; 
+   clientRect.right += clientOrigin.x; 
+   clientRect.top += clientOrigin.y; 
+   clientRect.bottom += clientOrigin.y; 
+
+   ::ClipCursor( &clientRect ); 
+}
+
+//-----------------------------------------------------------------------------------------------
 // Handles Windows (Win32) messages/events; i.e. the OS is trying to tell us something happened.
 // This function is called by Windows whenever we ask it for notifications
 //
@@ -19,8 +36,13 @@ static LRESULT CALLBACK GameCommonWindowProc( HWND windowHandle, UINT wmMessageC
 	
    // do Engine level message handling
    switch (wmMessageCode) {
-      case WM_ACTIVATE:
-         break; 
+      case WM_ACTIVATE: {
+         WORD activeWord = LOWORD(wParam); 
+         bool isActive = (activeWord != WA_INACTIVE);
+         if (isActive && windowContext->IsMouseLocked()) {
+            LockMouseToWindow( windowHandle ); 
+         }
+      } break; 
 
       default:
          break; 
@@ -156,6 +178,10 @@ void WindowContext::Create( std::string const &title, float clientAspect, float 
 
 	HCURSOR cursor = LoadCursor( NULL, IDC_ARROW );
 	SetCursor( cursor );
+
+   // Start the game with 0 mouse movement; 
+   m_lastFrameMousePosition = GetClientMousePosition(); 
+   m_currentMousePosition = GetClientMousePosition(); 
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -184,5 +210,108 @@ void WindowContext::BeginFrame()
 		TranslateMessage( &queuedMessage );
 		DispatchMessage( &queuedMessage ); // This tells Windows to call our "WindowsMessageHandlingProcedure" (a.k.a. "WinProc") function
 	}
+
+   // always save off old one;
+   m_lastFrameMousePosition = m_currentMousePosition; 
+   m_currentMousePosition = GetClientMousePosition(); 
+
+   if ((m_mouseMode == MOUSE_MODE_RELATIVE) && HasFocus()) {
+      IntVec2 center = GetClientCenter();
+      SetClientMousePosition( center ); 
+      m_lastFrameMousePosition = GetClientMousePosition(); 
+   }
+}
+
+//-----------------------------------------------------------------------------------------------
+IntVec2 WindowContext::GetClientCenter() const
+{
+   RECT clientRect; 
+   GetClientRect( (HWND)m_hwnd, &clientRect ); 
+
+   IntVec2 center; 
+   center.x = (clientRect.left + clientRect.right) / 2; 
+   center.y = (clientRect.top + clientRect.bottom) / 2; 
+
+   return center; 
+}
+
+//-----------------------------------------------------------------------------------------------
+IntVec2 WindowContext::GetClientMousePosition()
+{
+   POINT desktopPosition; 
+   if (!::GetCursorPos( &desktopPosition )) {
+      desktopPosition.x = 0; 
+      desktopPosition.y = 0; 
+   }
+
+   ::ScreenToClient( (HWND)m_hwnd, &desktopPosition ); 
+   return IntVec2( desktopPosition.x, desktopPosition.y ); 
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::SetClientMousePosition( IntVec2 &clientPos )
+{
+   POINT screen = { clientPos.x, clientPos.y }; 
+   ::ClientToScreen( (HWND)m_hwnd, &screen ); 
+
+   ::SetCursorPos( screen.x, screen.y ); 
+}
+
+//-----------------------------------------------------------------------------------------------
+IntVec2 WindowContext::GetClientMouseRelativeMovement()
+{
+   return m_currentMousePosition - m_lastFrameMousePosition; 
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::LockMouse()
+{
+   ++m_lockCount; 
+   if (m_lockCount > 0) {
+      LockMouseToWindow( (HWND)m_hwnd ); 
+   }
+
+   // 0 out for a frame; 
+   m_lastFrameMousePosition = GetClientMousePosition(); 
+   m_currentMousePosition = GetClientMousePosition(); 
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::UnlockMouse() 
+{
+   --m_lockCount; 
+   if (m_lockCount <= 0) {
+      ::ClipCursor(nullptr); 
+   }
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::ShowMouse()
+{
+   ::ShowCursor(TRUE); 
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::HideMouse()
+{
+   ::ShowCursor(FALSE); 
+}
+
+//-----------------------------------------------------------------------------------------------
+bool WindowContext::HasFocus() const
+{
+   return (::GetActiveWindow() == (HWND)m_hwnd); 
+}
+
+//-----------------------------------------------------------------------------------------------
+void WindowContext::SetMouseMode(eMouseMode mode)
+{
+   m_mouseMode = mode; 
+   if (mode == MOUSE_MODE_RELATIVE) {
+      IntVec2 center = GetClientCenter(); 
+      m_currentMousePosition = center;
+      m_lastFrameMousePosition = center; 
+      SetClientMousePosition( center ); 
+   }
 }
 
