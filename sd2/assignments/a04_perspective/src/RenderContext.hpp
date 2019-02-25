@@ -70,9 +70,9 @@ class RenderContext
       ID3D11SwapChain *m_swapchain;                   // A01
 
       // Stateful Data
-      ColorTargetView *m_frameBackbuffer;             // A01
-      DepthStencilTargetView *m_frameDepthStencil;    // A04
-      Camera *m_currentCamera;                        // A01
+      ColorTargetView *m_frameBackbuffer;                // A01
+      DepthStencilTargetView *m_defaultDepthStencilView; // A04
+      Camera *m_currentCamera;                           // A01
 
       // Immediate Drawing Utility
       VertexBuffer *m_immediateVBO;                   // A02 

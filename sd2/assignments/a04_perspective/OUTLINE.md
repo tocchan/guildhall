@@ -27,6 +27,7 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Implement `Camera::SetPerspectiveProjection` - use the currently bound color target to determine aspect ratio. 
 - Run game again - moving forward and back should now have a noticable difference in size; 
 
+
 ## 3: Window Context
 - Implement `WindowContext` per spec
 - Update `Main_Win32.cpp` to create a `WindowContext` instead of the `Window`
@@ -60,16 +61,45 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 
 ## 6: Constructing a Cube
 - Implement `IndexBuffer`
-- Implement `Mesh` 
+- Implmeent `CPUMesh` used for construction
+  - This uses a vertex type `VertexMaster` that will be the super-set of all other vertex types used in class.
 - Implement `AddCubeToMesh`
-- Construct a `Mesh` for game, and draw it every frame; 
+- Implement `GPUMesh` and `GPUMesh::CreateForCPUMesh`
+- Implement `RenderContext::DrawMesh( GPUMesh *mesh )`
+- Have game create a `GPUMesh` for a cube, and draw it each frame; 
 - Should not be able to fly around a box (though it'll possibly look inverted due to no depth buffer)
 
-
-## 7: Depth Buffer
-
+## 6b: *Optional*:  Update `RenderContext::DrawVertexArrays`
+- *Goal of this is to consolidate our rendering paths to just `DrawMesh`
+- Implement `GPUMesh::UpdateFromVertexArrays` 
+- Create a member on `RenderContext` that is `GPUMesh m_immediateMesh`
+- Have `RenderContext::DrawVertexArrays` copy to `GPUMesh`, and then use `DrawMesh`  
 
 ## 8: UV Sphere
+- Implement `AddUVSphereToMesh`
+  - This uses SphericalCoordinates to generate; 
+- Repeate steps for Cube
+
+## 7: Depth Buffer
+- Implement `Texture2D::CreateDepthStencilTargetFor(...)`
+- Implement `DepthStencilView` class; 
+- Implement `Texture2D::CreateDepthStencilTargetView(...)`
+- Have `RenderContext` create a default back buffer member `m_defaultDepthStencilTexture` & `m_defaultDepthStencilView`
+- Implement `Camera::SetDepthStencilView` - setting to nullptr should use the default backbuffer;
+- Update `RenderContext::BeginCamera` to also set the depth stencil view - (make sure all color targets/depth stencil are the same size at this point!)
+- Update `Shader` so that it will use the depth buffer
+  - Implement `Shader::SetDepth`
+
+## 7b: Shader XML
+- Support being able to load a shader from an **xml** file. See Example
+  - *Note: This does **NOT** replace creating directly from hlsl - check the extension to figure out the code path*
+- It should currently support the following; 
+  - Programmable Stages to use
+  - Blend State
+  - Depth Stencil State; 
+
+
+
 
 
   

@@ -10,6 +10,9 @@ A04: Perspective
 - [ ] **20%** Shader.XML
 - [ ] **10%** Extras
 
+If the `DevConsole` is not functional, you will lose 15% of your grade;  Recommend giving your dev console its own camera it will use for rendering; 
+
+
 ## Topics
 - Mouse Input
   - Relative Mouse Mode
@@ -239,19 +242,157 @@ void Game::UpdateInput()
 }
 ```
 
+## Shader.XML
+- Be able to a file similar to this: [./shader/default_unlit.xml]('./shader/default_unlit.xml')
+
+Be able to load in both the shader program, and initially setup the blend and depth states; 
+
 
 ## Extras
 
-- [ ] Built-In Shaders (DefaultUnlit, Default, Invalid)
-      DefaultUnlit & Default will be the same shader for now; 
-    - [ ] Updated Shader Error Reporting
-- [ ] IcoSphere Generation (No UV)
-    - [ ] IcoSphere UVs (Can use spherical projection - there's no clean seam so  will require a wrapping sampler to work)
-- [ ] Plane Generation (with subdivision count)
-    - [ ] Surface Generation for equations of the form "vec3 f(u, v)";
-    - [ ] NURB Generation (can use previous)
-- [ ] Shader Database Hot-Reload 
-- [ ] ShaderStage Resource Database
-    - [ ] Shader Defines (database key is now based off defines and name)
+### Recommended
+- [ ] \(X04.01: 4%) Built-In Shaders (`DefaultUnlit`, `Default`, `Invalid`)
+    - `DefaultUnlit` & `Default` will be the same shader for now; 
+    - [ ] \(X04.02: 2%) If a shader fails to load - it should duplicate the `Invalid` shader. 
+    - [ ] \(X04.03: 2%) Invalid shader uses a screenspace checkboard pattern of yellow and magenta; 
+    - [ ] \(X04.04: 3%) Support `raster` state options in the shader xml. 
+- [ ] \(X04.10: 4%) Shader Database Hot-Reload 
+
+### For Fun
+- [ ] \(X04.15: 4%) Mesh Subdivide
+- [ ] \(X04.20: 2%) Cube Sphere Generation
+- [ ] \(X04.30: 4%) IcoSphere Generation (No UV)
+    - [ ] \(X04.31: 2%) IcoSphere UVs (Can use spherical projection - there's no clean seam so  will require a wrapping sampler to work)
+- [ ] \(X04.40: 2%) Plane Generation (with subdivision count)
+    - [ ] \(X04.41: 4%) Surface Generation for equations of the form "vec3 f(u, v)";
+    - [ ] \(X04.42: 4%) NURB Generation (can use previous)
+- [ ] \(X04.50: 4%) `ShaderStage` Resource Database
+    - [ ] \(X04.51: 4%) Shader Program Defines (`ShaderStage` needs to be keyed off a hash of the program and defines)
+- [ ] \(X04.60: 4%) Watched Folders Resource Reloading
 
 
+## Extra Information
+
+### X04.01: Built-In Shaders
+Source for these shaders should be part of Engine.  Can either have a raw string containing source, or embed the resource into the executable. 
+
+
+### X04.02 and X04.03: Failure to Load
+If a shader fails to load, have it use the default shader;   This should do the normal matrix transforms, and then output a solid magenta colour `float4( 1, 0, 1, 1)`.
+
+Be sure to use a duplicate of the Invalid shader, not the Invalid shader itself, as when you reload, you don't want to accidently modify the Invalid shader; 
+
+For X04.03, instead output yellow and magenta grid pattern, done completely in the shader.  If you do this in screen space it stands out a little more as it will not move with the camera, which looks really odd.
+
+
+### X04.04: Raster States
+We currently just create a raster state and use it, but there are certain effects and options that can be useful to expose; 
+
+- **Cull Mode**:  Determines if we should render or not based on front-face setting.  Default to call back faces (triangles pointing away from us).  Good option to expose is no culling (for 2D, or just debug purposes)
+- **Front Face Winding Order**:  What is the winding order to treat as front-face.  We will default to counter-clockwise.  Not a lot of reason to change this as most affects that would want to (back-face rendering) can be done using cull-mode.
+- **Fill Mode**:  Defaults to `solid`, but can be changed to `wire`.  Determines what part of a triangle to render.  Either the entire of it, or just the edges of it;  useful if you want a wire-frame mode; 
+
+
+### X04.10: Shader Database Hot-Reload
+Tie this to either a dev console command or a function key.  
+
+Should reload all shaders that are *not built-in* from from - in place.  So all pointers to shaders are still valid.  Useful for quickly debugging or playing with shaders;
+
+A good addition to this task is folder watching (**X04.60**), which will reload based on the system detecting file changes; 
+
+
+### X04.20: Cube Sphere Generation
+`void AddCubeSphereToMesh( CPUMesh *out, vec3 center, float radius, uint iterations = 4 )`
+
+A quick way to generate a more uniform sphere that is textured.  Generate a cube first, and subdivide the faces `iterations` times, then push out all verts along their normal to radius length.  The texture is repeated 6 times on the outside of the sphere (the 6 original faces). 
+
+`iterations = 0` will result in just getting a cube back; 
+
+This is easier if you have Plane generation already working. 
+
+
+### X04.30 and X04.31: IcoSphere Generation
+
+`void AddIcosphereToMesh( CPUMesh *out, vec3 center, float radius, uint iterations = 4 )`
+
+An IcoSphere is a more uniform distribution of polygons along the outside of a sphere.  Useful more for debug purposes (rendering a wire sphere to show an area), as they are difficult to texture without doing a UV unwrap; 
+
+Recommend generating one by starting with a icosahedron, and then subdivide to the desired resolution;  `iterations` is referring to this subdivide count.  Having `iterations = 0` will result in just getting the icosahedron back; 
+
+See [https://schneide.blog/2016/07/15/generating-an-icosphere-in-c/](https://schneide.blog/2016/07/15/generating-an-icosphere-in-c/) for more information. 
+
+To texture, ico-spheres do not have a clean seam, so you need to ues a wrapping sampler, and repeat some vertices where you notice a wrap may happen; 
+
+See this [StackOverflow.com](https://stackoverflow.com/questions/41957890/how-to-properly-map-a-2d-image-texture-to-an-icosphere) for more information; 
+
+
+### X04.40: Plane Generation
+```cpp
+void AddPlaneToMesh( CPUMesh *out, 
+	vec3 origin, 
+	vec3 right, float xmin, float xmax, 
+	vec3 up, float ymin, float ymax, 
+	uint xsteps = 1, uint ysteps = 0 ); 
+```
+
+This will add a plane in the world.  Use `right` and `up` how to move away from the origin.  So if you wanted to generate a quad centered in the screen that was 2-length along the edge, you would say;
+
+```cpp
+AddPlaneToMesh( &cpu_mesh, vec3::ZERO, 
+	vec3::RIGHT, -1.0f, 1.0f, 
+	vec3::RIGHT, -1.0f, 1.0f ); 
+```
+
+`steps` will subdivide the plane on that direction, and must be `>= 1`.  If `ysteps == 0`, set `ysteps = xsteps`.  Gives the method a nice short-hand; 
+
+- `steps = 1` will generate a single quad
+- `steps = 2` will generate 4 quads
+- `iterations = 3` will generate 9 quads
+- ...etc...
+
+
+### X04.41: Graphing Calculator
+
+```cpp
+typedef std::function<vec3(float, float)> graph_cb; 
+void AddSurfaceToMesh( CPUMesh *out, 
+	vec3 origin, 
+	float xmin, float xmax, uint xsteps, 
+	float ymin, float ymax, uint ysteps, 
+	graph_cb func ); 
+```
+
+This takes an arbitrary function/ethod of the form `vec3 foo( float x, float y )`
+
+Given an `(x, y)` coordinate, it will generate a vec3 in space.  
+
+`min`, `max`, and `steps` controls the inputs.  For example, if you put 0 to 10, with 10 steps, it would generate 11 points (0, 1, 2, ..., 10).  
+
+`steps` must be `>= 1`. 
+
+Use this to generate the surface.  Code is very similar to the plane.
+
+
+## X04.42: NURBs
+
+```cpp
+void AddNURBToMesh( CPUMesh *out, 
+	vec3 const *points ); 	// can assume 16 points
+
+// optional
+void AddNUBToMesh( CPUMesh *out, 
+	uint width, uint height, 
+	vec3 const *points );  // should be (width * height) points - so above would be a 4x4
+```
+
+Similar to the graphing calculator (in fact you can use it to do this task), generate a NURB spline; 
+
+For more information, see [Wikipedia](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline). 
+
+
+## X04.50: Shader Stage Database
+This is an optimization now that you may have variations of shaders that are just state differences so you're not-recompiling multiple copies of the same shader stages. 
+
+This is very API specific (D3D11, OpenGL, D3D12, and Vulkan store the programmable part differently), so this database is not something the game would see.  
+
+With D3D11, we would want to 

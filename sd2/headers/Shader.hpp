@@ -77,5 +77,6 @@ class Shader         // A01, A02, A03
       ID3D11DepthStencilState *m_depthStencilState = nullptr;     // A04
 
       bool m_blendStateDirty                 = true;              // A03
+      bool m_depthStateDirty                 = true;              // A04
 }; 
 
