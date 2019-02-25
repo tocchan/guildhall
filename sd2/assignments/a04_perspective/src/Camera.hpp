@@ -15,7 +15,6 @@ class Camera
 
       // Transforms & Matrices
       void SetModelMatrix( mat44 camModel );                                                          // A04
-      mat44 GetModelMatrix() const;                                                                   // A04
       mat44 GetViewMatrix() const;                                                                    // A04
       mat44 GetProjectionMatrix() const;                                                              // A04
 
@@ -34,9 +33,18 @@ class Camera
 
       // cached matrices
       mat44 m_projection;                                                                             // A02
-      mat44 m_camera;                                                                                 // A04 (camera's model)
       mat44 m_view; // is inverse of m_camera.                                                        // A04
 
       //...
 }; 
 
+//------------------------------------------------------------------------
+// Camera.cpp
+//------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------
+void Camera::SetModelMatrix( mat44 const &model )
+{
+   m_view = model.GetInverse(); 
+}

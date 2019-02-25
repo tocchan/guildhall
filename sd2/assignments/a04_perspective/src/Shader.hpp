@@ -35,7 +35,7 @@ class Shader         // A01, A02, A03
       // ...
          
       // Depth/Stencil Mode
-      eCompareOp m_compreOp                  = COMPARE_LEQUAL;    // A04
+      eCompareOp m_depthCompareOp            = COMPARE_LEQUAL;    // A04
       bool m_writeDepth                      = false;             // A04
 
       //...
@@ -45,3 +45,42 @@ class Shader         // A01, A02, A03
       bool m_depthStateDirty                 = true;              // A04
 }; 
 
+//------------------------------------------------------------------------
+// Shader.cpp
+//------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------
+bool Shader::UpdateStatesIfDirty() 
+{
+   // blend state
+   // ...
+
+   // depth stencil
+   if (m_depthStateDirty || (m_depthStencilState == nullptr)) {
+      D3D11_DEPTH_STENICL_DESC ds_desc = {};
+
+      ds_desc.DepthEnable = TRUE;  // for simplicity, just set to true (could set to false if write is false and comprae is always)
+      ds_desc.DepthWriteMask = m_writeDepth ? D3D11_DEPTH_WRITE_MASK_ALL : D3D11_DEPTH_WRITE_MASK_ZERO; 
+      ds_desc.DepthFunc = DXGetCompareFunc( m_depthCompareOp ); //  
+
+      // Stencil - just use defaults for now; 
+      ds_desc.StencilEnable = false; 
+      ds_desc.StencilReadMask = 0xFF; 
+      ds_desc.StencilWriteMask = 0xFF; 
+
+      D3D11_DEPTH_STENCILOP_DESC default_stencil_op = {}; 
+      default_stencil_op.StencilFailOp = D3D11_STENCIL_OP_KEEP;      // what to do if stencil fails
+      default_stencil_op.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP; // What to do if stencil succeeds but depth fails
+      default_stencil_op.StencilPassOp = D3D11_STENCIL_OP_KEEP;      // what to do if the stencil succeeds
+      default_stencil_op.StencilFunc = D3D11_COMPARISON_ALWAYS;      // function to test against
+
+      // can have different rules setup for front and backface
+      ds_desc.FrontFace = default_stencil_op; 
+      ds_desc.BackFace = default_stencil_op; 
+
+      DX_SAFE_RELEASE(m_depthStencilState); 
+      dx->CreateDepthStencilState( &ds_desc, &m_depthStencilState ); 
+      m_depthStateDirty = false; 
+   }
+}

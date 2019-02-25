@@ -75,12 +75,18 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Create a member on `RenderContext` that is `GPUMesh m_immediateMesh`
 - Have `RenderContext::DrawVertexArrays` copy to `GPUMesh`, and then use `DrawMesh`  
 
-## 8: UV Sphere
+## 6c: UV Sphere
 - Implement `AddUVSphereToMesh`
   - This uses SphericalCoordinates to generate; 
 - Repeate steps for Cube
 
-## 7: Depth Buffer
+## 7: Model Matrix
+- Update shader to use a model matrix:  [./shaders/default_unlit.01](./shaders/default_unlit.01)
+- Create a uniform buffer on `RenderContext` to store it; 
+- Bind this to the correct slot (3) during `RenderContext::BeginCamera` and set the model matrix to `mat44::IDENTITY`
+- Implement `RenderContext::SetModelMatrix`
+
+## 8: Depth Buffer
 - Implement `Texture2D::CreateDepthStencilTargetFor(...)`
 - Implement `DepthStencilView` class; 
 - Implement `Texture2D::CreateDepthStencilTargetView(...)`
@@ -89,8 +95,9 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Update `RenderContext::BeginCamera` to also set the depth stencil view - (make sure all color targets/depth stencil are the same size at this point!)
 - Update `Shader` so that it will use the depth buffer
   - Implement `Shader::SetDepth`
+- Be sure to update/create the `m_depthStencilState` object if depth state has been dirtied; 
 
-## 7b: Shader XML
+## 8b: Shader XML
 - Support being able to load a shader from an **xml** file. See Example
   - *Note: This does **NOT** replace creating directly from hlsl - check the extension to figure out the code path*
 - It should currently support the following; 

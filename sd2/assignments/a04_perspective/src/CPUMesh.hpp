@@ -15,6 +15,9 @@ struct VertexMaster
 
    // vec3 normal;         // A05
    // vec4 tangent;        // A06
+
+   // skin weights         // Summer
+   // skin indices         // Summer
 }; 
 
 //------------------------------------------------------------------------
@@ -44,6 +47,9 @@ class CPUMesh              // A04
       uint GetVertexCount() const;                 // A04
       uint GetIndexCount() const;                  // A04
 
+      inline bool UsesIndexBuffer() const          { return GetIndexCount() > 0; }
+      inline uint GetElementCount() const          { return usesIndexBuffer() ? GetIndexCount() : GetVertexCount(); }
+
 
    public: 
       std::vector<VertexMaster>  m_vertices;       // A04
@@ -58,7 +64,47 @@ class CPUMesh              // A04
 // as I like to pick and choose the ones I want instead of having them
 // all live in CPUMesh.hpp
 //------------------------------------------------------------------------
+void CPUMeshAddQuad( CPUMesh *out, aabb2 quad ); 
+
 void CPUMeshAddCube( CPUMesh *out, aabb3 box );                                                          // A04
 void CPUMeshAddUVSphere( CPUMesh *out, vec3 center, float radius, uint wedges = 32, uint slices = 16 );  // A04
 
 
+
+//------------------------------------------------------------------------
+// CPUMesh.cpp
+//------------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+void CPUMeshAddQuad( CPUMesh *out, aabb2 quad )
+{
+   out->Clear(); 
+
+   set->SetColor( RGBA::WHITE ); 
+   // out->SetNormal( vec3::BACK ); 
+
+   // 0 --- 1
+   // |   / |
+   // | /   |
+   // 2 --- 3
+   out->SetUV( vec2(0.0f, 0.0f) ); 
+   out->AddVertex( quad.GetTopLeft() ); 
+   
+   out->SetUV( vec2(1.0f, 0.0f) ); 
+   out->AddVertex( quad.GetTopRight() ); 
+   
+   out->SetUV( vec2(0.0f, 1.0f) ); 
+   out->AddVertex( quad.GetBottomLeft() ); 
+   
+   out->SetUV( vec2(1.0f, 1.0f) ); 
+   out->AddVertex( quad.GetBottomRight() ); 
+
+   out->AddFace( 0, 2, 1 ); 
+   out->AddFace( 2, 3, 1 ); 
+}
+
+//------------------------------------------------------------------------
+void CPUMesh::AddIndexedTriangle( uint i0, uint i1, uint i2 )
+{
+   ASSERT( i0 < m_vertices.size() ); 
+}

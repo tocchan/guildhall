@@ -395,4 +395,21 @@ This is an optimization now that you may have variations of shaders that are jus
 
 This is very API specific (D3D11, OpenGL, D3D12, and Vulkan store the programmable part differently), so this database is not something the game would see.  
 
-With D3D11, we would want to 
+With D3D11, we would want to store off the specific stages into a database so if multiple shaders use a stage (or even mix and match stages), we can limit the number of loaded shader stages.
+
+The slowest part of creating a shader is compiling, and this can also have a side-effect of helping us limit state switches later (for example, switching between an alpha and transparent shader could be done without a stage switch potentially).
+
+
+## X04.51: Shader Defines
+Be able to define defines per stage/pass in a shader.xml.  See the example shader for example;  These can be set when compiling a shader to influence how the shader compiles (if the shader uses pre-compiler declarations like #ifdef).  Useful for creating permutations of the same shader.
+
+With the shader database, you now need to key a "loaded shader stage" off not just the filename, but also its defines.  Probably safe to do a CRC32 hash of the strings combined with the name.
+
+
+## X04.60: Watched Folders
+If you have resources, you can setup your engine to watch for data files changing, and reload them; 
+
+See: https://docs.microsoft.com/en-us/windows/desktop/fileio/obtaining-directory-change-notifications
+
+Hook this up for Shaders so if you save a shader, it automatically recompiles and is reflected in game.  I also suggest having a game_config or dev conosle command to turn it off. 
+

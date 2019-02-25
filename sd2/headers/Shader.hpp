@@ -69,7 +69,7 @@ class Shader         // A01, A02, A03
       // blend_info_t m_alphaBlend; // eBlendOp m_blendOp; 
 
       // Depth/Stencil Mode
-      eCompareOp m_compreOp                  = COMPARE_LEQUAL;    // A04
+      eCompareOp m_depthCompareOp            = COMPARE_LEQUAL;    // A04
       bool m_writeDepth                      = false;             // A04
 
       ID3D11InputLayout *m_inputLayout             = nullptr;     // A02

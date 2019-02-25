@@ -12,7 +12,10 @@ class GPUMesh                            // A04
       void CreateFromCPUMesh( CPUMesh const *mesh, eGPUMemoryUsage mem = GPU_MEMORY_USAGE_STATIC ); // A04
       void CopyFromCPUMesh( CPUMesh const *mesh, eGPUMemoryUsage mem = GPU_MEMORY_USAGE_DYNAMIC );  // A04
 
-      void CopyFromVertexArrays( VertexPCU const *vertices, uint count );                           // A04 Optional; 
+      void CopyVertexArray( VertexPCU const *vertices, uint count );                           // A04 Optional; 
+      void CopyIndices( uint const *indices, uint count );                                          // A04 Optional;
+
+      void SetDrawCall( bool useIndexBuffer, uint elemCount ); 
 
    public: 
       VertexBuffer *m_vertexBuffer; 

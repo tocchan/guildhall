@@ -69,7 +69,8 @@ struct mat44
    static mat4 RotationAroundX( float deg ); 
    static mat4 RotationARoundY( float deg ); 
    static mat4 RotationARoundZ( float deg ); 
-   static mat4 ForEuler( vec3 xyz, eRotationOrder rotOrder = ROTATION_ORDER_DEFAULT ); 
+   static mat4 ForEuler( vec3 eulerDegrees, eRotationOrder rotOrder = ROTATION_ORDER_DEFAULT ); 
+   static mat4 ForEulerXZY( vec3 eulerDegrees, eRotationOrder rotOrder = ROTATION_ORDER_DEFAULT ); 
    static mat4 Translation( vec3 pos ); 
 }; 
 
@@ -263,4 +264,13 @@ STATIC mat44 mat44::ForEuler( vec3 euler, eRotationOrder rot )
    }
 
    return ret; 
+}
+
+//------------------------------------------------------------------------
+STATIC mat44::ForEulerZXY( vec3 euler, vec3 translation ) 
+{
+   mat44 mat = mat44::ForEuler( euler, ROATATION_ORDER_ZXY ); 
+   mat.SetTranslation( translation ); 
+
+   return mat; 
 }

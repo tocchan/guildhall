@@ -37,7 +37,7 @@ class RenderContext
       // Resource Binding
       // Constants
       void BindUniformBuffer( uint slot, UniformBuffer *ubo );    // A02
-      void BindModelMatrix( mat44 const &modelMatrix );           // A04
+      void SetModelMatrix( mat44 const &modelMatrix );           // A04
       
       // Textures & Samplers
       void BindTextureView( uint slot, TextureView *view );       // A03
@@ -50,8 +50,8 @@ class RenderContext
       void BindTextureViewWithSampler( uint slot, std::string const &name, eSampleMode mode );  // A03
 
       // Drawing
-      void Draw( uint vertexCount, uint byteOffset = 0U );                 // A01
-      void DrawIndexed( uint indexCount, uint byteOffset = 0U );           // A04
+      void Draw( uint vertexCount );                                       // A01
+      void DrawIndexed( uint indexCount );                                 // A04
 
       void DrawVertexArrays( VertexPCU const *vertices, uint count );      // A02
       void DrawMesh( Mesh *mesh );                                         // A04
@@ -72,12 +72,13 @@ class RenderContext
       // Stateful Data
       ColorTargetView *m_frameBackbuffer;                // A01
       DepthStencilTargetView *m_defaultDepthStencilView; // A04
+      UniformBuffer *m_modelBuffer;                      // A04
 
       Camera *m_currentCamera;                           // A01
 
       // Immediate Drawing Utility
       VertexBuffer *m_immediateVBO;                   // A02 
-      Shader *m_defualtShader;                        // Optional (allow some SD1 methods to work - used when nullptr shader is set)
+      Shader *m_defaultShader;                        // Optional (allow some SD1 methods to work - used when nullptr shader is set)
 
       // cached resources for convenience; 
       Sampler* m_cachedSamplers[SAMPLE_MODE_COUNT];   // A03
