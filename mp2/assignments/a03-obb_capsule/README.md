@@ -15,12 +15,13 @@ Some tertiary goals for this assignment are as follows
 - Merge the D3D Branch, and setup a game orthographic camera (we can get a larger scene)
 - Implement a larger play space; 
 
-
 ## Grading 
-- [ ] *30%*:  Functionality of previous assignment works with Capsules
-- [ ] *30%*:  Functionality of previous assignment works with OBBs
-- [ ] *20%*:  Camera Keyboard Controls
-- [ ] *20%*:  Mouse cursor controls
+- [ ] *30%*:  Demo works with Capsules
+- [ ] *30%*:  Demo works with OBBs
+- [ ] *40%*:  New input control scheme; 
+    - [ ] *20%*: Mouse contorls   
+    - [ ] *10%*: Ability to Zoom
+    - [ ] *10%*: Camera is contained to world bounds; 
 
 
 ## Resources
@@ -38,7 +39,7 @@ Some tertiary goals for this assignment are as follows
 - [Capsule2.hpp](./src/Capsule2.hpp)
 - [OBB2.hpp](./src/OBB2.hpp)
 - [Plane2.hpp](./src/Plane2.hpp)
-
+- [Segment2.hpp](./src/Segment2.hpp)
 
 ## Checklist
 
@@ -56,9 +57,10 @@ Some tertiary goals for this assignment are as follows
     - *Note: These can completely replace `AABB2` and `Disc` if you don't want to write as many collision cases.*
 - [ ] Implement `Plane2` class - will help with the manifold generation; 
 - [ ] Implement `GetManifold` for the same cases;  These will be used for collisions; 
-    - [ ] `GetManifold( manifold *out, OBB2 const &a, OBB2 const &b )`
-    - [ ] `GetManifold( manifold *out, Capsule2 const &a, Capsule2 const &b )`
-    - [ ] `GetManifold( manifold *out, OBB2 const &a, Capsule2 const &b )`
+    - [ ] `GetManifold( manifold2 *out, OBB2 const &a, OBB2 const &b, float radius )` 
+    - [ ] `GetManifold( manifold2 *out, OBB2 const &a, OBB2 const &b )`
+    - [ ] `GetManifold( manifold2 *out, Capsule2 const &a, Capsule2 const &b )`
+    - [ ] `GetManifold( manifold2 *out, OBB2 const &a, Capsule2 const &b )`
 
 ### Input and Game
 - [ ] Define a `WorldBounds` AABB2 as part of your game;
@@ -68,7 +70,11 @@ Some tertiary goals for this assignment are as follows
     - [ ] Convert client mouse position to world position, and set your cursor there each frame; 
         - [ ] Implement `Camera::ClientToWorldPoint( vec2 clientPoint )`
     - [ ] Left Click selects while mouse is held down, deselects once mouse is released; 
+    - [ ] Ability to move selected object (possess)
     - [ ] Right Click creates an objects
-        - [ ] Function Keys (F1, F2, etc...) now pick the object to create, but don't actually create themselves; 
+        - [ ] Can set create options: *Type, Simulation Mode, Size, Mass, and Restitution*  
+        - [ ] Start point picked when mouse held down
+        - [ ] End point picked when mouse is released - object is created between start and end points (see demo) 
+    - [ ] Can zoom using mouse wheel (or keyboard keys)
 
 
