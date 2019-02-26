@@ -74,7 +74,7 @@ SamplerState sAlbedo : register(s0);      // sampler I'm using for the Albedo te
 // for passing data from vertex to fragment (v-2-f)
 struct v2f_t 
 {
-   float3 position : SV_POSITION; 
+   float4 position : SV_POSITION; 
    float4 color : COLOR; 
    float2 uv : UV; 
 }; 

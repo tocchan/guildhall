@@ -19,7 +19,7 @@ Some tertiary goals for this assignment are as follows
 - [ ] *30%*:  Demo works with Capsules
 - [ ] *30%*:  Demo works with OBBs
 - [ ] *40%*:  New input control scheme; 
-    - [ ] *20%*: Mouse contorls   
+    - [ ] *20%*: Mouse controls   
     - [ ] *10%*: Ability to Zoom
     - [ ] *10%*: Camera is contained to world bounds; 
 
