@@ -59,8 +59,8 @@ bool Texture2D::CreateDepthStencilTarget( uint widht, uint height )
    texDesc.MipLevels = 1; // setting to 0 means there's a full chain (or can generate a full chain)
    texDesc.ArraySize = 1; // only one texture
    texDesc.Usage = DXUsageFromMemoryUsage(m_memoryUsage);  // loaded from image - probably not changing
-   texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;            // if you support different image types  - this could change!  
-   texDesc.BindFlags = DXBindFromUsage(m_textureUsage);   // only allowing rendertarget for mipmap generation
+   texDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;            // if you support different image types  - this could change!  
+   texDesc.BindFlags = DXBindFromUsage(m_textureUsage);    // only allowing rendertarget for mipmap generation
    texDesc.CPUAccessFlags = 0U;                            // Determines how I can access this resource CPU side 
    texDesc.MiscFlags = 0U;  
    

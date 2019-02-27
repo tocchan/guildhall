@@ -67,7 +67,7 @@ Any section sharing a number (ex: 2A, 2B) can be done in any order within that s
 - Implement `GPUMesh` and `GPUMesh::CreateForCPUMesh`
 - Implement `RenderContext::DrawMesh( GPUMesh *mesh )`
 - Have game create a `GPUMesh` for a cube, and draw it each frame; 
-- Should not be able to fly around a box (though it'll possibly look inverted due to no depth buffer)
+- Should now be able to fly around a box (though it'll possibly look inverted due to no depth buffer)
 
 ## 6b: *Optional*:  Update `RenderContext::DrawVertexArrays`
 - *Goal of this is to consolidate our rendering paths to just `DrawMesh`
