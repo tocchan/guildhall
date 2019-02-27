@@ -22,4 +22,6 @@ A04 - Torque
 ## Checklist
 
 [ ] Dynamics -vs- Statics.  Take into account static velocity
+  - [ ] Calcualte static velocity based on movement since last frame
+  - [ ] Introduce `Rigidbody2D::Teleport` to move something but keep previous velocity; 
   - [ ] Solve the inelastic equation assuming infinite mass for the static object
