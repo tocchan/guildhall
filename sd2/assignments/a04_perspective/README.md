@@ -4,8 +4,9 @@ A04: Perspective
 *Note:  This assignment will have some visual anomalies, which we'll fix next week with Depth Buffers*
 
 ## Rubric
-- [ ] **30%** Rendered 3D Spinning Cube
-- [ ] **30%** Rendered 3D UV Sphere
+- [ ] **20%** Rendered 3D Spinning Cube
+- [ ] **20%** Rendered 3D UV Sphere
+- [ ] **20%** Window Context & Mouse Controls
 - [ ] **10%** Depth Buffer
 - [ ] **20%** Shader.XML
 - [ ] **10%** Extras

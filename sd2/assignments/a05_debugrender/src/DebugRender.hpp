@@ -13,7 +13,6 @@
 enum eDebugRenderSpace 
 {
    DEBUG_RENDER_SCREEN,          // renders in screen space (ie, backbuffer), defined when initializing the system 
-   DEBUG_RENDER_CAMERA,          // renders for the camera, but treats camera as a screen
    DEBUG_RENDER_WORLD,           // is rendered in the world; 
 }; 
 
@@ -63,94 +62,91 @@ void DebugRenderScreen();                   // render screenspace debug objects 
 
 
 //------------------------------------------------------------------------
-// 2D Debug Rendering (defaults to CAMERA)
+// 2D Debug Rendering (defaults to SCREEN)
 //------------------------------------------------------------------------
-void DebugRenderPoint( debug_render_options_t const *optionalOptions, 
+void DebugRenderPoint2D( debug_render_options_t const &options, 
    vec2 position, 
    float size = DEFAULT_POINT_SIZE );
 
-void DebugRenderLine( debug_render_options_t const *optionalOptions, 
+void DebugRenderLine2D( debug_render_options_t const &options, 
    vec2 start, vec2 end, 
    float lineWidth = DEFAULT_LINE_WIDTH );
 
-void DebugRenderArrow( debug_render_options_t const *optionalOptions, 
-   vec2 start, vec2 end, 
-   float lineWidth = DEFAULT_LINE_WIDTH ); 
-
-void DebugRenderQuad( debug_render_options_t const *optionalOptions, 
+void DebugRenderQuad2D( debug_render_options_t const &options, 
    AABB2 const &quad ); 
 
-void DebugRenderTexturedQuad( debug_render_options_t const *optionalOptions, 
+void DebugRenderTexturedQuad2D( debug_render_options_t const &options, 
    AABB2 const &quad, 
    TextureView *view ); 
 
-void DebugRenderWireQuad( debug_render_options_t const *optionalOptions, 
+void DebugRenderWireQuad2D( debug_render_options_t const &options, 
    AABB2 const &quad, 
    float lineWidth = DEFAULT_LINE_WIDTH ); 
 
-void DebugRenderDisc( debug_render_options_t const *optionalOptions, 
+// to get a ring, you can jus tuse a innerRadius line-thickness smaller than radius; 
+void DebugRenderDisc2D( debug_render_options_t const &options, 
    vec2 center, 
    float radius, 
-   float lineWidth = DEFAULT_LINE_WIDTH ); 
-
-void DebugRenderWireDisc( debug_render_options_t const *optionalOptions,
-   vec2 center, 
-   float radius, 
-   float lineWidth = DEFAULT_LINE_WIDTH ); 
+   float innerRadius = 0.0f ); 
 
 //------------------------------------------------------------------------
-// 3D Rendering (will always default to WORLD space)
+// 3D Rendering (will always default to WORLD)
 //------------------------------------------------------------------------
-void DebugRenderPoint( debug_render_options_t const *optionalOptions, 
+void DebugRenderPoint( debug_render_options_t const &options, 
    vec3 position, 
    float size = DEFAULT_POINT_SIZE );
 
-void DebugRenderLine( debug_render_options_t const *optionalOptions, 
+void DebugRenderLine( debug_render_options_t const &options, 
    vec3 start, vec3 end, 
    float lineWidth = DEFAULT_LINE_WIDTH );
 
-void DebugRenderSphere( debug_render_options_t const *optionalOptions, 
+void DebugRenderArrow3D( debug_render_options_t const &options, 
+   vec3 start, vec3 end, 
+   float base_thickness, 
+   float head_thickness ); 
+
+void DebugRenderSphere( debug_render_options_t const &options, 
    vec3 center, 
    float radius ); 
 
-void DebugRenderBox( debug_render_options_t const *optionalOptions, 
+void DebugRenderBox( debug_render_options_t const &options, 
    AABB3 box ); 
 
 // EXTRA (helps to be able to set raster fill mode to "wire")
 // Also, better to use an ICOSphere if available, but UV sphere is fine; 
-void DebugRenderWireSphere( debug_render_options_t const *optionalOptions,
+void DebugRenderWireSphere( debug_render_options_t const &options,
    vec3 center, 
    float radius ); 
 
 // EXTRA (helps to be able to set raster fill mode to "wire")
-void DebugRenderWireBox( debug_render_options_t const *optionalOptions, 
+void DebugRenderWireBox( debug_render_options_t const &options, 
    AABB3 box ); 
 
 // EXTRA (requires being able to render a cone/cylindar)
-void DebugRenderArrow( debug_render_options_t const *optionalOptions, 
+void DebugRenderArrow( debug_render_options_t const &options, 
    vec3 start, vec3 end, 
    float lineWidth = DEFAULT_LINE_WIDTH ); 
 
 // EXTRA - requires Arrow
-void DebugRenderBasis( debug_render_options_t const *optionalOptions, 
+void DebugRenderBasis( debug_render_options_t const &options, 
    mat44 const &basis, 
    float lineWidth = DEFAULT_LINE_WIDTH ); 
 
 //------------------------------------------------------------------------
 // Rendering Text (works in any mode)
 //------------------------------------------------------------------------
-void DebugRenderTextv( debug_render_options_t const *optionalOptions, 
+void DebugRenderTextv( debug_render_options_t const &options, 
    vec2 pivot, char const *format, va_list args );
-void DebugRenderTextf( debug_render_options_t const *optionalOptions, 
+void DebugRenderTextf( debug_render_options_t const &options, 
    vec2 pivot, char const *format, ... ); 
 
 //------------------------------------------------------------------------
 // Logs (shows up on screen temporily in a list)
 // ALWAYS assumes screen space; 
 //------------------------------------------------------------------------
-void DebugRenderLogv( debug_render_options_t const *optionalOptions, 
+void DebugRenderLogv( debug_render_options_t const &options, 
    char const *format, 
    va_list args ); 
-void DebugRenderLogf( debug_render_options_t const *optionalOptions, 
+void DebugRenderLogf( debug_render_options_t const &options, 
    char const *format,
    ... ); 

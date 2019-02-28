@@ -23,6 +23,9 @@ class RenderContext
 
       //...
 
+      // needs to be updated to also bind depth stencil state; 
+      void BindShader( Shader *shader ); 
+
       // Be able to bind index buffers; 
       void BindIndexStream( IndexBuffer *ibo );    // A04
 

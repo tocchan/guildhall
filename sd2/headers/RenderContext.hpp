@@ -28,7 +28,7 @@ class RenderContext
       void ClearDepthStencilTarget( float depth = 1.0f, uint8_t stencil = 0U ); // A04
 
       // State Binding
-      void BindShader( Shader *shader );  // A01
+      void BindShader( Shader *shader );  // A01, A04
 
       // Input Binding
       void BindVertexStream( VertexBuffer *vbo );  // A02
