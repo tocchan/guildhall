@@ -168,7 +168,6 @@ void Game::Startup()
 	// for now, and set it up (using a Less Or Equal rule so our old stuff works)
 	m_shader = ctx->GetOrCreateShader( "default_unlit.hlsl" ); 
 	m_shader->SetDepth( COMPARE_LEQUAL, true ); // says only write color if depth is less-equal to whatever was already there
-															  // and that we also want to update the depth when we do so; 
 }
 
 void Game::Render()

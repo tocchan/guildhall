@@ -12,6 +12,9 @@ A05: Debug Render System
 
 I'm looking for functionality, not you matching the header signature exactly.  If you prefer using a namespace, a Static class, or a singleton, that is up to you.  What I will be looking for is that it is usable anywhere, and it is as simple as one line to say "Print out the time of impact at the point of impact, for 4 seconds".  
 
+
+### Penalties
+
 ## Topics
 - Nothing new - just use the systems you have to implement the `DebugDraw` system; 
 
