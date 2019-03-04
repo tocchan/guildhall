@@ -12,26 +12,29 @@
 //------------------------------------------------------------------------
 enum eDebugRenderSpace 
 {
-   DEBUG_RENDER_SCREEN,          // renders in screen space (ie, backbuffer), defined when initializing the system 
-   DEBUG_RENDER_WORLD,           // is rendered in the world; 
-   DEBUG_RENDER_CAMERA,          // [EXTRA] Glyph Mode.  Uses world coordinates to figure out viewport space to render.
+   DEBUG_RENDER_SPACE_SCREEN,          // renders in screen space (ie, backbuffer), defined when initializing the system 
+   DEBUG_RENDER_SPACE_WORLD,           // is rendered in the world; 
+   DEBUG_RENDER_SPACE_GLYPH,          // [EXTRA] Glyph Mode.  Uses world coordinates to figure out viewport space to render.
 }; 
 
 enum eDebugRenderMode
 {
-   DEBUG_RENDER_USE_DEPTH,    // default mode - will use depth buffer and write;
-   DEBUG_RENDER_ALWAYS,       // always draw, does not write to depth
-   DEBUG_RENDER_XRAY,         // render behind (greater, no write), then in front (lequal, write)
+   DEBUG_RENDER_MODE_USE_DEPTH,    // default mode - will use depth buffer and write;
+   DEBUG_RENDER_MODE_ALWAYS,       // always draw, does not write to depth
+   DEBUG_RENDER_MODE_XRAY,         // render behind (greater, no write), then in front (lequal, write)
                               // darken or thin the line during behind render to differentiate from it being in front; 
 }; 
 
 //------------------------------------------------------------------------
 // struct to contain options for rendering something.  Contains parameters common to most 
 // debug draw calls. 
+// 
+// THIS IS A SUGGESTION - NOT REQUIRED.  Again, mostly looking that you can draw most things with a single
+// line of code - this is a way to make generic methods that are easy to expand later (and don't take so many arguments)
 struct debug_render_options_t 
 {
-   eDebugRenderSpace space       = DEBUG_RENDER_CAMERA; 
-   eDebugRenderMode mode         = DEBUG_RENDER_USE_DEPTH; 
+   // eDebugRenderSpace space;   // not needed - it is determined by the function called (but internally, can be useful to have the enum)
+   eDebugRenderMode world_mode;  // only affects objects rendered in WORLD space
 
    float durationSeconds         = 0.0f;  // show for a single frame
 
@@ -46,6 +49,10 @@ struct debug_render_options_t
    // 3D (WORLD space) common (ignored for SCREEN & CAMERA)
    mat44 modelTransform          = mat44::IDENTITY; // local transform to do to the object; 
 };
+
+//------------------------------------------------------------------------
+// Start of psuedo-required section!
+//------------------------------------------------------------------------
 
 //------------------------------------------------------------------------
 // System
@@ -65,27 +72,20 @@ void DebugRenderScreen();                   // render screenspace debug objects 
 //------------------------------------------------------------------------
 // 2D Debug Rendering (defaults to SCREEN)
 //------------------------------------------------------------------------
-void DebugRenderPoint2D( debug_render_options_t const &options, 
+void DebugRenderScreenPoint( debug_render_options_t const &options, 
    vec2 position, 
    float size = DEFAULT_POINT_SIZE );
 
-void DebugRenderLine2D( debug_render_options_t const &options, 
+void DebugRenderScreenLine( debug_render_options_t const &options, 
    vec2 start, vec2 end, 
    float lineWidth = DEFAULT_LINE_WIDTH );
 
-void DebugRenderQuad2D( debug_render_options_t const &options, 
-   AABB2 const &quad ); 
-
-void DebugRenderTexturedQuad2D( debug_render_options_t const &options, 
+void DebugRenderScreenQuad( debug_render_options_t const &options, 
    AABB2 const &quad, 
-   TextureView *view ); 
-
-void DebugRenderWireQuad2D( debug_render_options_t const &options, 
-   AABB2 const &quad, 
-   float lineWidth = DEFAULT_LINE_WIDTH ); 
+   TextureView *view = nullptr );   // should default to "white"
 
 // to get a ring, you can jus tuse a innerRadius line-thickness smaller than radius; 
-void DebugRenderDisc2D( debug_render_options_t const &options, 
+void DebugRenderScreenDisc( debug_render_options_t const &options, 
    vec2 center, 
    float radius, 
    float innerRadius = 0.0f ); 
@@ -97,11 +97,16 @@ void DebugRenderPoint( debug_render_options_t const &options,
    vec3 position, 
    float size = DEFAULT_POINT_SIZE );
 
+void DebugRenderQuad( debug_render_options_t const &options, 
+   aabb2 const &quad, 
+   TextureView *view = nullptr,  // default to white; 
+   bool billboard = false ); 
+
 void DebugRenderLine( debug_render_options_t const &options, 
    vec3 start, vec3 end, 
    float lineWidth = DEFAULT_LINE_WIDTH );
 
-void DebugRenderArrow3D( debug_render_options_t const &options, 
+void DebugRenderArrow( debug_render_options_t const &options, 
    vec3 start, vec3 end, 
    float base_thickness, 
    float head_thickness ); 
@@ -134,7 +139,7 @@ void DebugRenderBasis( debug_render_options_t const &options,
    float lineWidth = DEFAULT_LINE_WIDTH ); 
 
 //------------------------------------------------------------------------
-// Rendering Text (works in any mode)
+// Rendering Text
 //------------------------------------------------------------------------
 void DebugRenderTextv( debug_render_options_t const &options, 
    vec2 pivot, char const *format, va_list args );

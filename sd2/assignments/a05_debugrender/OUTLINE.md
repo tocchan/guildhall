@@ -1,19 +1,10 @@
 A05 Outline
 ======
 
-## Introduction to Lighitng
-
-- VertexLit
-  - Update MeshBuilding Functions (Cube & UVSphere at least)
-- Buffer Layouts
-- Point Lights 
-  - Lights Uniform Buffer
-- default.hlsl
-  - Ambient Light
-  - Point Lights
-  - Dot3 (Diffuse) Lighitng
-
-
 ## Debug Render System
 
+- Start with DebugRenderQuad in World Space
+  - Sprinkle some `DebugRender...` calls in you `Game::Update`
+    - `DebugRenderQuad( 5.0f, m_cam_position, rgba::GREEN, rgba::RED )` -> Renders a point for 5 seconds, transitioning from Green to Red at the camera's posiition
 - 
+
