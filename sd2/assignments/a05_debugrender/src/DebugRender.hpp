@@ -14,6 +14,7 @@ enum eDebugRenderSpace
 {
    DEBUG_RENDER_SCREEN,          // renders in screen space (ie, backbuffer), defined when initializing the system 
    DEBUG_RENDER_WORLD,           // is rendered in the world; 
+   DEBUG_RENDER_CAMERA,          // [EXTRA] Glyph Mode.  Uses world coordinates to figure out viewport space to render.
 }; 
 
 enum eDebugRenderMode
@@ -50,12 +51,12 @@ struct debug_render_options_t
 // System
 //------------------------------------------------------------------------
 void DebugRenderSystemStartup( RenderContext *context, 
-   float virtualScreenHeight = 720.0f );  // how high I want to treat the screen;
+   float virtualScreenHeight = 720.0f );  // how high I want to treat the screen for glyph/screen modes; 
 
 void DebugRenderSystemShutdown(); 
 
-void DebugRenderSystemBeginFrame(); // ...placeholder; 
-void DebugRenderSystemEndFrame();   // Cleanup old objects (called AFTER rendering)
+void DebugRenderSystemBeginFrame(); // ...placeholder - does nothing
+void DebugRenderSystemEndFrame();   // Cleanup old objects (called AFTER frame has been presented)
 
 void DebugRenderToCamera( Camera *camera ); // renders camera/world space objects to this camera; 
 void DebugRenderScreen();                   // render screenspace debug objects to backbuffer
