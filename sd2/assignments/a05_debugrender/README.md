@@ -13,11 +13,12 @@ A05: Debug Render System
 - Command to render a line in 3D space (for a given time, start color, and end color)
 - Command to render a spherical wire volume in 3D space 
 - Command to render billboarded text in 3D space (for a given time, start color, end color, and pivot point)
-- All the above can be rendered either "Ignoring Depth", "Using Depth"
+- All the above can be rendered either "Always" or "Use Depth"
 - All the above can be rendered using "XRay" mode
+- Dev Console Command to disable/enable debug rendering
 - Dev Console Command to clear all live commands (mostly matters for long lived commands)
 
-### [20%] 2D
+### [20%] Screen (2D)
 - Command to render a point in Screen Space (for given time, start color, and end color)
 - Command to render a line in Screen space (for a given time, start color, and end color)
 - Command to render a textured quad in Screen Space (for given time, start color, end color, and optional texture)
@@ -29,7 +30,6 @@ A05: Debug Render System
 
 ### [20%] Extras 
 - See below...
-
 
 ### Penalties
 - [01%] Per Warning (up to 10%)
@@ -134,7 +134,7 @@ void Game::Render()
 
 ### Extra Utility (3D)
 - [X05.20  2%] DebugRenderSphere (3D)
-- [X05.20  2%] DebugRenderBox (3D)
+- [X05.21  2%] DebugRenderBox (3D)
 - [X05.22  2%] DrawArrow (3D)
 - [X05.23  2%] DrawBasis (3D)
 - [X05.24  2%] DrawGrid (3D)
@@ -143,14 +143,17 @@ void Game::Render()
 - [X05.30  2%] DebugRenderScreenArrow
 - [X05.31  2%] DebugRenderScreenDisc
 
-### New Meshes
-- [2%] MeshAddCylinder
-- [2%] MeshAddCone
-
 ### Text
-- [4%] Text Wrap
-- [2%] Border Around Text (one or two texel black border around text drawn in the world)
-- [2%] Option to include a background behind rendered text (color with alpha)
+- [X05.40  4%] Text Wrap (Text takes a max width & justification - will render in that box)
+- [X05.41  2%] Render Text in World (non billboarded)
+- [X05.42  2%] Border Around Text (one or two texel black border around text drawn in the world)
+- [X05.43  2%] Option to include a background behind rendered text (color with alpha)
+
+### Misc 
+- [X05.50  2%] MeshAddCylinder
+- [X05.51  2%] MeshAddCone
+- [x05.52  4%] `RGBA LerpAsHSL( RGBA const &a, RGBA const &b, float t );` 
+- [X05.53  2%] Aspect correct texture (takes height and pivot)
 
 
 ## Extra Information
