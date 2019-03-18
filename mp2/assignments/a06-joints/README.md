@@ -1,10 +1,23 @@
-A06 - Effectors and Joints
+A06 - Effectors, Joints, and Triggers
 ======
 
 ## Overview
-A joint and effectos apply forces to an object based on a set of rules.  We'll be implementing on of each;  
+Starting on the Pinball game - we'll generate a level. 
 
-- Spring Joint:  Applies forces to keep 
+- Create bumpers
+  - OnCollision Events
+  - Create impulses
+  - Score
+- Bumps that disapear after being hit
+- Slides by reinstate the safety bump
+  - Trigger Volumes
+- Paddles
+  - rotational constraint near end
+  - rotation is limited to certain degrees
+  - high rotational velocity either up or down depending on button press
+  - effective velocity (used for collision) - based on actual movement/rotation since last frame; 
+- Interval on death for respawning
+
 
 ## Grading 
 
@@ -16,10 +29,4 @@ A joint and effectos apply forces to an object based on a set of rules.  We'll b
 
 ## Checklist
 
-- [ ] Implement Spring Joints 
 
-    - [ ] Implement positional (x,y) constraints
-       - [ ] For correction, solve correction on a per-axis basis, treating thing with contraints as static (so fully push in that direction)
-       - [ ] For collision response, just solve as normal as if it didn't have a constraint (not sure if this is correct, but we'll see how it feels)
-    - [ ] Implement rotational constraint
-        - [ ] When resolving an impulse, use the rotational constraint to determine how much energy goes toward angular momentum and how much goes toward linear velocity;  
