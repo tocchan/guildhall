@@ -129,8 +129,8 @@ void Game::Render()
 ## Extras
 
 ### Glyphs
-- [4%] DebugRenderGlyph
-- [4%] DebugRenderLabel
+- [X05.10  4%] DebugRenderGlyph
+- [X05.11  4%] DebugRenderLabel
 
 ### Extra Utility (3D)
 - [X05.20  2%] DebugRenderSphere (3D)
@@ -157,4 +157,25 @@ void Game::Render()
 
 
 ## Extra Information
-**Coming Soon**
+
+### Glyph & Label Rendering
+This technique is usually used when showing UI elements above in-world elements.  The UI elements are rendered in screen-space, but the position is denoted in world space.  Think a healthbar or class icon above a targets head.
+
+The idea is that no matter how close or far away you are, it stays the same size. 
+
+- Glyph positions are given in world space.
+- Glyph sizes and offsets are given in screen space (determined by system startup)
+- Glyphs rae rendered when rendering `Camera` objects.  
+
+A `Glyph` is an image or quad using this technique, and a `Label` would be text. 
+
+### Extra Utility 
+These should not require a lot of additional information.  These are some common shapes or debug commands I've found useful in the past.  These can help extend your mesh building functionality as well as give you more options for debug rendering; 
+
+The only tricky one would be the `Grid`.  For full credit, a grid should specify
+- The two major axis (for example, X and Z axis in Unity is the default grid)
+- A major and minor colouring per axis, as well as a major-factor. 
+  - major color is used when the line is a multiple of the major-factor.  For example, if you specfied RED and WHITE as your major and minor colors for the X-axis, and a major-factor of 10 - each 10th grid line would be RED, while every other grid line would be white. 
+
+### Others...
+Most of these should be fairly straight forward.  If something is unclear - please message me and I'll add notes here; 
