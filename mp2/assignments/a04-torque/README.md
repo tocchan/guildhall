@@ -21,15 +21,14 @@ We'll add some debug tools as well to confirm things are working.
 
 
 ## Resources
-- https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-oriented-rigid-bodies--gamedev-8032 : Equations at the bottom.
+- https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-oriented-rigid-bodies--gamedev-8032 : Rotational forces and manifold generation tutorial.  
   - http://chrishecker.com/images/e/e7/Gdmphys3.pdf : Link from previous article explaining the equations;
 - https://en.wikipedia.org/wiki/Moment_of_inertia : Needed for the physics step (objects will have torque applied to them - how does the physics step handle it)
 - https://en.wikipedia.org/wiki/Parallel_axis_theorem : Used for calculating moments of inertia with an offset from the axis.
 - https://www.toptal.com/game/video-game-physics-part-i-an-introduction-to-rigid-body-dynamics : Found it generally pretty help coming to grips with terms; 
-- https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-oriented-rigid-bodies--gamedev-8032 : Rotational forces and manifold generation tutorial.  
 
 ## Demo
-*Coming Soon*
+- [A04 Demo](./mp2.a04.zip)
 
 ## Source (Headers)
 - ...
@@ -41,7 +40,7 @@ We'll add some debug tools as well to confirm things are working.
   - [ ] Edge to Edge  (trickier)
   - *Note: Debug Draw system for rendering impacts really helps in debugging this*
 - [ ] Calculate Moment of Inertia for objects
-    - [ ] Updated eitehr when a mass or collider changes
+    - [ ] Updated either when a mass or collider changes
     - [ ] Use parrallel axis therem when colliders have a local offset from the rigidbody (center of the local shape)
         - *Note: You can get by without doing this "yet", but eventually we will have paddles that have an off-center axis of rotation.  Just keep a note you'll be needing to do it at some point.*
 - [ ] Implement Torque and Angular Velocity

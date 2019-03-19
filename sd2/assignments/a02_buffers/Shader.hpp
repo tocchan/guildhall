@@ -31,7 +31,7 @@ class Shader
 
 
 //------------------------------------------------------------------------
-bool Shader::CreateInputLayoutForVertexPCU()
+bool Shader::CreateInputLayoutForBufferLayout( BufferLayout const *layout )
 {
    // Early out - we've already created it; 
    // TODO: If vertex type changes, we need to rebind; 

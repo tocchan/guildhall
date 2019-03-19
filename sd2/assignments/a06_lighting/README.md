@@ -25,7 +25,7 @@ This will be shown to be working by having a scene with a Quad, a UV-Sphere, and
     - [ ] Cube
 - [ ] Can adjust ambient light (console command or hotkey)
 - [ ] Scene has at least one direction light
-    - [ ] Direcitonal light color is settable by conosle command
+    - [ ] Directional light color is settable by console command
     - [ ] Directional light direction is settable by console command
 - [ ] Scene has up to 4 dynamic point lights moving around
     - [ ] Can adjust number of lights with console command/hotkey. 
