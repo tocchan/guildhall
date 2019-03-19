@@ -15,6 +15,7 @@ This will be shown to be working by having a scene with a Quad, a UV-Sphere, and
 ### Resources
 - https://learnopengl.com/Advanced-Lighting/Advanced-Lighting : Decent tutorial of terms
 - https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_shading_model : Wikipedia definition; 
+- https://docs.microsoft.com/en-us/windows/desktop/direct3dhlsl/dx-graphics-hlsl-packing-rules : HLSL Packing rules for constant buffers in detail; 
 
 ## Rubric
 
