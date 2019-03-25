@@ -47,4 +47,36 @@ A06 Outline
 
 
 ### Extras
-- [ ] Do some extras time permitting;  
+- [ ] Do some extras time permitting; 
+
+
+
+```cpp 
+
+class VertexBuffer
+{
+	public:
+		buffer_attirbute_t const *m_layout; 
+};
+
+class Shader 
+{
+
+
+	public:
+		ID3D11InputLayout m_D3Dlayout; 
+};
+
+void RenderContext::DrawMesh( GPU *mesh ) 
+{
+	// old way
+	ID3D11InputLayout *layout = m_currentShader->GetInputLayoutForVertexPCU();
+	m_context->IASetInputLayout( layout );
+
+	// new way
+	ID3D11InputLayout *layout = m_currentShader->GetInputLayoutForBufferLayout( mesh->GetBufferLayout() ); 
+	m_context->IASetInputLayout( layout );
+
+}
+
+```

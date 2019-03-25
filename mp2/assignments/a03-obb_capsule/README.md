@@ -4,7 +4,7 @@ A03 - OBB & Capsule
 ## Overview
 We will be implementing two new objects;
 
-- Oriented Bounding Box (`OBB2`)
+- Oriented Bounding Box (`OBB2`)  
 - Capsule (`Capsule2`)
 
 This assignment will likely change nothing about your simulation, but will give us some new shapes to play with, and set us up for rotational 

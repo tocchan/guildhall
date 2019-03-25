@@ -6,7 +6,7 @@ This assignment is a bunch of little topics;
 
 First, we'll handle frictional forces.  When an object collides with another object, we first have the normal impulse, but there is also a frictional impulse.  This is nearly exactly the same as your normal impulse calculation, but is instead calculated using the tangent for the impact. 
 
-Second, we'll introduce the idea of `drag forces`, which we'll wave our handes at and just say it is a force that will act opposite our current velocities, hence slowing us down to a stop over time; 
+Second, we'll introduce the idea of `drag forces`, which we'll wave our handes at and just say it is a force that will act opposite our current velocities, hence slowing us down to a stop over time;  
 
 Third, we'll add the ability to constaint objects.  **Constaints** in the context of this class is restricting an axis of movement.  For 2D, we have three possible constraints, **X**, **Y**, and **Rotational** limits; 
 

@@ -24,7 +24,9 @@ We'll add some debug tools as well to confirm things are working.
 - https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-oriented-rigid-bodies--gamedev-8032 : Rotational forces and manifold generation tutorial.  
   - http://chrishecker.com/images/e/e7/Gdmphys3.pdf : Link from previous article explaining the equations;
 - https://en.wikipedia.org/wiki/Moment_of_inertia : Needed for the physics step (objects will have torque applied to them - how does the physics step handle it)
-- https://en.wikipedia.org/wiki/Parallel_axis_theorem : Used for calculating moments of inertia with an offset from the axis.
+  - https://en.wikipedia.org/wiki/List_of_moments_of_inertia : Common moment of inertia equations 
+  - https://en.wikipedia.org/wiki/Parallel_axis_theorem : Used for calculating moments of inertia with an offset from the axis.  Needed with above to determine our shapes' moments of inertia. 
+  - 
 - https://www.toptal.com/game/video-game-physics-part-i-an-introduction-to-rigid-body-dynamics : Found it generally pretty help coming to grips with terms; 
 
 ## Demo
