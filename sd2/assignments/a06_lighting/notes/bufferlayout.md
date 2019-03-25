@@ -71,11 +71,11 @@ struct buffer_attribute_t
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 STATIC buffer_attribute_t const vertex_lit::LAYOUT[] = {
-   buffer_attribute_t( "POSITION",  RDF_VEC3,      MEMBER_OFFSET(vertex_lit, position) ), 
-   buffer_attribute_t( "COLOR",     RDF_RGBA32,    MEMBER_OFFSET(vertex_lit, color) ), 
-   buffer_attribute_t( "UV",        RDF_VEC2,      MEMBER_OFFSET(vertex_lit, uv) ), 
-   buffer_attribute_t( "NORMAL",    RDF_VEC3,      MEMBER_OFFSET(vertex_lit, normal) ), 
-   buffer_attribute_t( "TANGENT",   RDF_VEC4,      MEMBER_OFFSET(vertex_lit, tangent) ), 
+   buffer_attribute_t( "POSITION",  RDF_VEC3,      offsetof(vertex_lit, position) ), 
+   buffer_attribute_t( "COLOR",     RDF_RGBA32,    offsetof(vertex_lit, color) ), 
+   buffer_attribute_t( "UV",        RDF_VEC2,      offsetof(vertex_lit, uv) ), 
+   buffer_attribute_t( "NORMAL",    RDF_VEC3,      offsetof(vertex_lit, normal) ), 
+   buffer_attribute_t( "TANGENT",   RDF_VEC4,      offsetof(vertex_lit, tangent) ), 
    buffer_attribute_t() // end
 };
 

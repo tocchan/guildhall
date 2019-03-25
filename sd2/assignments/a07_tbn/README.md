@@ -1,25 +1,10 @@
-A06: Lightings
+A06: Normal Maps
 ======
 
 ## Overview
-- Blinn-Phong Lighting using Vertex Normals
-  - Ambient Light
-  - Directional Light
-  - Point Lights
-- Custom Vertex Formats
-- Normal Generation 
-- Gamma and sRGB
-
-This will be shown to be working by having a scene with a Quad, a UV-Sphere, and a Box, all lit by at least one directional light, and at least 4-point lights; 
 
 
 ### Resources
-- https://learnopengl.com/Advanced-Lighting/Advanced-Lighting : Decent tutorial of terms
-- https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_shading_model : Wikipedia definition; 
-- https://docs.microsoft.com/en-us/windows/desktop/direct3dhlsl/dx-graphics-hlsl-packing-rules : HLSL Packing rules for constant buffers in detail; 
-- http://filmicworlds.com/blog/linear-space-lighting-i-e-gamma : Gamma and sRGB Explanation
-  - https://blog.demofox.org/2018/03/10/dont-convert-srgb-u8-to-linear-u8 : Cautionary Tale about pre-converting sRGB to RGB with U8 formats; 
-  - No Reading Material - But you can use `DXGI_FORMAT_R8G8B8A8_UNORM_SRGB` formats (and equivalent) to automatically convert linear values to sRGB space on store, and sRGB to linear space on load. 
 
 ## Rubric
 
@@ -62,9 +47,6 @@ This will be shown to be working by having a scene with a Quad, a UV-Sphere, and
 - [X06.00  4%] DebugRenderScreenBasis - render your current camera's orientation to the screen. 
 - [X06.00  4%] Unified light structure (Global and Local Directional, Point, and Cone lights)
 - [X06.00  2%] Branchless (no if statement) lighting equations for above (more a fun excercise in this case then an optimization)
-
-- [X06.00  4%] Hook up D3D11InfoQueue to print D3D11 errors to your dev console
-- [X06.00  4%] Shader Reloading will now work for included files
-- [x06.00  4%] Remove `VertexMaster` and have CPUMesh be setup completely from a `BufferLayout`
+- 
 
 ## Extra Information
