@@ -13,8 +13,8 @@ struct VertexMaster
    rgba color;             // A04
    vec2 uv;                // A04;
 
-   // vec3 normal;         // A05
-   // vec4 tangent;        // A06
+   vec3 normal;            // A06
+   // vec4 tangent;        // A07
 }; 
 
 //------------------------------------------------------------------------
@@ -25,6 +25,7 @@ class CPUMesh              // A04
       CPUMesh();           // A04
 
       void Clear();        // A04; 
+      void SetBufferLayout( BufferLayout const *layout ); // A06 
 
       // Modify the stamp;
       void SetColor( rgba color );           // A04
@@ -44,12 +45,23 @@ class CPUMesh              // A04
       uint GetVertexCount() const;                 // A04
       uint GetIndexCount() const;                  // A04
 
+      BufferLayout const* GetLayout() const;       // A06
+      VertexMaster const* GetVertices() const;     // A06
+
+   public:
+      // templated helper
+      template <typename T>
+      void SetBufferLayout() 
+      {
+         SetBufferLayout( BufferLayout::For<T>() ); 
+      }
 
    public: 
       std::vector<VertexMaster>  m_vertices;       // A04
       std::vector<uint>          m_indices;        // A04
 
       VertexMaster m_stamp;                        // A04
+      BufferLayout const *m_layout;                // A06
 };
 
 

@@ -65,6 +65,7 @@ This will be shown to be working by having a scene with a Quad, a UV-Sphere, and
 
 - [X06.00  4%] Hook up D3D11InfoQueue to print D3D11 errors to your dev console
 - [X06.00  4%] Shader Reloading will now work for included files
-- [x06.00  4%] Remove `VertexMaster` and have CPUMesh be setup completely from a `BufferLayout`
+- [X06.00  4%] Remove `VertexMaster` and have CPUMesh be setup completely from a `BufferLayout`
+- [X06.00  4%] UniformBuffer can optionally be given a buffer layout.  Will store a CPU copy of data if present and this can be used to set properties by name; 
 
 ## Extra Information

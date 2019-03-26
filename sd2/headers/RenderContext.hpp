@@ -38,6 +38,12 @@ class RenderContext
       // Constants
       void BindUniformBuffer( uint slot, UniformBuffer *ubo );    // A02
       void SetModelMatrix( mat44 const &modelMatrix );           // A04
+
+      // Lighting
+      void SetAmbientLight( rgba const &color, float intensity ); // A06
+      void EnableLight( uint slot, light_t const &info );         // A06
+      void DisableLight( uint slot );                             // A06
+      // Add additional helpers as you see fit; 
       
       // Textures & Samplers
       void BindTextureView( uint slot, TextureView *view );       // A03
@@ -54,7 +60,7 @@ class RenderContext
       void DrawIndexed( uint indexCount );                                 // A04
 
       void DrawVertexArrays( VertexPCU const *vertices, uint count );      // A02
-      void DrawMesh( Mesh *mesh );                                         // A04
+      void DrawMesh( Mesh *mesh );                                         // A04 -> A06
 
       // Any Additional Helper Drawing Methods
       // ... 
@@ -73,6 +79,11 @@ class RenderContext
       ColorTargetView *m_frameBackbuffer;                // A01
       DepthStencilTargetView *m_defaultDepthStencilView; // A04
       UniformBuffer *m_modelBuffer;                      // A04
+      
+      // light buffer   
+      UniformBuffer *m_gpuLightBuffer;                   // A06 - constant buffer storing lights; 
+      light_buffer_t m_cpuLightBuffer;                   // A06 - CPU copy of light data
+      bool m_lightBufferDirty;                           // A06 - need to update the light buffer before a draw
 
       Camera *m_currentCamera;                           // A01
 

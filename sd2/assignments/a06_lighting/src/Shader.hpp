@@ -45,39 +45,46 @@ class ShaderStage                         // A01, A02
 class Shader         // A01, A02, A03
 {
    public:
-      Shader();                                                   // A01
-      ~Shader();                                                  // A01, A02, A03, A05
-
-      bool CreateFromFile( RenderContext *ctx, std::string const &filename );    // A01, A04
-      bool IsValid() const;                                       // A01
-
-      void SetBlendMode( eBlendMode mode );                       // A03
-      void SetDepth( eCompareOp op, bool write );                 // A04
-
-   public: // Internal, so could be private as friend; 
-      bool CreateInputLayoutForVertexPCU();                       // A02 
+      // ... new/changed
       bool UpdateInputLayout( BufferLayout const* );              // A06
-      bool UpdateStatesIfDirty();                                 // A03, A04
 
    public:
-      ShaderStage m_vertexStage;                                  // A01
-      ShaderStage m_pixelStage;                                   // A01
-
-      // BlendMode
-      eBlendMode m_blendMode                 = BLEND_MODE_ALPHA;  // A03
-      // blend_info_t m_colorBlend; 
-      // blend_info_t m_alphaBlend; // eBlendOp m_blendOp; 
-
-      // Depth/Stencil Mode
-      eCompareOp m_depthCompareOp            = COMPARE_LEQUAL;    // A04
-      bool m_writeDepth                      = false;             // A04
-
+      // ...
       ID3D11BufferLayout const *m_currentLayout    = nullptr;     // A06
       ID3D11InputLayout *m_inputLayout             = nullptr;     // A02
-      ID3D11BlendState *m_blendState               = nullptr;     // A03
-      ID3D11DepthStencilState *m_depthStencilState = nullptr;     // A04
 
-      bool m_blendStateDirty                 = true;              // A03
-      bool m_depthStateDirty                 = true;              // A04
+      // ...
 }; 
 
+//------------------------------------------------------------------------
+// .cpp
+//------------------------------------------------------------------------
+
+//------------------------------------------------------------------------
+// This is just one such option.
+// Could also do something like Shader::GetInputLayoutForBufferLayout(...)
+// that would cache all used input layouts with the shader
+//
+// In practice though, most shaders just end up getting used with the same
+// vertex type, so as long as you only create on change, you'll probably get
+// fairly similar performance
+bool Shader::UpdateInputLayout( Bufferlayout const *layout ) 
+{
+   if (layout == m_currentLayout) {
+      // don't do anything - already valid;
+      return true; 
+   }
+
+   // free old layout
+   DX_SAFE_RELEASE( m_inputLayout ); 
+
+   // Fill a new input layout description using the buffer layout
+   // ... EXCERCISE TO THE READER ...
+
+   // Create the new input layout...
+   // ...
+
+   // cache this off so we can prevent recreating it next time; 
+   m_currentLayout = layout; 
+   return true; 
+}
