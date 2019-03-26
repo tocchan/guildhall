@@ -48,12 +48,14 @@ class BufferLayout
 
    public:
       // Static ways to look for a unique layout pointer based an attribute list; 
-      static BufferLayout const* For( buffer_attribute_t const *attrib_list, size_t stride ); 
+      static BufferLayout const* For( buffer_attribute_t const *attrib_list, 
+         size_t stride, 
+         CopyFromMasterCallback copyCallback ); 
       
       // templated helper
       // ussage: BufferLayout const* layout = BufferLayout::For<VertexPCU>(); 
       template <typename T>
-      static BufferLayout const* For() { return For( T::LAYOUT, sizeof(T) ); } 
+      static BufferLayout const* For() { return For( T::LAYOUT, sizeof(T), T::CopyFromMaster ); } 
 };
 
 
