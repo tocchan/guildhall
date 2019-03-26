@@ -83,7 +83,7 @@ void Foo()
 
    // So to call it, we need the object to call it *on*
    // (notice the * before method_pointer)
-   obj_ptr->*method_pointer( "test" ); // this will now call SomeMethod on obj_ptr
+   (obj_ptr->*method_pointer)( "test" ); // this will now call SomeMethod on obj_ptr
 }
 ```
 
@@ -122,7 +122,7 @@ class EventFunction
          // welll, I can guess I'll need to store pointers
          // to these things so call them later, so let's do that for now;
          m_object_pointer = obj; 
-         m_function_pointer = &method_ptr; 
+         m_function_pointer = &(void**)&method_ptr;  // they really hate this cast, so we heavy hand it; 
 
          // if this is just a normal C function - what changes?
       }
@@ -163,7 +163,7 @@ class EventFunction
 
          // we will use a lambda with capture
          // to allow us to call this method in the future; 
-         m_func = [=]( std::string const &args ) { obj->*method_ptr(args); }; 
+         m_func = [=]( std::string const &args ) { (obj->*method_ptr)(args); }; 
 
          // Question: If this was for the normal C function, what would I set m_func to?
          // (it is much simpler)
@@ -208,6 +208,69 @@ void Foo()
 
 This allows us to have a fixed type function but still have some type information for us to use - this is going to be the crutch we'll be using for this problem; 
 
-// ... more to come - need to head into work...
+We'll introduce another member, which we'll call the **Proxy Function**, which we'll use to call the appropriate method - the entire goal of this function is that it has a fixed signature so anything we want to do can go through it, and it has enough information to do the work we need; 
+
+Our proxy method is going to have this signature; 
+
+```cpp
+void (*proxy_cb)( EventFunction const *evt, std::string const &arg ); 
+```
+
+So in the case of a C function - this is simple; 
+
+```cpp
+class EventFunction
+{
+   public:
+      EventFunction( event_cb cb ) 
+      {
+         m_object_pointer = nullptr; 
+         m_function_pointer = cb; 
+         m_proxy = CallCFunction; 
+      }
+
+   private:
+      // ...
+      proxy_cb m_proxy; 
+
+      static void CallCFunction( EventFunction const *evt, std::string const &arg )
+      {
+         // I know m_function_pointer is an event_cb, otherwise
+         // this function wouldn't have been called; 
+         event_cb cb = (event_cb)(evt->m_function_pointer);
+         cb( arg ); // so just call it;  
+      }
+};
+```
+
+So, what about methods?  Well, we need to know the object type, and the method pointer type (which honestly can be deduced in this case from just the object type, but we'll use this as an excuse to use `decltype`); 
+
+```cpp
+class EventFunction
+{
+   public:
+      template <typename T>
+      EventFunction( T *obj, void (T::*method_ptr)( std::string const& ) )
+      {
+         // save data so we can compare
+         m_object_pointer = obj; 
+         m_function_pointer = &method_ptr; 
+
+         // decltype is compile-time deduction of the type of method_ptr
+         m_proxy = CallMethod<T,decltype(method_ptr)>;  // use the appropraite CallMethod
+
+   private:
+      // ...
+      template <typename T, typename MCB>
+      static void CallMethod( EventFunction const *evt, std::string const &arg ) 
+      {
+         MCB method_ptr = *(MCB*)&(evt->m_function_pointer); // again, not a happy cast, so we are very forceful with it; 
+         T *obj_ptr = (T*)(evt->m_object_pointer); 
+
+         // call the method;
+         (obj_ptr->*method_ptr)( arg ); 
+      }
+};
+```
 
 
