@@ -60,7 +60,7 @@ class RenderContext
       void DrawIndexed( uint indexCount );                                 // A04
 
       void DrawVertexArrays( VertexPCU const *vertices, uint count );      // A02
-      void DrawMesh( Mesh *mesh );                                         // A04 -> A06
+      void DrawMesh( GPUMesh *mesh );                                      // A04 -> A06
 
       // Any Additional Helper Drawing Methods
       // ... 
@@ -89,6 +89,7 @@ class RenderContext
 
       // Immediate Drawing Utility
       VertexBuffer *m_immediateVBO;                   // A02 
+      GPUMesh *m_immediateMesh;                       // -> A04 (replaces m_immediateVBO)
       Shader *m_defaultShader;                        // Optional (allow some SD1 methods to work - used when nullptr shader is set)
 
       // cached resources for convenience; 

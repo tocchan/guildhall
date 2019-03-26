@@ -19,10 +19,12 @@ A06 Outline
 - [ ] Introduce `VertexLit` or `VertexPCUN` depending on your naming preference; 
 - [ ] Introduce `BufferLayout` and `buffer_attribute_t` objects
 - [ ] Fully describe `VertexLit` in a layout
+- [ ] Create unique `BufferLayout` objects for given attribute lists or vertex structures; 
 - [ ] Update `VertexMaster` to contain a `vec3 normal`
 - [ ] Update mesh building functions to also set normal when applicable (or default to `vec3(0,0,-1)` when not (why?))
-- [ ] When constructing `VertexBuffer`s, a vertex layout should be specified.
-- [ ] When `Draw`ing, when binding the vertex buffer to the shader, be sure to redo it if the vertex layout has changed since the last one used with this shader; 
+- [ ] `CPUMesh` now must specify a desired `BufferLayout` before mesh construction is allowed; 
+- [ ] Update `GPUMesh` copy and create methods from `CPUMesh`
+- [ ] When drawing a `GPUMesh`, make sure `Shader` updates its `ID3D11InputLayout` to match the current input format. 
     - *Note: there is multiple ways to handle this pairing.  Easiest would just be to remake an input-layout when you detect the vertex layout is different from last time this shader (or more specifically, this Vertex Shader Stage) was used;  You can also store a list of all layouts used with the shader and cache them off.  You can also use reflection to determine unique **Input Signatures** used, and create a global dual-key lookup, though DX11 does not make this particularly easy to do.  
 - [ ] Write a shader that uses Normals, and renders normals as colour.  Be sure you are still able to draw, and your normals look correct. 
 
@@ -49,34 +51,5 @@ A06 Outline
 ### Extras
 - [ ] Do some extras time permitting; 
 
-
-
-```cpp 
-
-class VertexBuffer
-{
-	public:
-		buffer_attirbute_t const *m_layout; 
-};
-
-class Shader 
-{
-
-
-	public:
-		ID3D11InputLayout m_D3Dlayout; 
-};
-
-void RenderContext::DrawMesh( GPU *mesh ) 
-{
-	// old way
-	ID3D11InputLayout *layout = m_currentShader->GetInputLayoutForVertexPCU();
-	m_context->IASetInputLayout( layout );
-
-	// new way
-	ID3D11InputLayout *layout = m_currentShader->GetInputLayoutForBufferLayout( mesh->GetBufferLayout() ); 
-	m_context->IASetInputLayout( layout );
-
-}
 
 ```

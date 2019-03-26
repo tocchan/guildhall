@@ -18,7 +18,7 @@ class RenderContext
       void BeginCamrea( Camera *cam );   // don't forget to bind the light buffer to the correct slot
 
       // ...
-      void DrawMesh( Mesh *mesh );                                         // A04 -> A06
+      void DrawMesh( GPUMesh *mesh );                                         // A04 -> A06
 
    public:
       // ...
@@ -35,7 +35,7 @@ class RenderContext
 
 // Two new things happen in draw (both DrawIndexed and Draw)
 // You may want to move this to a PreDraw() private method; 
-void RenderContext::DrawMesh( Mesh *mesh )
+void RenderContext::DrawMesh( GPUMesh *mesh )
 {
    // First, finalize the light buffer
    if (m_lightBufferDirty) {
