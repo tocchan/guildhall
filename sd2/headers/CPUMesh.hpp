@@ -25,7 +25,7 @@ class CPUMesh              // A04
       CPUMesh();           // A04
 
       void Clear();        // A04; 
-      void SetBufferLayout( BufferLayout const *layout ); // A06 
+      void SetLayout( BufferLayout const *layout ); // A06 
 
       // Modify the stamp;
       void SetColor( rgba color );           // A04
@@ -51,9 +51,9 @@ class CPUMesh              // A04
    public:
       // templated helper
       template <typename T>
-      void SetBufferLayout() 
+      void SetLayout() 
       {
-         SetBufferLayout( BufferLayout::For<T>() ); 
+         SetLayout( BufferLayout::For<T>() ); 
       }
 
    public: 

@@ -25,7 +25,7 @@ class CPUMesh
       // ...
 
       // new stuff
-      void SetBufferLayout( BufferLayout const *layout ); // A06 
+      void SetLayout( BufferLayout const *layout ); // A06 
 
       BufferLayout const* GetLayout() const;       // A06
       VertexMaster const* GetVertices() const;     // A06 - just since I don't like accessing members direction
@@ -35,9 +35,9 @@ class CPUMesh
       // CPUMesh mesh;  
       // mesh.SetBufferLayout<VertexPCU>(); 
       template <typename T>
-      void SetBufferLayout() 
+      void SetLayout() 
       {
-         SetBufferLayout( BufferLayout::For<T>() ); 
+         SetLayout( BufferLayout::For<T>() ); 
       }
 
    public: 

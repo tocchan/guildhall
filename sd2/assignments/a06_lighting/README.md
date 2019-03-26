@@ -53,19 +53,61 @@ This will be shown to be working by having a scene with a Quad, a UV-Sphere, and
 
 ### Usage
 
+```cpp
+
+// create meshes with normals
+void Game::Startup()
+{
+  RenderContext *rc = App::GetRenderContext(); 
+  CPUMesh mesh; 
+
+   // we're using a format with normals; 
+  mesh.SetLayout<VertexLit>(); 
+
+  // updated to set normals
+  MeshAddUVSphere( &mesh, 
+    vec3::ZERO,     // ...centered at zero 
+    5.0f,           // ...with radius 5 
+    32, 16 );       // ...with 32 wedges, 16 slices 
+
+  m_sphere = GPUMesh::FromCPUMesh( rc, mesh ); 
+}
+
+// Using Lights
+void Game::Render()
+{
+  RenderContext *rc = App::GetRenderContext(); 
+  rc->BeginCamera( m_camera ); 
+
+  rc->SetAmbienteLight( rgba::WHITE, .01f ); 
+
+  // enable a point light as some position in the world with a normal quadratic falloff; 
+  rc->EnablePointLight( m_lightPosition, m_lightColor, m_lightIntensity, vec3(0.0f, 0.0f, 1.0f) );
+
+  rc->BindShader( "shader/lit.shader" ); 
+  rc->DrawMesh( m_sphere ); 
+
+  rc->EndCamera(); 
+}
+```
+
 
 ## Extras
 
-- [X06.00  5%] Screenshot
-- [X06.00  4%] Spot Lights
-- [X06.00  5%] Projected Textures
-- [X06.00  4%] DebugRenderScreenBasis - render your current camera's orientation to the screen. 
-- [X06.00  4%] Unified light structure (Global and Local Directional, Point, and Cone lights)
-- [X06.00  2%] Branchless (no if statement) lighting equations for above (more a fun excercise in this case then an optimization)
+### Free (From Class Notes - Cut for C29)
+- [X06.00  4%] Unified light structure (free if following class notes)
+- [X06.01  2%] Branchless (no if statements) lighting equations for above (free if following class notes)
 
-- [X06.00  4%] Hook up D3D11InfoQueue to print D3D11 errors to your dev console
-- [X06.00  4%] Shader Reloading will now work for included files
-- [X06.00  4%] Remove `VertexMaster` and have CPUMesh be setup completely from a `BufferLayout`
-- [X06.00  4%] UniformBuffer can optionally be given a buffer layout.  Will store a CPU copy of data if present and this can be used to set properties by name; 
+### Utility
+- [X06.10  5%] Projected Textures
+- [X06.11  4%] DebugRenderScreenBasis - render your current camera's orientation to the screen. 
+- [X06.12  4%] Remove `VertexMaster` and have `CPUMesh` work soley using a `BufferLayout`
+- [X06.13  4%] UniformBuffer can optionally be given a buffer layout.  Will store a CPU copy of data if present and this can be used to set properties by name; 
+
+### D3D Exploration
+- [X06.20  6%] Screenshot
+- [X06.21  4%] Hook up D3D11InfoQueue to print D3D11 errors to your dev console
+- [X06.22  4%] Shader Reloading will now work for included files
+
 
 ## Extra Information
