@@ -1,7 +1,7 @@
 ```cpp
 
 // signature is not of great importance - just know we have a signature we have to "match"
-typedef void (*event_cb)( std::string const &arg ); 
+typedef bool (*event_cb)( std::string const &arg ); 
 
 // We can subscribe something to it like this - both subscribe and unsubcribe
 void EventSystemSubscribe( std::string const &event, event_cb cb )
@@ -9,7 +9,7 @@ void EventSystemUnsubscribe( std::string const &event, event_cb cb );
 
 ```
 
-## std::function is not comparable
+## `std::function` is not comparable
 
 Easiest solution if we want to subscribe methods is to switch to using `std::function` instead of a raw function pointer - allowing us to capture methods, lambdas, and C style functions.  
 
@@ -49,7 +49,22 @@ class EventFunction
 
       // can be used like a normal std::function
       void operator()( std::string const &arg ) const; 
+};
+
+void EventSubscribe( std::string const &eventName, event_cb cb ); 
+// ...becomes...
+void EventSubscribe( std::string const &eventName, EventFunction cb ); 
+
+// ...so...
+void SomeCFunction( EventArgs &args )
+{
+
 }
+
+// ...still works
+EventSubscribe( "clear", SomeCFunction ); 
+
+
 ```
 
 ### Method Pointers
@@ -67,6 +82,7 @@ class ObjType
 void Foo()
 {
    ObjType *obj_ptr = new ObjType(); 
+   ObjType otherGuy; 
 
    obj_ptr->SomeMethod( "test" ); // calling a method normally
 
@@ -84,6 +100,7 @@ void Foo()
    // So to call it, we need the object to call it *on*
    // (notice the * before method_pointer)
    (obj_ptr->*method_pointer)( "test" ); // this will now call SomeMethod on obj_ptr
+   (otherGuy.*method_pointer)( "other test" ); 
 }
 ```
 
@@ -102,7 +119,7 @@ void Foo()
    EventFunction func = EventFunction( &someObject, &ObjectType::MethodOnObject ); 
 
    // call it!
-   func( "test" ); 
+   func( "test" );  // someObject.MethodOnObject( "test" ); 
 }
 ```
 
@@ -113,6 +130,12 @@ class EventFunction
 {
    public:
       //... 
+      EventFunction( event_cb cb )
+      {
+         m_object_pointer = nullptr; 
+         m_function_pointer = cb; 
+      }
+
       template <typename T>
       EventFunction( T *obj, void (T::*method_ptr)( std::string const& ) )
       {
@@ -122,7 +145,7 @@ class EventFunction
          // welll, I can guess I'll need to store pointers
          // to these things so call them later, so let's do that for now;
          m_object_pointer = obj; 
-         m_function_pointer = &(void**)&method_ptr;  // they really hate this cast, so we heavy hand it; 
+         m_function_pointer = *(void**)&method_ptr;  // they really hate this cast, so we heavy hand it; 
 
          // if this is just a normal C function - what changes?
       }
@@ -154,6 +177,13 @@ class EventFunction
 {
    public:
       //... 
+      EventFunction( event_cb cb )
+      {
+         m_object_pointer = nullptr; 
+         m_function_pointer = cb; 
+         m_func = cb; 
+      }
+
       template <typename T>
       EventFunction( T *obj, void (T::*method_ptr)( std::string const& ) )
       {
@@ -180,6 +210,43 @@ class EventFunction
       // ...
       std::function<void(std::string const&)> m_func; // a function matching our event signature
 };  
+```
+
+```cpp
+
+void EventSubscribe( std::string const &id, EventFunction &func )
+{
+   // imagine the hood
+   std::map<std::string&, SubscriberList*> m_subscriptions; 
+   SubscriberList *list = m_subscriptions[id]; 
+   list.Add( func ); 
+}
+
+void EventUnsubscribe( std::string const &id, EventFunction const &func ) 
+{
+   // imagine the hood
+   std::map<std::string&, SubscriberList*> m_subscriptions; 
+   SubscriberList *list = m_subscriptions[id]; 
+   
+   for (uint i = 0; i < count; ++i) {
+      if (list[i] == func) {
+         list.remove_at(i); 
+         return; 
+      }
+   }   
+}
+
+void EventFire( std::string const &id, std::string const &arg ) 
+{
+
+   // imagine the hood
+   std::map<std::string&, SubscriberList*> m_subscriptions; 
+   SubscriberList *list = m_subscriptions[id]; 
+   
+   for (uint i = 0; i < count; ++i) {
+      list[i]( arg ); 
+   }  
+}
 ```
 
 
@@ -229,6 +296,8 @@ class EventFunction
          m_proxy = CallCFunction; 
       }
 
+      void operator()( std::string const &arg )    { m_proxy( this, arg ); }
+
    private:
       // ...
       proxy_cb m_proxy; 
@@ -254,10 +323,11 @@ class EventFunction
       {
          // save data so we can compare
          m_object_pointer = obj; 
-         m_function_pointer = &method_ptr; 
+         m_function_pointer = *(void**)&method_ptr; 
 
          // decltype is compile-time deduction of the type of method_ptr
          m_proxy = CallMethod<T,decltype(method_ptr)>;  // use the appropraite CallMethod
+      }
 
    private:
       // ...
@@ -274,3 +344,50 @@ class EventFunction
 ```
 
 
+```cpp
+
+class Game
+{
+   void Startup()
+   {
+      EventSubscribe( "reload_shaders", EventFunction(this, &Game::DoAThing) ); 
+   }
+
+   void Shutdown()
+   {
+      EventUnsubscribeAll(this); 
+   }
+
+
+   bool DoAThing( EventArgs &args )
+   {
+
+   }
+};
+
+
+class NetSession 
+{
+   void connection_join( NetConnection *cp ) 
+   {
+      // ... work
+
+      on_connect(cp); 
+   }
+
+   Event<NetConnection*> on_connect; 
+   Event<NetConnection*> on_disconnect; 
+};
+
+void Game::Startup()
+{
+   NetSession *sp = GetSession(); 
+   sp->on_connect.subscribe( this, &Game::on_new_connection ); 
+   sp->on_disconnect.subscribe( this, &Game::on_connection_leave ); 
+}
+
+void Game::on_new_connection( NetConnection *cp )
+{
+   DisplayMessage( "So and So has joined the game" ); 
+}
+```
