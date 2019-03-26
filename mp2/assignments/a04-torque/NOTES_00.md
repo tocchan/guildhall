@@ -20,24 +20,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Opinion: Math in Games
 
 ## Contact Points
