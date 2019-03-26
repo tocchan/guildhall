@@ -83,6 +83,45 @@ class Rigidbody2D
 			m_rotation += m_angular_velocity * deltaTime; 
 		}
 
+		
+
+	public:
+		vec2 m_frame_forces; 
+		float m_frame_torque; 
+
+		float m_mass; 		// float m_inverse_mass; 
+		float m_moment; // of inertia
+
+		vec2 m_velocity; 
+		float m_angular_velocity; 
+};
+```
+
+## Impulses
+
+So, once things rotate - the rest is surprisingly straight forward, in that we just have to update how we handle impacts slightly; 
+
+First, our effective velocity at point of impact now is influenced by angular velocity, and the local distance of impact from the center of mass;  
+
+`velocityDueToRotation = r * angularVelocity`
+
+...where `r` is the distance from local origin.  The direction is tangental to the displacement, hence the `-rotate90()` used below;
+
+Second, we'll going to resolve collision in terms of impulse, and then apply that impulse to both objects.  An **impulse** is an instantaneous change in velocity, or it can be thought of as applying a constant force for a second instantly.  
+
+The impulse we calculate is called a **Normal Impulse**, as it is the impulse along the impact normal.  See links with assignment for how to calculate this; 
+
+Once calculated, it is applied to both objects (postive to A, negative to B - due to every action having an equal but opposite reaction).  
+
+Linear Impulse is applied directly to the object as before to calculate change in linear velocity; 
+
+Angular Impulse is applied along the tangent to the displacement from center, scaled by the distance (giving us leverage).  This can calculated shorthand by using the 2D Cross Product, but will put the long way in code below; 
+
+```cpp
+class Rigidbody2D
+{
+	public:
+		// ...
 		vec2 GetImpactVelocity( vec2 worldPos ) const
 		{
 			vec2 displacement = GetPosition() - worldPos; 
@@ -111,18 +150,6 @@ class Rigidbody2D
 			// float impulseTorque = Determinant( directionOfTorque, impulse ); 
 			m_angular_velocity += impulseOfTorque / m_moment; 
 		}
-
-	public:
-		vec2 m_frame_forces; 
-		float m_frame_torque; 
-
-		float m_mass; 		// float m_inverse_mass; 
-		float m_moment; // of inertia
-
-		vec2 m_velocity; 
-		float m_angular_velocity; 
-};
+		//...
+}
 ```
-
-## Impulses
-
