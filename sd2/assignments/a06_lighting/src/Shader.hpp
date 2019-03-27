@@ -50,7 +50,7 @@ class Shader         // A01, A02, A03
 
    public:
       // ...
-      ID3D11BufferLayout const *m_currentLayout    = nullptr;     // A06
+      BufferLayout const *m_currentLayout          = nullptr;     // A06
       ID3D11InputLayout *m_inputLayout             = nullptr;     // A02
 
       // ...

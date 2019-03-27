@@ -72,7 +72,7 @@ class Shader         // A01, A02, A03
       eCompareOp m_depthCompareOp            = COMPARE_LEQUAL;    // A04
       bool m_writeDepth                      = false;             // A04
 
-      ID3D11BufferLayout const *m_currentLayout    = nullptr;     // A06
+      BufferLayout const *m_currentLayout          = nullptr;     // A06
       ID3D11InputLayout *m_inputLayout             = nullptr;     // A02
       ID3D11BlendState *m_blendState               = nullptr;     // A03
       ID3D11DepthStencilState *m_depthStencilState = nullptr;     // A04
