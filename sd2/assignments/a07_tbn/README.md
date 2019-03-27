@@ -9,21 +9,18 @@ A06: Normal Maps
 ## Rubric
 
 ### [90%] Required
-- [ ] Scene contains 3 Primitives
+- [ ] 5%: Scene contains 3 Primitives with correct Normals & Tangents
     - [ ] Quad
     - [ ] UV-Sphere
     - [ ] Cube
-- [ ] Can adjust ambient light (console command or hotkey)
-- [ ] Scene has at least one direction light
-    - [ ] Directional light color is settable by console command
-    - [ ] Directional light direction is settable by console command
-- [ ] Scene has up to 4 dynamic point lights moving around
-    - [ ] Can adjust number of lights with console command/hotkey. 
-    - [ ] One light can be forced to the position of the camera with a keypress.
-- [ ] Diffuse Lighting is implemented
-- [ ] Specular Lighting is implemented 
-- [ ] Can swap between rendering normals as color, and rendering lighting (hotkey or console command)
-
+- [ ] 5%: Object are rotating (around Y and/or X is fine)
+- [ ] 10%: A "flat" texture is created by defualt (like "white"), that is the default normal map to use
+- [ ] 10% Be able to display Nroamls/Tangents/Bitangents
+- [ ] 5% Support for emissive color (global and texture)
+- [ ] 10% Lighting works correctly with normal maps for at least camera facing faces
+- [ ] 20% Lighting works correctly with normal maps on all faces;
+- [ ] 10% Materials Implemented
+- [ ] 15% Material from Data works
 
 ### [10%] Extras 
 - See below...
@@ -38,15 +35,25 @@ A06: Normal Maps
 
 ### Usage
 
-
 ## Extras
 
-- [X06.00  5%] Screenshot
-- [X06.00  4%] Spot Lights
-- [X06.00  5%] Projected Textures
-- [X06.00  4%] DebugRenderScreenBasis - render your current camera's orientation to the screen. 
-- [X06.00  4%] Unified light structure (Global and Local Directional, Point, and Cone lights)
-- [X06.00  2%] Branchless (no if statement) lighting equations for above (more a fun excercise in this case then an optimization)
-- 
+### Shaders
+- [ ] Dissolve Effect
+- [ ] Laser Sword Cut Effect
+- [ ] Tri-Planar Shading 
+- [ ] Parallax Shader
+    - [ ] Self Occluding Parallax Shader
+- [ ] Interior Mapping (Cube) Effect
+
+### Material 
+- [ ] Material can define a color for a texture slot 
+- [ ] Material can define a sampler by name ("point", "linear", "trilinear")
+- [ ] Material can define a sampler definition (support at least mip levels, min-mag-mip filters, and u-v-w wrap modes)
+- [ ] Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
+    - [ ] Material can set uniforms by name
+    - [ ] Can set properties from data
+
+
+
 
 ## Extra Information

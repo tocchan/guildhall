@@ -69,7 +69,7 @@ struct VertexPCU
 	rgba color; 
 	vec2 uv; 
 
-   static buffer_attribute_t[] LAYOUT; 
+   static buffer_attribute_t LAYOUT[]; 
    static void CopyFromMaster( void *buffer, VertexMaster const *src, uint count );
 };
 

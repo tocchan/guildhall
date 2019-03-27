@@ -65,8 +65,8 @@ lighting_t GetLighting( float3 eye_pos,
    float3 surface_normal )
 {
    // 
-   lighting_t light; 
-   light.diffuse = (AMBIENT.xyz * AMBIENT.w); 
+   lighting_t lighting; 
+   lighting.diffuse = (AMBIENT.xyz * AMBIENT.w); 
 
    float3 dir_to_eye = normalize(eye_pos - surface_position); 
 
@@ -92,7 +92,7 @@ lighting_t GetLighting( float3 eye_pos,
       float dot3 = max( dot( -light_dir, surface_normal ), 0.0f ); 
 
       float3 diffuse_color = light.color * light.intensity * attenuation * dot3; 
-      light.diffuse += diffuse_color; 
+      lighting.diffuse += diffuse_color; 
 
       // Specular 
       // blinn-phong 
@@ -107,13 +107,13 @@ lighting_t GetLighting( float3 eye_pos,
       // finalize coefficient
       spec_coefficient = SPEC_FACTOR * pow( spec_coefficient, SPEC_POWER ); 
       float3 specular_color = light.color * light.intensity * spec_attenuation * spec_coefficient; 
-      light.specular += specular_color; 
+      lighting.specular += specular_color; 
    }
 
-   light.diffuse = saturate(light.diffuse); // clamp this to (0, 1)
+   lighting.diffuse = saturate(light.diffuse); // clamp this to (0, 1)
    // light.specular is untouched - greater than one can tell us information on how bright it is - used for bloom;  
 
-   return light; 
+   return lighting; 
 }
 
 //--------------------------------------------------------------------------------------
