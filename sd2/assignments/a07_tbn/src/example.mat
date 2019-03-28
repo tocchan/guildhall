@@ -1,0 +1,49 @@
+<material id="skin">
+  <shader src="filename.shader" />
+
+  <!-- defaults -->
+
+  <!-- all options -->
+  <!-- if id is set, than everything else is ignored, and it is assumed the texture exists already -->
+  <!-- type: 1d, 2d, 3d, cube -->
+  <!-- src, and color are mutually exclusive -->
+  <texture index="0" color="0xrrggbbaa" /> <!-- will create a 1x1 texture of this colour -->
+  <texture index="1" src="flat" /> <!-- references a texture by id/filename -->
+
+  <!-- support samplers -->
+  <sampler index="0" name="linear" />
+
+  <!-- alternatively -->
+  <!-- same as texture, but use a predefined index;
+       diffuse: 0
+       normal: 1
+       specular/bump: 2
+       emissive: 3
+  -->
+  <diffuse src="image/brick.png" />
+  <normal src="image/brick_normal.png" />
+  <specular src="image/brick_spec.png" />
+
+  <!-- other option : explicit key-value properties? -->
+  <!-- for an extra  -->
+  <float name="spec_power" value="1.0f" />
+  <color name="tint" value="1,1,1,1" />
+   
+  <!-- TODO 
+      int
+      ivec2
+      ivec3
+      ivec4
+      uint
+      uvec2
+      uvec3
+      uvec4
+      vec2
+      vec3
+      vec4
+      mat33
+      mat44
+      rotation
+  -->
+
+</material>

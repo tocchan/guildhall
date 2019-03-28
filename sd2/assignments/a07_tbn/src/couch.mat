@@ -1,0 +1,11 @@
+<material id="couch"
+  shader="shader/lit.shader">
+
+
+  <diffuse src="image/example_colour.png" />
+  <normal  src="image/example_normal.png" />
+  <spec    src="image/example_spec.png" />
+
+  <sampler idx="0" type="linear" />
+
+</material>
