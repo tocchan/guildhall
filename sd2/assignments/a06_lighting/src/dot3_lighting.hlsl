@@ -84,7 +84,7 @@ lighting_t GetLighting( float3 eye_pos,
       // directional light
       float dir_dist = abs( dot( (surface_position - light.position), light.direction ) );   // for directional
       float point_dist = length( surface_position - light.position );                          // for point
-      float3 distance = lerp( point_dist, dir_dist, light.is_directional ); 
+      float distance = lerp( point_dist, dir_dist, light.is_directional ); 
 
       // Diffuse Part
       float3 la = light.diffuse_attenuation; 
