@@ -7,8 +7,8 @@
 class Material
 {
    public:
-      Material(); 
-      Material( XMLNode *xml ); 
+      Material( RenderContext *ctx ); 
+      Material( RenderContext *ctx, XMLElement *xml ); 
       ~Material();
 
       void SetShader( Shader *shader ); 
@@ -39,6 +39,8 @@ class Material
       Shader *m_shader; 
       std::vector<TextureView*> m_textures; 
       std::vector<Sampler*> m_samplers; 
+      
+      UniformBuffer *m_materialBuffer; 
 };
 
 #endif 
