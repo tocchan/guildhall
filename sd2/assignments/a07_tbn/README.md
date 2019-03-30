@@ -1,12 +1,13 @@
-A06: Normal Maps
+A07: Normal Maps
 ======
 
 ## Overview
+Finish out our lighting by having pre-fragment normals, really bumping up the graphical fidelity for just a few extra lines of shader code; 
 
-### Build
-- [./builds/a07.zip](./builds/a07.zip)
+Also, we'll add a utility container object called the `Material`.  A `Material` is shader with its resources - and is really as a convenience to us to make changing between different objects easier; 
 
 ### Resources
+- [./builds/a07.zip](./builds/a07.zip) - A07 Demo Build
 
 ## Rubric
 
@@ -15,7 +16,7 @@ A06: Normal Maps
     - [ ] Quad
     - [ ] UV-Sphere
     - [ ] Cube
-- [ ] 5%: Object are rotating (around Y and/or X is fine)
+- [ ] 5%: An Object are rotating (around Y and/or X is fine)
 - [ ] 10%: A "flat" texture is created by defualt (like "white"), that is the default normal map to use
 - [ ] 10% Be able to display Nroamls/Tangents/Bitangents
 - [ ] 5% Support for emissive color (global and texture)
@@ -37,8 +38,65 @@ A06: Normal Maps
 
 ### Usage
 
+Materials are meant to just make drawing a little easier.  YOu can define a material either through data or through code, and it keeps track of all the resources needed for that draw call; 
+
+For example, below, I can have two materials both using the "lit" shader;
+
+```xml
+<!-- material/couch.mat -->
+<material id="material/couch" shader="shader/lit">
+   <diffuse src="image/couch_color.png" />
+   <normal  src="image/couch_normal.png" />
+   <sampler idx="0" type="linear" />
+</material>
+
+<!-- material/brick.mat -->
+<material id="material/brick" shader="shader/lit">
+   <texture idx="0" src="image/brick_color.png" />
+   <texture idx="1" src="image/brick_normal.png" />
+   <sampler idx="0" type="linear" />
+</material>
+```
+
+...which can then be used by the game...
+
+```cpp
+void Game::Startup()
+{
+   // Material *m_mat_brick;  Material *m_mat_couch
+   RenderContext *ctx = App::GetRenderContext(); 
+   m_mat_brick = ctx->GetOrCreateMaterial( "material/brick.mat" ); 
+   m_mat_couch = ctx->Material::GetOrCreateMaterial( "material/couch.mat" ); 
+
+   // create resources
+}
+
+void Game::Render()
+{
+   RenderContext *ctx = App::GetRenderContext(); 
+   // ...
+
+   ctx->BeginCamera( m_camera ); 
+
+   ctx->SetModelMatrix( mat44::Translation( 5.0f, 0.0f, 0.0f ) ); // where
+   ctx->BindMaterial( m_mat_couch ); // how
+   ctx->Draw( m_mesh_cube ); // what
+
+   ctx->SetModelMatrix( mat44::Translation( -5.0f, 0.0f, 0.0f ) ); // where
+   ctx->BindMaterial( m_mat_brick ); // how
+   ctx->Draw( m_mesh_cube ); // what
+
+   ctx->EndCamera(); 
+}
+```
+
+When shaders start requiring a lot more resources (even now, we an have up to diffuse, normal, spec, emissive, and displacement), this helps clean the code up a lot.  
+
 
 ## Extras
+
+### Lights
+- [ ] 04%: Cone Lights
 
 ### Shaders
 - [ ] 02%: Laser Sword Cut Effect
@@ -49,6 +107,7 @@ A06: Normal Maps
 - [ ] 05%: Interior Mapping (Cube) Effect
 
 ### Material 
+- [ ] 04%: Material Instancing (ie: `Material::Clone`)
 - [ ] 04%: Material can define a color for a texture slot 
 - [ ] 02%: Material can define a sampler by name ("point", "linear", "trilinear")
 - [ ] 04%: Material can define a sampler definition (support at least mip levels, min-mag-mip filters, and u-v-w wrap modes)
@@ -57,8 +116,15 @@ A06: Normal Maps
     - [ ] 02%: Can set properties using the XML
 
 
-
 ## Extra Information
+
+### Cone Lights
+Be able to define an `inner` and `outer` angle and power for a light.  If a lit fragment is within `inner_angle`, it gets full `inner_power` applied to its light intensity.  If it it outside `outer_angle`, it will get the light intensity scaled by `outer_power`. 
+
+When between the two angles, use the hlsl function `smoothstep` or `lerp` to blend between the two. 
+
+**Note: This should be doable without any trigometric functions in the shader;**
+
 
 ### Cut Effect
 Be able to define an arbitrary plane in which to "cut" an object.  Only parts of the object on the positive side of the plane should be be visible, and colour near the cut should be a solid colour, blending quickly to the object's normal colour; 
