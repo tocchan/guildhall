@@ -3,6 +3,8 @@ A06: Normal Maps
 
 ## Overview
 
+### Build
+- [./builds/a07.zip](./builds/a07.zip)
 
 ### Resources
 
@@ -35,25 +37,47 @@ A06: Normal Maps
 
 ### Usage
 
+
 ## Extras
 
 ### Shaders
-- [ ] Dissolve Effect
-- [ ] Laser Sword Cut Effect
-- [ ] Tri-Planar Shading 
-- [ ] Parallax Shader
-    - [ ] Self Occluding Parallax Shader
-- [ ] Interior Mapping (Cube) Effect
+- [ ] 02%: Laser Sword Cut Effect
+- [ ] 03%: Dissolve Effect
+- [ ] 04%: Tri-Planar Shading 
+- [ ] 04%: Parallax Shader
+    - [ ] 02%: Self Occluding Parallax Shader, aka Deep Parallax Shader
+- [ ] 05%: Interior Mapping (Cube) Effect
 
 ### Material 
-- [ ] Material can define a color for a texture slot 
-- [ ] Material can define a sampler by name ("point", "linear", "trilinear")
-- [ ] Material can define a sampler definition (support at least mip levels, min-mag-mip filters, and u-v-w wrap modes)
-- [ ] Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
-    - [ ] Material can set uniforms by name
-    - [ ] Can set properties from data
-
+- [ ] 04%: Material can define a color for a texture slot 
+- [ ] 02%: Material can define a sampler by name ("point", "linear", "trilinear")
+- [ ] 04%: Material can define a sampler definition (support at least mip levels, min-mag-mip filters, and u-v-w wrap modes)
+- [ ] 05%: Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
+    - [ ] 02%: Material can set uniforms by name in code; 
+    - [ ] 02%: Can set properties using the XML
 
 
 
 ## Extra Information
+
+### Cut Effect
+Be able to define an arbitrary plane in which to "cut" an object.  Only parts of the object on the positive side of the plane should be be visible, and colour near the cut should be a solid colour, blending quickly to the object's normal colour; 
+
+Will require use of the hlsl `clip` function.
+
+### Dissolve Effect
+See Demo.  Will require use of the hlsl `clip` function. 
+
+### Parallax Shader
+See Demo; 
+
+**Resources;**
+- https://learnopengl.com/Advanced-Lighting/Parallax-Mapping
+- https://www.habrador.com/tutorials/shaders/3-parallax-mapping/
+
+### Interior Mapping
+See Demo; 
+
+**Resources**; 
+- http://interiormapping.oogst3d.net/
+- https://www.habrador.com/tutorials/shaders/2-interior-mapping/
