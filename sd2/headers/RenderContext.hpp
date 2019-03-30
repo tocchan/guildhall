@@ -55,6 +55,8 @@ class RenderContext
       void BindTextureViewWithSampler( uint slot, TextureView *view, eSampleMode mode );        // A03
       void BindTextureViewWithSampler( uint slot, std::string const &name, eSampleMode mode );  // A03
 
+      void BindMaterial( Material *mat );                                  // A07
+
       // Drawing
       void Draw( uint vertexCount );                                       // A01
       void DrawIndexed( uint indexCount );                                 // A04
@@ -68,6 +70,7 @@ class RenderContext
    public:
       Shader* GetOrCreateShader( std::string const &filename );                // A01
       TextureView2D* GetOrCreateTextureView2D( std::string const &filename );  // A03
+      Material* GetOrCreateMaterial( std::string const &filename );            // A07
 
    public:
       // D3D11 Handles
@@ -98,6 +101,7 @@ class RenderContext
       // Databases
       std::map<std::string, Shader*> m_shaderDatabase;             // A01
       std::map<std::string, TextureView2D*> m_textureViewDatabase; // A03
+      std::map<std::string, Material*> m_materialDatabase;         // A07
 }; 
 
 
