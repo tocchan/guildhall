@@ -18,7 +18,7 @@ Also, we'll add a utility container object called the `Material`.  A `Material` 
     - [ ] Cube
 - [ ] 5%: An Object are rotating (around Y and/or X is fine)
 - [ ] 10%: A "flat" texture is created by defualt (like "white"), that is the default normal map to use
-- [ ] 10% Be able to display Nroamls/Tangents/Bitangents
+- [ ] 10% Be able to display Normals/Tangents/Bitangents
 - [ ] 5% Support for emissive color (global and texture)
 - [ ] 10% Lighting works correctly with normal maps for at least camera facing faces
 - [ ] 20% Lighting works correctly with normal maps on all faces;
@@ -110,7 +110,7 @@ When shaders start requiring a lot more resources (even now, we an have up to di
 - [ ] 04%: Material Instancing (ie: `Material::Clone`)
 - [ ] 04%: Material can define a color for a texture slot 
 - [ ] 02%: Material can define a sampler by name ("point", "linear", "trilinear")
-- [ ] 04%: Material can define a sampler definition (support at least mip levels, min-mag-mip filters, and u-v-w wrap modes)
+- [ ] 04%: Material can define a sampler definition (min-mag-mip filters, and u-v-w wrap modes)
 - [ ] 05%: Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
     - [ ] 02%: Material can set uniforms by name in code; 
     - [ ] 02%: Can set properties using the XML

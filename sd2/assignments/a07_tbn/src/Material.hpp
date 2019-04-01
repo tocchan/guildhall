@@ -40,7 +40,7 @@ class Material
       std::vector<TextureView*> m_textures; 
       std::vector<Sampler*> m_samplers; 
       
-      UniformBuffer *m_materialBuffer; 
+      UniformBuffer *m_materialBuffer     = nullptr; 
 };
 
 #endif 
