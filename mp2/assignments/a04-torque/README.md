@@ -8,16 +8,16 @@ We'll add some debug tools as well to confirm things are working.
 
 
 ## Grading 
-- [ ] All features from previous assignment continue to work
-- [ ] Intersection code now also returns a contact point
-- [ ] Debug Menu showing object state; 
+- [ ] 10%: All features from previous assignment continue to work
+- [ ] 30%: Intersection code now also returns a contact point
+- [ ] 20%: Debug Menu showing object state; 
     - [ ] At minimum must include...
         - [ ] Position
         - [ ] Mass
         - [ ] Velocity
         - [ ] Moment of Inertia
         - [ ] Angular Velocity
-- [ ] Collisions now properly affect angular movement
+- [ ] 40% Collisions now properly affect angular movement
 
 
 ## Resources

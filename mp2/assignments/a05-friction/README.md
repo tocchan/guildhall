@@ -16,13 +16,13 @@ And finally, we'll add teh ability to save our and load a level.
 
 
 ## Grading 
-- [ ] Expose Friction controls for objects
-- [ ] Implement a hacky `drag` and `angular_drag` 
-- [ ] Friction and Drag appear in the debug view; 
-- [ ] Expose contraint controls for objects
-- [ ] Ability to control time for only the game simulation (using a nested clock). 
-- [ ] Add console command to save all static objects to a file (your choice between XML or Binary format)
-- [ ] Add console command to load all static objects to a file. 
+- [ ] 20%: Expose Friction controls for objects
+- [ ] 10%: Implement a hacky `drag` and `angular_drag` 
+- [ ] 10%: Friction and Drag appear in the debug view; 
+- [ ] 30%: Expose contraint controls for objects
+- [ ] 10%: Ability to control time for only the game simulation (using a nested clock). 
+- [ ] 10%: Add console command to save all objects to a file (your choice between XML or Binary format)
+- [ ] 10%: Add console command to load all objects to a file. 
 
 
 ## Resources
