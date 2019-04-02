@@ -28,6 +28,7 @@
   <!-- for an extra  -->
   <float name="spec_power" value="1.0f" />
   <color name="tint" value="1,1,1,1" />
+  <float name="dissolve" value=".5f" />
    
   <!-- TODO 
       int
