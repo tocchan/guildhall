@@ -6,7 +6,7 @@ Starting the RTS project - going to get the game modes that we're
 going to support for this. 
 
 ### Game Structure
-- An init phsae (load all initial resources)
+- An init phase (load all initial resources)
 - A main menu to select the mode we want to play
 - A load phase for loading resources needed for the mode
 - An Editor Mode
@@ -16,23 +16,24 @@ going to support for this.
 - `RTSCamera` - A Camera with a specific control scheme
 - `Map` - A single level in the game. 
 
-### Map Editor
-- Vertex Painting Interface
-- Saving and Loading a Map
+### Basic UI
+- `UIButton` and `UIButtonGroup` UI objects;
+- Buttons should be selectable with Mouse; 
 
 ## Rubric
 
 ### [100%] Required
-- [ ] All game states are in and demonstratable
-- [ ] Can load into a map from the main menu (ex: `play_map name`)
-- [ ] Can load into map editor from the main menu (ex: `edit_map name`)
-    - [ ] A map that doesn't exist will be created; 
-- [ ] Can save from map-editor; 
-- [ ] Basic `RTSCamera` controls work
+- [ ] 30%: All game states are in and demonstratable
+- [ ] 20%: A map is generated, and can be rendered (and is broken in correct number of vertices)
+- [ ] 10%: Map can be resized, and regenerated.
+- [ ] 20%: Basic `RTSCamera` controls work
     - [ ] Zoom
     - [ ] Pan
     - [ ] Pivot with Constraints
-- [ ] Map is vertex painted
+- [ ] 20%: UI Elements
+  - [ ] UIButton
+  - [ ] UIButtonGroup
+  - [ ] Main Menu using a UIButtonGroup
 
 ### Penalties
 - [01%] Per Warning (up to 10%)
