@@ -96,24 +96,24 @@ When shaders start requiring a lot more resources (even now, we an have up to di
 ## Extras
 
 ### Lights
-- [ ] 04%: Cone Lights
+- [ ] X07.00 04%: Cone Lights
 
 ### Shaders
-- [ ] 02%: Laser Sword Cut Effect
-- [ ] 03%: Dissolve Effect
-- [ ] 04%: Tri-Planar Shading 
-- [ ] 04%: Parallax Shader
-    - [ ] 02%: Self Occluding Parallax Shader, aka Deep Parallax Shader
-- [ ] 05%: Interior Mapping (Cube) Effect
+- [ ] X07.10 02%: Laser Sword Cut Effect
+- [ ] X07.11 03%: Dissolve Effect
+- [ ] X07.12 04%: Tri-Planar Shading 
+- [ ] X07.13 04%: Parallax Shader
+    - [ ] X07.14 02%: Self Occluding Parallax Shader, aka Deep Parallax Shader
+- [ ] X07.15 05%: Interior Mapping (Cube) Effect
 
 ### Material 
-- [ ] 04%: Material Instancing (ie: `Material::Clone`)
-- [ ] 04%: Material can define a color for a texture slot 
-- [ ] 02%: Material can define a sampler by name ("point", "linear", "trilinear")
-- [ ] 04%: Material can define a sampler definition (min-mag-mip filters, and u-v-w wrap modes)
-- [ ] 05%: Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
-    - [ ] 02%: Material can set uniforms by name in code; 
-    - [ ] 02%: Can set properties using the XML
+- [ ] X07.20 04%: Material Instancing (ie: `Material::Clone`)
+- [ ] X07.21 04%: Material can define a color for a texture slot 
+- [ ] X07.22 02%: Material can define a sampler by name ("point", "linear", "trilinear")
+- [ ] X07.23 04%: Material can define a sampler definition (min-mag-mip filters, and u-v-w wrap modes)
+- [ ] X07.24 05%: Shader Reflection - Generate a  BufferLayout for a given Constant Buffer in a Shader (requires shader bytecode)
+    - [ ] X07.25 02%: Material can set uniforms by name in code; 
+    - [ ] X07.26 02%: Can set properties using the XML
 
 
 ## Extra Information
