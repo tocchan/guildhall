@@ -13,7 +13,7 @@ args.Set( "position", "3, 2, 1" );
 // When fetcing, we can do things like this
 float val = args.Get( "value", 0.0f );             // will get 1.0f, 
 float val2 = args.Get( "NotSet", 0.0f );           // will get 0.0f (or default value) since it doesn't exist
-vec3 dir = args.Get( "direction", vec3::FORWARD );  // will get (0, 0, 1)
+vec3 dir = args.Get( "direction", vec3::K );  // will get (0, 0, 1)
 
 // trickier - requires some support functions to be written for all types we want to support; 
 // *note to self: this adds quite of bit of template meta-magic to the code.  May not be worth supporting*
@@ -26,7 +26,7 @@ std::string valString = args.Get( "value", "" );    // will return "1.0" as a st
 //------------------------------------------------------------------------
 // Base type - what would this have to implement to support the above interfaces?
 //------------------------------------------------------------------------
-class NamedProperty 
+class PropertyBase 
 {
    public:
       virtual std::string AsString() const      = 0; 
@@ -42,7 +42,6 @@ class NamedProperties
    public:
       NamedProperties();
       ~NamedProperties(); // be sure to now delete all the properties!  
-
 
       std::string GetPropertyString( std::string const &name, std::string const &def = "" ); 
 
@@ -62,15 +61,21 @@ class NamedProperties
          // ... TODO in class
       }
 
+      void Set( std::string const &id, char const *var )
+      {
+      }
 
+      std::string Get( std::string const &id, char const *defaulfValue )
+      {
+      }
 
    private: 
       // supporting methods; 
-      NamedProperty* GetProperty( std::string const &name ) const; 
-      void SetProperty( std::string const &name, NamedProperty const *prop ); 
+      PropertyBase* GetProperty( std::string const &name ) const; 
+      void SetProperty( std::string const &name, PropertyBase const *prop ); 
 
    public:
-      std::map<std::string, TypedProperty*> m_properties; 
+      std::map<std::string, PropertyBase*> m_properties; 
 }; 
 
 
@@ -84,7 +89,7 @@ class NamedProperties
 // Second (which I"ll show) will use what we know about static memory to create a unique identifier for types; 
 
 template <typename T>
-class TypedProperty : public NamedProperty
+class TypedProperty : public PropertyBase
 {
    public:
       virtual std::string AsString() const         { return ToString( m_value ); } // using duck typing - this will fail if we don't implement a "ToString" for a type stored here
@@ -93,10 +98,10 @@ class TypedProperty : public NamedProperty
       static void const* GetTypeIdentifier()       { return &s_Id; }
 
    public:
-      static T m_value; // actual value being stored here; 
+      T m_value; // actual value being stored here; 
 
    private: 
-      static int s_Id; // doesn't matter what the value is - the *address* is unique; 
+      static int s_Id; // doesn't matter what the value is - the *address* is unique to each class created with this template; 
 
 }; 
 

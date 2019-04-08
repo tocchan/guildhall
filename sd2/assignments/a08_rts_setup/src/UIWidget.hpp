@@ -75,7 +75,7 @@ class UIButton : public UIWidget
 //------------------------------------------------------------------------
 // A radio group allows for only a single item in the group 
 // to be selected at a time - ie, mutually exclusive selection
-class UIRadioGroupW
+class UIRadioGroup
 {
    // implement me
 }; 
