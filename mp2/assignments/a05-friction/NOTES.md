@@ -29,13 +29,24 @@ Some artifacts I noticed implementing constraints...
       - You can solve the impulse equation for each axis seperately, treating constrained axis as having infinite mass (like static objects).  This felt better to me - but is not required for the assignment. 
       - If you have an angular constraint, you can treat the object as having an infinite moment of inertia (causing all momentum to come from the linear hit part - notice that in the impulse equation infinite inertia would cause those components to go to zero). 
 
+```cpp
+class Rigidbody2D
+{
+   public:
+      bool SetConstraints( bool x, bool y, bool rotation ); 
+
+   public:
+      vec3 m_freedoms   = vec3(1.0f, 1.0f, 1.0f);     
+};
+```
+
 ## Drag
 Drag can be implemented using forces or just applying a per frame dampen.
 
 - Drag forces apply opposite current velocities...
    - A drag force acts opposite to current velocity (hence why it usually slows you down).  I would recommend applying this as a change directly as an acceleration instead of a force (small time steps and low mass objects can result in very high drag forces, that at a fixed timestep may result in erratic behaviour.  `accel += -velocity * GetLinearDrag()`
    - Similar for angular forces - I would just apply a negative angular acceleration based on current angular velocity;  `angular_accel += -angular_velocity * GetAngularDrag()`
-- Drag as a dampening force would just have you dampen both angular velocity and linear velocity before applying the current frames forces.  Something as simple as `velocity = velocity * (GetLinearDrag() * fixedStep)`, and similarly for angular velocity.
+- Drag as a dampening force would just have you dampen both angular velocity and linear velocity before applying the current frames forces.  Something as simple as `velocity = velocity * (1.0f - (GetLinearDrag() * fixedStep))`, and similarly for angular velocity.
 
 - Since both methods are easy to implement, I encourage you to try both and see what you like the best; 
 
