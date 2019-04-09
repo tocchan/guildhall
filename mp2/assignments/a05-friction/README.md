@@ -30,7 +30,7 @@ And finally, we'll add teh ability to save our and load a level.
 
 
 ## Demo
-*Coming Soon*
+- [./mp2.a05.zip](./mp2.a05.zip)
 
 
 ## Source (Headers)
@@ -68,10 +68,3 @@ And finally, we'll add teh ability to save our and load a level.
     - [ ] When loading, destroy all objects before loading
 
 
-## Note
-- Getting friction between two objects is not an exact science, and can really depend on how you want to think of it.  The tutorial listed with this assignment a circular combination, but that means that if either object has friction, there is going to be a frictional component to the collision.  If you want your game to have "ice" that always causes objects to slide on it, you may want to do a product combination similar to restitution.  
-- Some artifacts I noticed implementing constraints...
-  - Correction is no longer going to guarantee to bring you 100% out of the object if you constrain movement to one dimension of freedom without rewriting collision code.  This is fine - it will eventually correct over multiple frames; 
-    - This did result in my having some rotational introducted when spheres collided.  I'm fine with this;  
-  - Impulses are calculated correctly, which actually feels "off" when there are constaints.  (ie, a ball not bouncing off a constained object, but instead just stopping since it *should have* transferred momemntum).  
-     - You can solve the impulse equation for each axis seperately, treating constained axis as having infinite mass (like static objects).  This felt better bot me - but is not required for the assignment. 

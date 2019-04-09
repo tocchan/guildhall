@@ -57,6 +57,6 @@ class Map
       MapTile *m_tiles        = nullptr;  // logical representation
       VertexLit *m_vertices   = nullptr;  // visual represenation
 
-      Mesh *m_terrainMesh; 
+      GPUMesh *m_terrainMesh; 
       Material *m_terrainMaterial; 
 }; 

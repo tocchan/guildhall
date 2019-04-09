@@ -1,4 +1,4 @@
-// Optionally, you can have RTSCamera own a Camera
+ // Optionally, you can have RTSCamera own a Camera
 class RTSCamera : public Camera
 {
    public:
