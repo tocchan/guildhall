@@ -65,10 +65,58 @@ class UILabel : public UIWidget
 
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
+
+typedef NamedStrings EventArgs; 
+--> 
+typedef NamedProperties EventArgs;
+
+//------------------------------------------------------------------------
+class Event
+{
+   public:
+      Event();
+      Event( std::string const &commandLine );
+
+   public:
+      std::string m_name; 
+      EventArgs m_args;
+}; 
+
+//------------------------------------------------------------------------
 class UIButton : public UIWidget
 {
    // implement me
    // ...
+
+   void Click()
+   {
+      Event evt( m_eventClick ); 
+      // m_name; 
+      // m_args; 
+
+      EventFire( evt.GetName(), evt.GetArgs() );  
+   }
+
+   std::string m_eventOnClick = "play map=level0.map"
+}; 
+
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+class UISlider : public UIWidget
+{
+   void Change( float value ) 
+   {
+      m_value = value; 
+      // whatever other updating needed for visual reasons;
+
+      Event evt( m_eventOnChange ); 
+      evt.m_args.Add( "value", m_value ); // add this AS A FLOAT
+      evt.m_args.Add( "source", this );   //  who triggered this event; 
+
+      EventFire( evt ); 
+   }
+
+   std::string m_eventOnChange = "changeRadius"; 
 }; 
 
 //------------------------------------------------------------------------
