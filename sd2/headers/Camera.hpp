@@ -26,11 +26,11 @@ class Camera
 
       // Space Conversions
       // Client to World
-      vec2 ClientToUV( vec2 client ) const;                                                           // ???
-      vec3 ClientToNDC( vec2 client, float ndcDepth = 1.0f ) const;                                   // ???
-      vec3 NDCToWorld( vec3 ndc ) const;                                                              // ???
-      vec3 ClientToWorld( vec2 client, float ndcDepth = 1.0f ) const;                                 // ???
-      Ray3D ClientToWorldRay( vec2 client );                                                          // ???
+      vec2 ClientToUV( vec2 client ) const;                                                           // MP2-A03
+      vec3 ClientToNDC( vec2 client, float ndcDepth = 1.0f ) const;                                   // MP2-A03
+      vec3 NDCToWorld( vec3 ndc ) const;                                                              // MP2-A03
+      vec3 ClientToWorld( vec2 client, float ndcDepth = 1.0f ) const;                                 // MP2-A03
+      Ray3D ClientToWorldRay( vec2 client );                                                          // MP2-A03
 
       // World to Client
       vec2 WorldToClient( vec3 worldPos ) const;                                                      // ???
