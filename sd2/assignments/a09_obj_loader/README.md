@@ -7,10 +7,12 @@ Support loading object files from data, as well as model files specifying import
 ## Rubric
 
 ### [90%] Required
-- [ ] 40%: Object Loader Works and one is visible in game; 
-- [ ] 10%: Model Class (houses a `GPUMesh`, `Material`, and *transform* for model (Matrix4x4 is fine))
-- [ ] 40%: Model File support 
-    - [ ] 15%: Custom Transform
+- [ ] 30%: Object Loader Works and one is visible in game; 
+- [ ] 10%: `.mesh` files to define model loading rules (see examples)
+- [ ] 05%: `RenderContext::GetOrCreateMesh` or equivalent method for mesh resource database; 
+- [ ] 10%: Model Class (houses a `GPUMesh`, `Material`, and *transform* for model (Matrix4x4 is fine)).  Constructable from a Mesh; 
+- [ ] 35%: Model File support 
+    - [ ] 10%: Custom Transform
     - [ ] 10%: Custom Scale
     - [ ] 10%: Flip Faces
     - [ ] 05%: Desired material file to use; 
@@ -45,16 +47,16 @@ class Model
 ## Extras
 
 ### Engine Features
-- [ ] X09.00: `bool EvaluateExpression( float *result, char const *str )` implemented
-- [ ] X09.01: `InputManager` - see below for expected features
-- [ ] X09.02: `StopWatch` class - see notes from MP2
+- [ ] X09.00 (05%): `bool EvaluateExpression( float *result, char const *str )` implemented
+- [ ] X09.01 (04%): `InputManager` - see below for expected features
+- [ ] X09.02 (02%): `StopWatch` class - see notes from MP2
 
 ### Rendering Extensions
-- [ ] X09.10: Multi-Material Meshes
-- [ ] X09.11: `CPUMesh` simplify
-- [ ] X09.12: mikkt tangent generation
-- [ ] X09.13: Flat normal generation
-    - [ ] X09.14: Smooth weighted normal generation
+- [ ] X09.10 (04%): Multi-Material Meshes
+- [ ] X09.11 (04%): `CPUMesh` simplify
+- [ ] X09.12 (02%): mikkt tangent generation
+- [ ] X09.13 (02%): Flat normal generation
+    - [ ] X09.14 (03%): Smooth weighted normal generation
 
 ## Extra Information
 
