@@ -65,12 +65,14 @@ class RenderContext
       void DrawMesh( GPUMesh *mesh );                                      // A04 -> A06
 
       // Any Additional Helper Drawing Methods
+      void DrawModel( Model *model );                                      // A09
       // ... 
 
    public:
       Shader* GetOrCreateShader( std::string const &filename );                // A01
       TextureView2D* GetOrCreateTextureView2D( std::string const &filename );  // A03
       Material* GetOrCreateMaterial( std::string const &filename );            // A07
+      GPUMesh* GetOrCreateMesh( std::string const &filename );                 // A09
 
    public:
       // D3D11 Handles
@@ -102,6 +104,7 @@ class RenderContext
       std::map<std::string, Shader*> m_shaderDatabase;             // A01
       std::map<std::string, TextureView2D*> m_textureViewDatabase; // A03
       std::map<std::string, Material*> m_materialDatabase;         // A07
+      std::map<std::string, GPUMesh*> m_meshDatabase;              // A09
 }; 
 
 

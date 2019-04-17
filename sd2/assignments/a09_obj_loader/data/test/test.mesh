@@ -1,14 +1,11 @@
-<model id="building/towncenter">
+<mesh id="building/towncenter">
 	<!-- import rules - define scale, and we define how to transform it from the art's basis to a game basis -->
 	<!-- To do this, look at the art file, and state where their x means in your engine -->
 	<mesh src="model/test/test_cube.obj"
+		material="model/test/test_cube.mat" />
 		invert="false"
 		tangents="true"
 		scale="1.0f"
 		transform="-y -z -x" />
 
-	<!-- what material do I want to use with this?  Optional, but can 
-	     be used to fetch a matching material - optional can override values if you support instancing -->
-	<material src="model/test/test_cube.mat" />
-
-</model>
+</mesh>

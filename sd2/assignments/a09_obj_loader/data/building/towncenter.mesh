@@ -1,0 +1,10 @@
+<mesh id="building/towncenter">
+	<!-- import rules - define scale, and we define how to transform it from the art's basis to a game basis -->
+	<!-- To do this, look at the art file, and state where their x means in your engine -->
+	<submesh src="model/building/towncenter.obj"
+		material="material/towncenter.mat" 
+		invert="false"
+		tangents="true"
+		scale="1.0f / 256.0f"
+		transform="-y -z -x" />
+</mesh>
