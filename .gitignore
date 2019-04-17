@@ -2,8 +2,6 @@
 *.slo
 *.lo
 *.o
-*.obj
-!data/**/*.obj
 
 # Precompiled Headers
 *.gch
