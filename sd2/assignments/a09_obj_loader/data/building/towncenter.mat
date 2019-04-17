@@ -1,0 +1,9 @@
+<material id="building/towncenter"
+  shader="shader/lit.shader">
+
+  <diffuse  src="image/texture/building.color.jpg" />
+  <normal   src="image/texture/building.normal.png" />
+
+  <sampler idx="0" type="linear" />
+
+</material>

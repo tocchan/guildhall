@@ -1,0 +1,9 @@
+<material id="test/cube"
+  shader="shader/lit.shader">
+
+  <diffuse  src="model/test/test_color.png" />
+  <normal   src="flat" />
+
+  <sampler idx="0" type="linear" />
+
+</material>
