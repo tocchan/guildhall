@@ -2,7 +2,7 @@ A09: Wavefront Obj Loader
 ======
 
 ## Overview
-Support loading object files from data, as well as model files specifying import rules; 
+Support loading object files from data, as well as mesh files specifying import rules; 
 
 ## Rubric
 
@@ -10,8 +10,8 @@ Support loading object files from data, as well as model files specifying import
 - [ ] 30%: Object Loader Works and one is visible in game; 
 - [ ] 10%: `.mesh` files to define model loading rules (see examples)
 - [ ] 05%: `RenderContext::GetOrCreateMesh` or equivalent method for mesh resource database; 
-- [ ] 10%: Model Class (houses a `GPUMesh`, `Material`, and *transform* for model (Matrix4x4 is fine)).  Constructable from a Mesh; 
-- [ ] 35%: Model File support 
+- [ ] 10%: Model Class (houses a `GPUMesh`, `Material`, and *transform* for model (Matrix4x4 is fine)).  Constructable from a `GPUMesh` or mesh filename; 
+- [ ] 35%: Mesh File support 
     - [ ] 10%: Custom Transform
     - [ ] 10%: Custom Scale
     - [ ] 10%: Flip Faces
@@ -56,7 +56,10 @@ void Prop::Render()
 ```cpp
 Model::Model( RenderContext *ctx, char const *mesh_file )
 {
-    m_mesh = ctx->GetOrCreateMesh( mesh ); 
+    // GPUMesh *m_mesh; 
+    m_mesh = ctx->GetOrCreateMesh( mesh_file ); 
+
+    // Material *m_material; 
     m_material = ctx->GetOrCreateMaterial( m_mesh->GetDefaultMaterialID() ); 
     m_modelMatrix = mat44::IDENTITY; 
 }

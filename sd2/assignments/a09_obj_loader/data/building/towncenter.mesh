@@ -1,12 +1,9 @@
 <mesh id="building/towncenter"
-   src="model/building/towncenter.obj"
+	src="model/building/towncenter.obj"
 	invert="false"
 	tangents="true"
 	scale="1.0f / 256.0f"
-	transform="-y -z -x" />
+	transform="-y -z -x">
 
-   <!-- index is only needed if you're supporting multi-material (or multi-submesh) meshes -->
-   <!-- otherwise you can infer index 0 -->
-   <material index="0" src="model/building/towncenter.mat" />
-
+	<material index="0" src="material/towncenter.mat" />
 </mesh>
