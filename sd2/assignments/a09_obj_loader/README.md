@@ -70,7 +70,7 @@ Be able to evaluate simple value only equations, such as...
 2 + 7 * 3                 // 23
 (2 + 7) * 3               // 27
 2^8 - 1                   // 255
--1 - (3 * (8 + 2)^2) - 4  // -304
+-1 - (3 * (8 + 2)^2) - 4  // -305
 ```
 
 If an expression can't be evaluated - leave `out` unchanged and return `false`.
