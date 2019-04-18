@@ -31,17 +31,39 @@ When grading, I will ask you to import a couple different meshes wiht different 
 - [Wikipedia Wavefront OBJ](https://en.wikipedia.org/wiki/Wavefront_.obj_file): Information about the file format; 
 
 ### Model Object
-Model files generate an object like the below.  You can add a simple `RenderContext::DrawModel` which can bind the model matrix, material, and then draw the mesh - making drawing meshes a little simpler. 
+The desired use case for the above system is to be able to load meshes, but will be used when rendering, in what we'll call a Model;
+
+So game code would look like this;
 
 ```cpp
-class Model
+class Prop::Load()
 {
-    public:
-        GPUMesh *m_mesh; 
-        Material *m_material; 
-        mat44 m_modelMatrix;  
-};
+    // Model *m_model; 
+    m_model = new Model( App::GetRenderContext(), "model/building/rock.mesh" ); 
+}
+
+void Prop::Render()
+{
+    m_model->SetModelMatrix( m_transform.GetMatrix() ); 
+
+    // This will bind the model matrix, the material, and draw the mesh - mostly as a convenience class; 
+    App::GetRenderContext()->DrawModel( m_model ); 
+}
 ```
+
+...where a model being created does the following;
+
+```cpp
+Model::Model( RenderContext *ctx, char const *mesh_file )
+{
+    m_mesh = ctx->GetOrCreateMesh( mesh ); 
+    m_material = ctx->GetOrCreateMaterial( m_mesh->GetDefaultMaterialID() ); 
+    m_modelMatrix = mat44::IDENTITY; 
+}
+```
+
+Notice that meshes are just resources - shared potentially by many models (or even directly access by someone, like a map or level). 
+
 
 
 ## Extras
