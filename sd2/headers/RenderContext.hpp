@@ -17,8 +17,11 @@ class RenderContext
       void BeginFrame();               // A01
       void EndFrame();                 // A01
 
-      ColorTargetView* GetFrameColorTarget();               // A01
+      ColorTargetView* GetFrameColorTarget();               // A01, A10
       DepthStencilTargetView* GetFrameDepthStencilTarget(); // A04
+
+      void CopyTexture( Texture2D *dst, Texture2D *src );   // A10
+      void ApplyEffect( Texture2D *dst, Texture2D *src, Material *mat ); // A10 
 
       // DRAWING
       void BeginCamera( Camera* );     // A01, A02, A03, A04

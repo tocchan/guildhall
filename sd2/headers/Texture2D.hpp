@@ -34,18 +34,17 @@ class Texture2D : public Texture       // A03
       bool LoadFromFile( std::string const &filename );  // A03 
       bool LoadFromImage( Image const &image );          // A03
 
-      DepthStencilTargetView* CreateDepthStencilTargetView();  // A04
-
-
       // Create a view of this texture usable in the shader; 
       TextureView2D* CreateTextureView2D() const;                    // A03  
       DepthStencilTargetView* CreateDepthStencilTargetView() const;  // A04
+      ColorTargetView* CreateColorTargetView() const;                // A10
 
    public:
       vec2 m_dimensions;                     // A03
 
    public: // Helper statics
-      static Texture2D* CreateColorTarget( RenderContext *ctx, uint width, uint height, eImageFormat format );  // ???
+      static Texture2D* CreateColorTarget( RenderContext *ctx, uint width, uint height, eImageFormat format );  // A10
+      static Texture2D* CreateMatchingColorTarget( Texture2D *other );  // A10
       
       static Texture2D* CreateDepthStencilTarget( RenderContext *ctx, uint widht, uint height );   // A04
       static Texture2D* CreateDepthStencilTargetFor( Texture2D *colorTarget );   // A04

@@ -11,6 +11,9 @@ class ColorTargetView
    public: // internal use - could be private with friends;
       void CreateForInternalTexture( ID3D11Texture2D *tex );   // A01
 
+      void CreateForTexture( Texture2D *texture );       // A10
+
+
    public: // a renderable view of a texture // private
       ID3D11Resource *m_source         = nullptr;        // ???
       ID3D11RenderTargetView *m_rtv    = nullptr;        // A01

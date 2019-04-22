@@ -12,16 +12,17 @@ New tech needed for this is `RenderTargets`, which you already mostly have the t
 
 ## Rubric
 
-### [80%] Required
-- [ ] Support creating arbitrary render targets (either fully defined and/or using a source texture to match)
-- [ ] `RenderContext` default backbuffer is now a custom render target matching the swap chain
-- [ ] Support `RenderContext::CopyTexture`
-    - [ ] During `RenderContext::EndFrame`, copy the secondary render target to the swap chain backbuffer before Presenting
-- [ ] Support `RenderContext::ApplyEffect( ColorTargetView *out, TextureView2D *in, Material *mat )`
+### [90%] Required
+- [ ] 10%: Support creating arbitrary render targets (either fully defined and/or using a source texture to match)
+- [ ] 10%: `RenderContext` default backbuffer is now a custom render target matching the swap chain
+- [ ] 10%: Support `RenderContext::CopyTexture`
+- [ ] 10%: During `RenderContext::EndFrame`, copy the secondary render target to the swap chain backbuffer before Presenting
+- [ ] 20%: Support `RenderContext::ApplyEffect( ColorTargetView *out, TextureView2D *in, Material *mat )`
 - [ ] Pause Screen Implemented to spec and functional
-    - [ ] Pause screen applies a full screen effect of frame up to this point, with UI drawn over the effect
-    - [ ] Effect transitions in (fades, desaturates, pixelates, etc...)
-    - [ ] Effect transitions out  
+    - [ ] 10%: Pause screen applies a full screen effect of frame up to this point, with UI drawn over the effect
+    - [ ] 05%: Effect transitions in (fades, desaturates, pixelates, etc...)
+    - [ ] 05%: Effect transitions out  
+    - [ ] 10%: Pause screen consumes all input 
 
 
 ### Penalties
@@ -32,13 +33,17 @@ New tech needed for this is `RenderTargets`, which you already mostly have the t
 ## Resources
 
 
-
 ## Extras
 
 ### Effects
-- [ ] X10.00 (10%): ShadowMap
+- [ ] X10.00: (10%) Depth of Field Blur
+- [ ] X10.01: (10%) ShadowMaps
 
 ### Utility
-- [ ] Debug Render PiP (Picture in Picture)
+- [ ] X10.10: (05%) Debug Render PiP (Picture in Picture)
+
+### Additional Stages
+- [ ] X10.20: (05%) Implement a shader using the Tesselation Stages (displacement mapping is a good starter)
+- [ ] X10.21: (05%) Implement a shader using the Geoemetry Stage 
 
 ## Extra Information
