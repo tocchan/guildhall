@@ -53,8 +53,6 @@ void Game::FloorHit( NamedProperties &props )
 {
    // named properties expected - we're not using them, 
    // just here as reference on what you should put in; 
-   Collider2D *me = props.Get<Collider2D*>( "me", nullptr ); 
-   Collider2D *them = props.Get<Collider2D*>( "them", nullptr ); 
    collision2d col = props.Get<collision2d>( "collision", nullptr ); 
 
 
@@ -88,7 +86,6 @@ void Game::ScoreExit( NamedProperties &props )
 {
    Trigger2D *trigger = props.Get<Trigger2D*>( "trigger", nullptr ); // trigger that was hit
    Collider2D *collider = props.Get<Collider2D*>( "collider", nullptr ); // collider entering or leaving
-
    DebugRenderMessage( 4.0f, rgba::GREEN, "Score Region Left" ); 
 }
 ```
@@ -153,3 +150,21 @@ I recommmend starting by making sure all collider and rigidbodies can be marked 
 - [ ] Before purging destroyed objects, be sure to walk through again and remove all colliders from the tracked list; 
 
 
+## Notes
+
+```cpp
+PhysicsStep 
+   update fixed frame count
+   Update Rigidbodies
+   Update collisions
+   Update Triggers
+      Update touching list against dyanmic rigid bodies
+      Fire all events
+         FireEnterAndLeaveEvents
+
+   Purge
+      Foreach Trigger
+         FireLeaveEvents
+
+      Delete purged objects
+```
