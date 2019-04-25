@@ -9,7 +9,7 @@ This *does not* remove previous code of setting views, but instead just gives an
 
 
 ## Preliminary Change
-I am going to rename `TextureView` to `ShaderResourceView` to be more inline with D3D11s naming, as ewll as `TextureView` makes more sense as the comm
+I am going to rename `TextureView` to `ShaderResourceView` to be more inline with D3D11s naming, as well as `TextureView` makes more sense as a base class all views share;  *Note: Technically in my engine it is the only class I have, as all views contain the same data.  The specific type names just help with compiler/type checking*. 
 
 
 ## Goal
