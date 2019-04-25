@@ -32,6 +32,41 @@ New tech needed for this is `RenderTargets`, which you already mostly have the t
 
 ## Resources
 
+Once you have the base functions working, you can make life easier on yourself by adding some common helpers that use it.  For example;
+
+```cpp
+// simpler ApplyEffect in place
+void RenderContext::ApplyEffect( Texture *tex, Material *mat ) 
+{
+	// I like having a pool of scratch textures I can use for this (you will probably only need one)
+	// that gets recreated if the size needs change)
+	Texture *scratch = GetOrCreateScratchTextureMatching( tex );
+
+	ColorTargetView *ctv = scratch->CreateColorTargetView(); 
+	TextureView2D *srv = scratch->CreateTextureView(); 
+	
+	ApplyEffect( ctv, srv, mat ); 
+	CopyTexture( tex, scratch ); // copy scratch back to tex so tex is left with the effect
+
+	delete ctv; 
+	delete srv; 
+	// don't delete scratch - handled by RenderContext
+}
+
+// Apply multiple effects in order
+void RenderContext::ApplyEffects( Texture *tex, std::vector<Material*> effects ) 
+{
+	// similar to above, but just swap back and forth between the two textures
+	// and if you stop on an odd effect (the result is in scratch), do a copy, otherwise nothing
+	// ...
+}
+
+// Just apply the effect to the current backbuffer on the camera - assuming the backbuffer
+void Camera::ApplyEffect( Material *mat ) 
+{
+	m_context->ApplyEffect( m_colorTargetView ); 
+}
+```
 
 ## Extras
 
