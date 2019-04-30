@@ -101,6 +101,7 @@ class TextureView
 {
 	private:
 		eTextureUsageBit m_viewType;  
+		Texture *m_baseTexture; 
 
 		// aliased handles
 		union {
