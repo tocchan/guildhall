@@ -1,3 +1,4 @@
+// Engine/Core/Math/Ray3.hpp
 struct Ray3
 {
    Ray3(); 
@@ -9,6 +10,28 @@ struct Ray3
    // useful construction
    static Ray3 FromPoints( vec3 start, vec3 end ); 
 }; 
+
+// Engine/Core/Math/Sphere.hpp
+struct Sphere
+{
+   vec3 point;
+   float radius; 
+};
+
+// Engine/Core/Math/Capsule3.hpp
+struct Capsule3
+{
+   vec3 start;
+   vec3 end; 
+   float radius; 
+};
+
+// Engine/Core/Math/Plane3.hpp
+struct Plane3
+{
+   vec3 normal;
+   float signedDistance; 
+};
 
 // Functions
 // All return ALL intersections (including negative).

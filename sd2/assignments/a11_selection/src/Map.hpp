@@ -14,6 +14,11 @@ class Map
       Entity* CreateEntity( vec2 pos ); 
       Entity* FindEntity( GameHandle handle ) const; 
 
+      // Pick
+      Entity* RaycastEntity( float *hitTime, Ray3 ray, float maxDistance = INFINITY ); 
+      bool RaycastTerrain( float *hitTime, Ray3 ray, float maxDistance = INFINITY ); 
+
+
    private:
       void PurgeDestroyedEntities();   // cleanup destroyed entities, freeing up the slots; 
 
@@ -64,3 +69,26 @@ Entity* Map::FindEntity( GameHandle handle )
       return nullptr; 
    }
 }
+
+//------------------------------------------------------------------------
+Entity* Map::RaycastEntity( float *hitTime, Ray3 ray, float maxDistance = INFINITY )
+{
+   Entity *bestEntity = nullptr; 
+   float bestTime = INFINITY; 
+
+   foreach (Entity *ent in mEntities) {
+      float time; 
+      if (ent->IsSelectable() && ent->Raycast( &time, ray )) {
+         if ((time >= 0.0f) && (time <= maxDistance) && (time < bestHitTime)) {
+            bestEntity = ent; 
+            bestHitTime = time; 
+         }
+      }
+   }
+
+   *hitTime = bestHitTime; 
+   return bestEntity; 
+}
+
+
+

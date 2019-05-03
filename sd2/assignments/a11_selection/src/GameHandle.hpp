@@ -16,3 +16,15 @@ class GameHandle
    private:
       uint m_data = 0; 
 };
+
+GameHandle::GameHandle( uint cyclicID, uint index ) 
+{
+   ASSERT( index <= 0x0000ffff ); 
+   ASSERT( cyclicID <= 0x0000ffff ); 
+
+   // So I want cyclicID to be in high-word (high 16 bits)
+   // I want index in the lo-word (low 16 bits); 
+   uint hiword = cyclicID << 16; 
+   m_data = hiword | index; 
+}
+

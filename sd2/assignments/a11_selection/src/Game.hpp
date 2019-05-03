@@ -1,3 +1,4 @@
+//------------------------------------------------------------------------
 class Game
 {
    public:
@@ -6,5 +7,15 @@ class Game
       void ClearCommands();   // just free up memory 
 
    private:
-      queue<RTSCommand*> m_commandQueue; 
+      std::queue<RTSCommand*> m_commandQueue; 
 }; 
+
+//------------------------------------------------------------------------
+void Game::ProcessCommands()
+{
+   RTSCommand *cmd;
+   while (m_commandQueue.dequeue( &cmd )) {
+      cmd->Execute(); 
+      delete cmd; 
+   }
+}

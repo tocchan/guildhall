@@ -6,11 +6,15 @@ enum eEntityFlagBit : uint
 }; 
 typedef uint eEntityFlags; 
 
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 class Entity
 {
    public:
+      void Update(); 
+
       void Destroy(); 
-      void SetSelectable( bool s ); 
+      void SetSelectable( bool isSelectable ); 
 
       bool IsDestroyed() const; 
       bool IsSelectable() const; 
