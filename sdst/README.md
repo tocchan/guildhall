@@ -30,6 +30,9 @@ That gives us 6 assignments worth of work.
 
 ### Week 2 - Combat & Audio
 #### Task List
+- [ ] Visually show which units are selected (world space)
+- [ ] Display list of selected units (screen space) - includes type and current health
+    - [ ] Color based on health percentage (> 80% green, > 30% yellow, red)
 - [ ] Be able to spawn units as part of a team
     - [ ] `set_team` command to switch commander team
     - [ ] Can only select and issue orders to units who are part of your team
@@ -38,6 +41,7 @@ That gives us 6 assignments worth of work.
     - [ ] ...attack when clicking a unit of an opposing team
     - [ ] ...follow when clicking a unit of the same team
 - [ ] Allow units to attack other units
+    - [ ] Display health bar above units that are damaged
 - [ ] Allow units to die
     - [ ] Dead units are not selectable
     - [ ] Dead units disspear after a fixed (non-zero) time (3 seconds is a good start)
