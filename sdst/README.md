@@ -53,6 +53,8 @@ That gives us 6 assignments worth of work.
 
 ### Week 3 - Buildings & Gathering
 #### Task List
+- [ ] Selected Unit UI.  Graphical and shows portraits
+    - [ ] If more than 16 units selected, show 15, and the last tile just a box that says +n...
 - [ ] Units display available commands that can be issued to them through UI
     - [ ] Peons have a sub-menu for build structure that lists structures they canb build
     - [ ] Move, Attack, Patrol, and Hold Position command available to `peon` and `warrior`
