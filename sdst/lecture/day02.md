@@ -16,6 +16,9 @@ Day 02
 - Audio
   - Play Audio at Position
   - Setting listener position
+    - Camera
+    - Focal Point
+    - Character
   - Data Driving
     - Mixers
     - Clips

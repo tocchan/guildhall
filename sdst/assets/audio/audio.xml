@@ -1,0 +1,36 @@
+<audio>
+   <!-- mixer channels -->
+   <!-- controls volume - FMOD CoreAPI feature is a channel group -->
+   <!-- aka a mixer, bus, or group -->
+   <mix id="master" />
+   <mix id="sfx" parent="master" />
+   <mix id="bgm" parent="master" />
+
+   <!-- clips -->
+   <!-- PlayClip( char const *id, char const *mix = nullptr ); 
+        should play a clip by id, if not found, will play by filename -->
+   <!-- FMOD Core API feature would be a Sound -->
+   <clip id="music.mainmenu" stream="true" loop="true" type="2d" src="audio/music/mainmenu.mp3" />
+   <clip id="music.game" stream="true" loop="true" type="2d" src="audio/music/gameplay.mp3" />
+
+   <!-- cues -->
+   <!-- a cue is an event into the audio system to "do something", 
+        in our system, it just means play a random sound from a collection -->
+   <!-- FMOD Studio API would call this an 'event', but we're not using that... so just something we make -->
+   <cue id="warrior_death" mix="sfx">
+      <!-- can reference clips by filename or id defined above -->
+      <clip id="audio/sfx/pain.wav" />
+   </cue>
+
+   <cue id="peon_death" mix="sfx">
+      <clip id="audio/sfx/pain.wav" />
+   </cue>
+
+   <cue id="hit" mix="sfx">
+      <clip id="audio/sfx/hit00.wav" />
+      <clip id="audio/sfx/hit01.wav" />
+      <clip id="audio/sfx/hit02.wav" />
+   </cue>
+</audio>
+
+

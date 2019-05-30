@@ -38,8 +38,8 @@ That gives us 6 assignments worth of work.
     - [ ] Can only select and issue orders to units who are part of your team
 - [ ] With a unit selected, when right-clicking...
     - [ ] ...move when clicking just terrain (current behaviour)
-    - [ ] ...attack when clicking a unit of an opposing team
-    - [ ] ...follow when clicking a unit of the same team
+    - [ ] ...attack when clicking a hostile
+    - [ ] ...follow when clicking an ally team
 - [ ] Allow units to attack other units
     - [ ] Display health bar above units that are damaged
 - [ ] Allow units to die

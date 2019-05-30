@@ -1,0 +1,16 @@
+<unit id="peon"
+      health="40"
+      armour="0,1,2"
+      attack="2,3,4"
+      speed="1"
+      selectable="true">
+
+   <!-- what animations to play when doing a certain action -->
+   <animset>
+      <anim id="idle" src="peon.idle" />
+      <anim id="walk" src="peon.walk" />
+      <anim id="attack" src="peon.attack" />
+      <anim id="dead" src="peon.dead" />
+   </animset>
+   
+</unit>

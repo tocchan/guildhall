@@ -1,0 +1,30 @@
+<animations texture="image/sprites/Laborer_spriteshee_2k.png"
+            size="128, 128"
+            ppu="64"      
+            pivot=".5, .25">
+
+   <anim id="peon.idle"
+         cell="0,8"
+         frames="1"
+         frametime="0.05" />
+
+   <anim id="peon.walk" 
+         cell="0,0"
+         frames="7"
+         frametime="0.05" />
+
+   <anim id="peon.attack"
+         cell="8,0", 
+         frames="7", 
+         frametime="0.05">
+      <event frame="4" action="attack" />
+   </anim>
+
+   <anim id="peon.dead"
+         cell= "0,8"
+         frames="7"
+         frametime="0.1">
+      <event frame="0" action="play_sound id=peon_death" />
+      <event frame="7" action="play_sound id=thud" />
+   <anim>
+</animations>
