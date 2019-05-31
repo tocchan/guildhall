@@ -25,7 +25,10 @@ That gives us 6 assignments worth of work.
     - [ ] If not holding shift, latest task replaces entire task queue
 
 #### Notes
-- ???
+- [Example Video](https://www.youtube.com/watch?v=Ie7Q4G8kqpI)
+- [Frustum Work](notes/frustum.md)
+- [Billboarding](notes/billboarding.md)
+- [Animator](notes/animator.cpp)
 
 
 ### Week 2 - Combat & Audio
@@ -48,7 +51,8 @@ That gives us 6 assignments worth of work.
 - [ ] Hook up 3D Positional Audio for Combat Sounds [hit, miss, death]
 
 #### Notes
-- ???
+- [Example Video](https://www.youtube.com/watch?v=fyUrOtFWbTo)
+- [Recommended Work List](notes/notes.a2.md)
 
 
 ### Week 3 - Buildings & Gathering
