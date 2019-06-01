@@ -62,6 +62,9 @@ That gives us 6 assignments worth of work.
 - [ ] Units display available commands that can be issued to them through UI
     - [ ] Peons have a sub-menu for build structure that lists structures they canb build
     - [ ] Move, Attack, Patrol, and Hold Position command available to `peon` and `warrior`
+- [ ] Resources
+    - [ ] Supply - used as a limiter for how many units you can build
+    - [ ] Wood - used as a currency to build new units/buildings
 - [ ] Buildings can be defined in data
     - [ ] Define townhall
     - [ ] Define hut
