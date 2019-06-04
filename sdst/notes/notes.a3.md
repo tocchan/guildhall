@@ -23,6 +23,13 @@ Assignment 3 Notes
         - [ ] If using a clip shader - you can just render in whatever order
         - [ ] If using an alpha shader and sorting - render trees BEFORE rendering units.
     - [ ] Be able to change what you render based on health percent (full, healthy, weak, and dead)
+    - [ ] *extra* Add a bit of wobble on hit, and fall over on death. 
+- [ ] Tasks - Continued
+    - [ ] Go through and define in data how you want to think of tasks
+    - [ ] Have the code be able to load these in
+        - [ ] Recommend **Prototype Pattern** here, as you will clone tasks when issuing them
+        - *Note: Combining move/follow into a single task made sense to me here.*
+
 
 
 ## Rough Notes
