@@ -1,0 +1,21 @@
+<meshes invert="false"
+		tangents="true"
+		scale="1.0f / 256.0f"
+		transform="-y -z -x">
+
+	<mesh id="pine01.bark" src="model/foliage/pine01.bark.obj">
+		<material index="0" src="material/foliage.mat" />
+	</mesh>
+
+	<mesh id="pine01.leaves" src="model/foliage/pine01.leaves.obj">
+		<material index="0" src="material/foliage.mat" />
+	</mesh>
+
+	<mesh id="pine01.stump" src="model/foliage/pine01.stump.obj">
+		<material index="0" src="material/foliage.mat" />
+	</mesh>
+
+	<mesh id="pine01.whole" src="model/foliage/pine01.whole.obj">
+		<material index="0" src="material/foliage.mat" />
+	</mesh>
+</meshes>

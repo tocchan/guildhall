@@ -1,0 +1,21 @@
+<units>
+   <unit id="tree.pine01"
+          health="40"
+          armour="0"
+          static="true"
+          resource="true">
+
+      <collision shape="disc" radius=".2" />
+
+      <!-- models are made up of...
+         src: model to use when untouched - full and weak will default to this
+         base: stump of a tree - unchanged and always rendered.  defaults to nothing
+         full: top part of model to use when full
+         weak: top part of modelt o use when weak -->
+     	<model src="pine01.whole"
+     		base="pine01.stump"
+     		full="pine01.leaves"
+     		weak="pine01.bark" />
+
+	</unit>
+</units>

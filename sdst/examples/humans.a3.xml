@@ -1,0 +1,68 @@
+<units>
+
+   <!-- Peon -->
+   <unit id="peon"
+         health="40"
+         supply="1"
+         armour="0"
+         attack="2"
+         range=".4"
+         speed="2"
+         build_time="20"
+         selectable="true">
+
+      <!-- what animations to play when doing a certain task -->
+      <animset>
+         <anim id="idle" src="peon.idle" />
+         <anim id="walk" src="peon.walk" />
+         <anim id="attack" src="peon.attack" />
+         <anim id="dead" src="peon.dead" />
+      </animset>
+
+      <tasks>
+         <task type="move" /> <!-- move means they can patrol & follow -->
+         <task type="attack" />
+         <task type="gather" />
+         <task type="build" id="towncenter" />
+      </tasks>
+
+   </unit>
+
+   <!-- Warrior -->
+   <unit id="warrior"
+         health="120"
+         armour="1"
+         attack="5"
+         range=".6"
+         speed="2"
+         supply="1"
+         selectable="true">
+
+      <tasks>
+         <task type="move" />
+         <task type="attack" />
+      </tasks>
+
+      <!-- what animations to play when doing a certain task -->
+      <animset>
+         <anim id="idle" src="warrior.idle" />
+         <anim id="walk" src="warrior.walk" />
+         <anim id="attack" src="warrior.attack" />
+         <anim id="dead" src="warrior.dead" />
+      </animset>
+   </unit>
+
+   <!-- debating using 'building' keyword, and having
+        different defaults -->
+   <!-- townhall -->
+   <unit id="towncenter"
+      health="400"
+      armour="2"
+      building="true" 
+      selectable="true"
+      build_time="120" >
+
+      <model src="building.towncenter" />
+   </unit>
+
+</units>

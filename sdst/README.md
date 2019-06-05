@@ -55,27 +55,32 @@ That gives us 6 assignments worth of work.
 - [Recommended Work List](notes/notes.a2.md)
 
 
-### Week 3 - Buildings & Gathering
+### Week 3 - Tasks and Buildings
 #### Task List
-- [ ] Selected Unit UI.  Graphical and shows portraits
-    - [ ] If more than 16 units selected, show 15, and the last tile just a box that says +n...
-- [ ] Units display available commands that can be issued to them through UI
-    - [ ] Peons have a sub-menu for build structure that lists structures they canb build
-    - [ ] Move, Attack, Patrol, and Hold Position command available to `peon` and `warrior`
-- [ ] Resources
-    - [ ] Supply - used as a limiter for how many units you can build
-    - [ ] Wood - used as a currency to build new units/buildings
+- [ ] Be able to define what units can do in data;  [Example](../examples/units.a3.xml)
+- [ ] Right-click now picks best task for the job.
+      - [ ] Maintain old behaviour, but now more unified using a utility method
+      - [ ] When a group is selected, each unit may pick a different task 
+            (ex: peons gather, warriors move, when right clicking a tree)
+- [ ] Units display available commands that can be issued to them through debug UI
+    - [ ] Be able to select a task, and use mouse to select the target of the task
+    - [ ] Task is applied to all units selected that can run that task.  Others ignore it; 
+- [ ] Allow units to be rendered using a model in data instead of an animated iso-sprite
+    - Tree Example: [Model File](../examples/foliage_models.xml), [Unit File](../examples/foliage_units.xml)
+    - [Example](../examples/humans.a3.xml)
+    - *Recommend breaking rendering out to a [Renderable](../notes/Renderable.md) component*
 - [ ] Buildings can be defined in data
+    - [ ] Define a tree
     - [ ] Define townhall
-    - [ ] Define hut
+- [ ] Hook a key so you can spawn trees on a map at cursor location
+- [ ] Create a `GatherTask`
+    - [ ] Add it to peons
+    - [ ] It behaves like `AttackTask`, but only works on trees
+    - [ ] Make it so your `AttackTask` can't target trees (visible result is now warriors no longer can attack trees)
 - [ ] Peon can build buildings
-- [ ] Buildings can have dependencies (can only build hut if townhall is built)
-- [ ] Townhall can build `peon`s
-    - [ ] Up to max supply
-    - [ ] Supply is given by huts
-- [ ] Peons can chop trees for wood
-    - [ ] `tree` unit defined in data
-    - [ ] Tree moves through different mesh states as it lowers on health
+    - [ ] Add a `BuildTask` so peons can build a `townhall` 
+    - [ ] When selecting a target, show a placeholder mesh to show the building being built
+    - [ ] `BuildTask` just immediatley creates an entity as part of your team once peon reaches target point.
 
 #### Notes
 - ???
@@ -83,6 +88,21 @@ That gives us 6 assignments worth of work.
 
 ### Week 4 - Win Conditions and Profiling
 #### Task List
+- [ ] Occupancy Maps
+    - [ ] Buildings define their occupancy region in data
+        - *Note: could also infer it from the model size, but should allow an override through data*
+- [ ] Collision Types for units
+- [ ] Resources
+    - [ ] Supply - used as a limiter for how many units you can build
+    - [ ] Wood - used as a currency to build new units/buildings
+    - [ ] Tree can be cut down
+- [ ] Buildings can have dependencies (can only build hut if townhall is built)
+- [ ] Townhall can build `peon`s
+    - [ ] Up to max supply
+    - [ ] Supply is given by huts
+- [ ] Peons can chop trees for wood
+    - [ ] `tree` unit defined in data
+    - [ ] Tree moves through different mesh states as it lowers on health
 - [ ] Goblin Hut structure defiend
 - [ ] `AICommander` that controls the Goblin Team
     - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group
