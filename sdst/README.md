@@ -18,7 +18,7 @@ That gives us 6 assignments worth of work.
 - [ ] Units are rendered correctly with given art assets
     - [ ] Should support at least *walk* and *idle* animations.
 - [ ] Both *peon* and *warrior* units are defined
-- [ ] Be able to `spawn unit` which will spawn a unit where the user is looking
+- [ ] Be able to `spawn unit` which will spawn a unit at cursor location
 - [ ] Units no long self-intersect (will push off each other)
 - [ ] User can select and issue commands to multiple units at once
 - [ ] User can queue up tasks on units by holding shift
@@ -75,7 +75,7 @@ That gives us 6 assignments worth of work.
 - [ ] Hook a key so you can spawn trees on a map at cursor location
 - [ ] Create a `GatherTask`
     - [ ] Add it to peons
-    - [ ] It behaves like `AttackTask`, but only works on trees
+    - [ ] It behaves like `AttackTask`, but only works on *resources*, basically trees for now; 
     - [ ] Make it so your `AttackTask` can't target trees (visible result is now warriors no longer can attack trees)
 - [ ] Peon can build buildings
     - [ ] Add a `BuildTask` so peons can build a `townhall` 
