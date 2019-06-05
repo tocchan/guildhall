@@ -57,7 +57,7 @@ That gives us 6 assignments worth of work.
 
 ### Week 3 - Tasks and Buildings
 #### Task List
-- [ ] Be able to define what units can do in data;  [Example](../examples/units.a3.xml)
+- [ ] Be able to define what units can do in data;  [Example](./examples/humans.a3.xml)
 - [ ] Right-click now picks best task for the job.
       - [ ] Maintain old behaviour, but now more unified using a utility method
       - [ ] When a group is selected, each unit may pick a different task 
@@ -66,9 +66,9 @@ That gives us 6 assignments worth of work.
     - [ ] Be able to select a task, and use mouse to select the target of the task
     - [ ] Task is applied to all units selected that can run that task.  Others ignore it; 
 - [ ] Allow units to be rendered using a model in data instead of an animated iso-sprite
-    - Tree Example: [Model File](../examples/foliage_models.xml), [Unit File](../examples/foliage_units.xml)
-    - [Example](../examples/humans.a3.xml)
-    - *Recommend breaking rendering out to a [Renderable](../notes/Renderable.md) component*
+    - Tree Example: [Model File](./examples/foliage_models.xml), [Unit File](./examples/foliage_units.xml)
+    - [Example](./examples/humans.a3.xml)
+    - *Recommend breaking rendering out to a [Renderable](./notes/renderable.md) component*
 - [ ] Buildings can be defined in data
     - [ ] Define a tree
     - [ ] Define townhall
@@ -83,7 +83,10 @@ That gives us 6 assignments worth of work.
     - [ ] `BuildTask` just immediatley creates an entity as part of your team once peon reaches target point.
 
 #### Notes
-- ???
+- [Unit Example File](./examples/humans.a3.xml)
+- [Model Example File](./examples/foliage_models.xml)
+- [Renderable Notes](./notes/renderable.md)
+- todo: video
 
 
 ### Week 4 - Win Conditions and Profiling
