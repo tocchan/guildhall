@@ -3,6 +3,42 @@ Assignment 3 Notes
 
 ## Recommended Order of Tasks
 
+- [ ] Figure out how want to define your data
+- [ ] Recommend making tasks be able to self-register; 
+- [ ] Maintain A2 Functionality but with generic right click; 
+    - [ ] Add a `UnitTask::GetActionUtilityForTarget` or similar method for rating this take for a specific entity-target pair. 
+    - [ ] Hook right click in the `PlayerController` to compute best task per unit for each target
+    - [ ] Issue that task to that unit
+- [ ] When units selected - use the first unit to show a task list on the screen.
+    - [ ] Allow user to select this task however you want - just a single key is good
+        - *Note: Another option is to define the hotkey in data for this task and data-drive it.  But sure you print what the hotkey is to screen*
+    - [ ] Once a task is selected, allow user to select a target.
+    - [ ] Issue that task on each selected unit *that can run that task*.  Don't do anything to units that can't run that task; 
+        - [ ] Enqueue if shift is held - you can generalize this with a `Entity::SetTask` vs `Entity::EnqueueTask`
+- [ ] Get trees in the game
+    - [ ] Split your renerdering out to seperate `Renderable` types
+        - [ ] 
+        
+- [ ] 10%: Allow units to be rendered using a model in data instead of an animated iso-sprite
+    - Tree Example: [Model File](./examples/foliage_models.xml), [Unit File](./examples/foliage_units.xml)
+    - [Example](./examples/humans.a3.xml)
+    - *Recommend breaking rendering out to a [Renderable](./notes/renderable.md) component*
+- [ ] 05%: Buildings can be defined in data
+    - [ ] 05%: Define a tree
+          - Be able to mark it as a resource to make others tasks easier;
+    - [ ] 05%: Define townhall
+- [ ] 05%: Hook a key so you can spawn trees on a map at cursor location
+- [ ] 20%: Create a `GatherTask`
+    - Added it to peons
+    - It behaves like `AttackTask`, but only works on *resources*, basically trees for now; 
+    - Make it so your `AttackTask` can't target trees
+    - Make it so `GatherTask` can only work on resource objects; 
+- [ ] 20%: Peon can build buildings
+    - [ ] Add a `BuildTask` so peons can build a `townhall` 
+    - [ ] When selecting a target, show a placeholder mesh to show the building being built
+    - [ ] `BuildTask` just immediate creates the building
+
+
 - [ ] Add the idea of a "Team" to the map or game
     - [ ] Recommend a class or struct managing all information about a team
        - [ ] Color
@@ -49,8 +85,14 @@ Assignment 3 Notes
     - [ ] Define a build task 
     - [ ] Allow 
 
-
-
+## Teams
+```cpp
+class Team 
+{
+   uint m_index;
+   rgba m_color;  
+};
+```
 
 ## Rough Notes
 - Buildings

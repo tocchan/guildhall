@@ -125,7 +125,7 @@ That gives us 6 assignments worth of work.
 - [ ] 15%: Do your appropriate debugging. 
 
 #### Notes
-- ???
+- todo: Video
 
 ### Week 5 - Minimap & Threaded Loading
 #### Task List
