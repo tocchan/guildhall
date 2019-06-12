@@ -33,22 +33,23 @@ That gives us 6 assignments worth of work.
 
 ### Week 2 - Combat & Audio
 #### Task List
-- [ ] Visually show which units are selected (world space)
-- [ ] Display list of selected units (screen space) - includes type and current health
-    - [ ] Color based on health percentage (> 80% green, > 30% yellow, red)
-- [ ] Be able to spawn units as part of a team
-    - [ ] `set_team` command to switch commander team
-    - [ ] Can only select and issue orders to units who are part of your team
-- [ ] With a unit selected, when right-clicking...
+- [ ] 10%: Visually show which units are selected (world space)
+- [ ] 05%: Display list of selected units (screen space) - includes type and current health
+    - [ ] 05%: Color based on health percentage (> 80% green, > 30% yellow, red)
+- [ ] 05%: Be able to spawn units as part of a team
+    - [ ] 05%: Ability to switch team during gameplay (command or hotkey)
+    - [ ] 05%: Can only select and issue orders to units who are part of your team
+- [ ] 10%: With a unit selected, when right-clicking...
     - [ ] ...move when clicking just terrain (current behaviour)
     - [ ] ...attack when clicking a hostile
     - [ ] ...follow when clicking an ally team
-- [ ] Allow units to attack other units
-    - [ ] Display health bar above units that are damaged
-- [ ] Allow units to die
-    - [ ] Dead units are not selectable
-    - [ ] Dead units disspear after a fixed (non-zero) time (3 seconds is a good start)
-- [ ] Hook up 3D Positional Audio for Combat Sounds [hit, miss, death]
+- [ ] 20%: Allow units to attack other units
+    - [ ] 05%: Display health bar above units that are damaged
+- [ ] 05%: Allow units to die
+    - [ ] 05%: Dead units are not selectable
+    - [ ] 05%: Dead units disappear after a fixed (non-zero) time (3 seconds is a good start)
+- [ ] 20%: Hook up 3D Positional Audio for Combat Sounds [hit, miss, death]
+	- *note for future: explicitly state that this should be event driven*
 
 #### Notes
 - [Example Video](https://www.youtube.com/watch?v=fyUrOtFWbTo)
@@ -57,30 +58,32 @@ That gives us 6 assignments worth of work.
 
 ### Week 3 - Tasks and Buildings
 #### Task List
-- [ ] Be able to define what units can do in data;  [Example](./examples/humans.a3.xml)
-- [ ] Right-click now picks best task for the job.
-      - [ ] Maintain old behaviour, but now more unified using a utility method
-      - [ ] When a group is selected, each unit may pick a different task 
+- [ ] 10%: Be able to define what units can do in data;  [Example](./examples/humans.a3.xml)
+- [ ] 10%: Right-click now picks best task for the job.
+      - Maintain old behaviour, but now more unified using a utility method
+      - When a group is selected, each unit may pick a different task 
             (ex: peons gather, warriors move, when right clicking a tree)
-- [ ] Units display available commands that can be issued to them through debug UI
-    - [ ] Be able to select a task, and use mouse to select the target of the task
-    - [ ] Task is applied to all units selected that can run that task.  Others ignore it; 
-- [ ] Allow units to be rendered using a model in data instead of an animated iso-sprite
+- [ ] 02%: Units display available commands that can be issued to them through debug UI
+    - [ ] 05%: Be able to select a task, and use mouse to select the target of the task
+    - [ ] 03%: Task is applied to all units selected that can run that task.  Others ignore it; 
+- [ ] 10%: Allow units to be rendered using a model in data instead of an animated iso-sprite
     - Tree Example: [Model File](./examples/foliage_models.xml), [Unit File](./examples/foliage_units.xml)
     - [Example](./examples/humans.a3.xml)
     - *Recommend breaking rendering out to a [Renderable](./notes/renderable.md) component*
-- [ ] Buildings can be defined in data
-    - [ ] Define a tree
-    - [ ] Define townhall
-- [ ] Hook a key so you can spawn trees on a map at cursor location
-- [ ] Create a `GatherTask`
-    - [ ] Add it to peons
-    - [ ] It behaves like `AttackTask`, but only works on *resources*, basically trees for now; 
-    - [ ] Make it so your `AttackTask` can't target trees (visible result is now warriors no longer can attack trees)
-- [ ] Peon can build buildings
+- [ ] 05%: Buildings can be defined in data
+    - [ ] 05%: Define a tree
+          - Be able to mark it as a resource to make others tasks easier;
+    - [ ] 05%: Define townhall
+- [ ] 05%: Hook a key so you can spawn trees on a map at cursor location
+- [ ] 20%: Create a `GatherTask`
+    - Added it to peons
+    - It behaves like `AttackTask`, but only works on *resources*, basically trees for now; 
+    - Make it so your `AttackTask` can't target trees
+    - Make it so `GatherTask` can only work on resource objects; 
+- [ ] 20%: Peon can build buildings
     - [ ] Add a `BuildTask` so peons can build a `townhall` 
     - [ ] When selecting a target, show a placeholder mesh to show the building being built
-    - [ ] `BuildTask` just immediatley creates an entity as part of your team once peon reaches target point.
+    - [ ] `BuildTask` just immediate creates the building
 
 #### Notes
 - [Unit Example File](./examples/humans.a3.xml)
@@ -94,36 +97,48 @@ That gives us 6 assignments worth of work.
 - [ ] Occupancy Maps
     - [ ] Buildings define their occupancy region in data
         - *Note: could also infer it from the model size, but should allow an override through data*
+    - [ ] Static objects occupy cells that their origin occupy (may improve this later) once pathing isdone)
 - [ ] Collision Types for units
+    - [ ] Disc Collider for units
+    - [ ] Box (AABB2) collider for buildings
+    - *Note: Similar to the Pachinko colliders, but doing much less.  There are no rigidbodies, physics systems, etc...*
 - [ ] Resources
     - [ ] Supply - used as a limiter for how many units you can build
     - [ ] Wood - used as a currency to build new units/buildings
     - [ ] Tree can be cut down
-- [ ] Buildings can have dependencies (can only build hut if townhall is built)
+- [ ] Buildings are now property constructed;
+    - [ ] Can only build in tiles that are not occupied (using Occupancy map)
+    - [ ] Can only build if you have the resources
+    - [ ] Resources are consumed upon building; 
 - [ ] Townhall can build `peon`s
-    - [ ] Up to max supply
-    - [ ] Supply is given by huts
+    - [ ] Up to max supply, and only if resources are available; 
+    - [ ] Supply is given by huts & town halls
 - [ ] Peons can chop trees for wood
-    - [ ] `tree` unit defined in data
+    - [ ] Add a `Resource` component to the tree object
+    - [ ] When attacking a `Resource`, remove the resources from the tree.  Killing tree when out of resources
+          - *Could use health as a resource count on the object.*
     - [ ] Tree moves through different mesh states as it lowers on health
-- [ ] Goblin Hut structure defiend
-- [ ] `AICommander` that controls the Goblin Team
-    - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group
-- [ ] Able to construct a Warrior Hall after a townhall is built
-    - [ ] Warrior Hall can build `warrior` units
-- [ ] Game completes in win condition when all goblin units are dead (buildings/units)
-- [ ] Game completes in loss condition when all local units are dead (buildings/units)
-- [ ] Map Editor
-    - [ ] Can place trees, goblin huts, and starting units on a map
-    - [ ] Can save out the map
-    - [ ] Can load and play these maps
-- [ ] Gather profiling data about your game and identify current hotspots
+    - [ ] If their target is destroyed, they should pick a new nearby target
+    - [ ] When peons are full, they return their resources to an object marked as a return point.  Adding resources to that team; 
+        - **This should be defined in data, with the Towncenter currently marked as one**
+    - [ ] After depositing, they should go back to chopping the same tree they started with; 
+- [ ] 15%: Do your appropriate debugging. 
 
 #### Notes
 - ???
 
 ### Week 5 - Minimap & Threaded Loading
 #### Task List
+- [ ] Buildings can have dependencies (can only build hut if townhall is built)
+- [ ] Map Editor
+    - [ ] Can place trees, goblin huts, and starting units on a map
+    - [ ] Can save out the map
+    - [ ] Can load and play these maps
+- [ ] Goblin Hut structure defiend
+- [ ] `AICommander` that controls the Goblin Team
+    - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group
+- [ ] Game completes in win condition when all goblin units are dead (buildings/units)
+- [ ] Game completes in loss condition when all local units are dead (buildings/units)
 - [ ] Game shows a minimap
     - [ ] Shows buildings that belogn to a team
     - [ ] Shows units that belong to a team

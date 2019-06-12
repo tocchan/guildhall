@@ -74,7 +74,10 @@ Assignment 3 Notes
 - Self Defining/Registering Tasks
   - Macros and Global Registrations
     - `#define TASK_TYPE( name, class )` example
-
+- Colliders
+- Tile Map/Occupancy
+- Weighting Tasks (utility function)
+  - `UnitTask::GetTargetUtility()`
 
 - Retroactive
   - Redesign - I think I would have one kind of command, and that would be unit->task combos that are deferred enqueues for networking sake.  If not networking just deal directly with issuing tasks to objects; 
