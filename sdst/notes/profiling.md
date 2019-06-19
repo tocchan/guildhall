@@ -186,3 +186,33 @@ void ThreadTest()
 // Mutex Functions
 
 ```
+
+
+## Examples
+
+```cpp
+
+void SaveEntityToFile( std::string const &filename, Entity *ent ) 
+{
+   XMLDocument doc; 
+
+   XMLNode root = doc.add_node( "entities" ); 
+   ent->write_node_to_xml( root ); 
+
+   doc.write_to_file( filename ); 
+}
+
+
+void Game::Update()
+{
+   // ... some
+
+   // save out the state of an entity to a file for debug purposes
+   if ((m_selectedUnit != nullptr) && KeyConsumePress( KB_F5 )) {
+      std::thread saveThread( SaveEntityToFile, "temp.xml", m_selectedUnit ); 
+   }
+
+   // normal game processing
+   // ...
+}
+```
