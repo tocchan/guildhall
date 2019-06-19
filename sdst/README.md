@@ -177,6 +177,7 @@ That gives us 6 assignments worth of work.
 - [Deadlock Empire](https://deadlockempire.github.io/) - Very good site for helping you gain intuition on race conditions; 
 - [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) - Theoritical Speed-Limit to how much parrallization can help a specific problem. 
 - [Instruction Pipelining](https://en.wikipedia.org/wiki/Instruction_pipelinin) - More just light reading atm.  Useful to know about for micro-optimization; 
+- [Mike Acton: Data Oriented programming](https://www.youtube.com/watch?v=rX0ItVEVjHc) - Good talk about data oriented programming.
 
 
 ### Week 6 - Pathing & Optimization

@@ -1,13 +1,22 @@
 
 
 ## Topics
-- Profiling 
-  - Cycles
+
+### Profiling
+  - Cycles/Ticks (every step of your processor - smallest unit of measurement we cna geT)
+    - What the 2.4Ghz is measuring - number of instructions it can process a second; 
+    - `__rdtsc()` intrinsic "read timestamp counter"
+    - Closest timing to hardware you'll get
+    - Basically useless outside of very specific micro-optimization
+      - Largely due to not being thread-safe.  Two cores will return very different 
   - High Performance Counter
     - `GetCurrentTimeHPC();` 
   - "Wall-Time" 
     - `HPCToSeconds()`
   - Sampling Profilers
+    - Quickest way to profile - run you app and pause it;  Do this a half dozen times and see if you notice you're stopped in roughly the same spot.  Hey, good chance that is the area of code that is slow; 
+    - Take that, multiply by millions, and you have a sampling profiler
+      - This is built into Visual Studio 2019
   - Instrumented Profilers
     - Simple Instrument (Measurement)
       - Time at start - time at finish, log it
@@ -15,32 +24,37 @@
       - `ProfileLogScope` object
       - `PROFILE_LOG_SCOPE` macro; 
 
-- General Profiling Philosophy
+### Profiling Philosophy
   - Measure twice, cut once.
-  - Profile first to identify what is wrong, and proifle after to verify what you did *helped*
-    - Don't check in something that made it worse - no matter how much work you put into it (this shoudl go wihtout saying)
-  - PCs/OSes have a lot of noise.  Unless measure a large section of code (ie, loading scene), measure something as much as possible.  For example, instead of measuring a sqrt once and timing it, you run the code for 10s, and see how many times you could run sqrt; 
-    - That said, you want your profiling to reflect reality.  Unit tests are a good start, but the optimizer may optimize out your test, or optimize thta use case. 
-    - Extreme example - no use profiling your GetOrCreateTexture once the texture is already loaded.  It is only the first spike that needs it; 
+  - Profile first to identify what is wrong, and profile after to verify what you did *helped*
+    - Don't check in something that made it worse (or possibly no change) - no matter how much work you put into it (this should go without saying).  Usually optimized code is less clear than initial code - so unless you hace a demonstrable win, it is not worth it; 
+  - PCs/OSes have a lot of noise.  Unless you measure a large section of code (ie, loading scene), measure something as much as possible.  For example, instead of measuring a sqrt once and timing it, you run the code for 10s, and see how many times you could run sqrt; 
+    - That said, you want your profiling to reflect reality.  Unit tests are a good start, but the optimizer may optimize out your test, or optimize that use case.
+      - Extreme example - testing a tight loop, that the Release optimizer notices you don't use the result of, so it just optimizes out the loop (Pathing takes 0ms in release!  I'm so good at my job!)
+      - Extreme example - no use profiling your GetOrCreateTexture once the texture is already loaded.  It is only the first spike that needs it; 
   - NEVER ASSUME - same skill that can make you a good debugger will make you an excellent profiler
     - Go in assuming as little as possible - let the data tell you where to look
     - Once you make a change, measure to be sure you improved it
-    - Minimize optimization while coding something up the first time - you don't need to write optimized code all the time - but you should write optimizable code.  This comes with practice!
+    - Minimize optimization while coding something up the first time - you don't need to write optimized code all the time - but you should write *optimizable* code.  This comes with practice!
       - Again, clean interfaces that ask simple questions help a lot with this!
 
-- Optimization Philosophy
+### Optimiztaion Philosophy
   - Macro/Algorithmic Optimization
     - Deals with the overall approach to a problem
       - Looping over every element -vs- looking at just a subset
-      - Searching a sorted vector (looping over the entire array vs divice and conquer)
+      - Searching a sorted vector (looping over the entire array vs divide and conquer)
     - O(n) wins
-      - Simplest version is using a more appropraite data structure; 
-        `std::map` instead of a `std::vector`
+      - Simplest version is using a more appropriate data structure; 
+        `std::map` instead of a `std::vector`, `std::vector` instead of `std::map`...
     - Usually requires system refactoring
       - Good interfaces can help with this!
   - Micro Programming
     - Good understanding of hardware/the machine to make the most of it
       - Being cache friendly
+        - 64-bytes - minimum memory pulled when accessing memory
+        - Cache-warm - memory you're accessing is already in cache (usually L1 or L2)
+        - Cache-Local - memory you're accessing is nearby previously accessed memory
+        - Cache-miss - memory you want is not in cache and needs to be pulled
       - Pipelining properly
       - Just doing less work; 
     - Usually gives "order of magnitude" or scalar wins
@@ -56,24 +70,29 @@
   - Optimize in Release - unless you're specifically trying to get Debug to run faster
     - An debug optimization will likely improve a release optimization, but it may very well do nothing (ex: release does the same or better optimization than you do), and in some cases worse.  So take your timings in release; 
 
-- Parrallel Programming
+## Parrallel/Concurrent Programming (mostly Threads)
   - Threads
     - Why? 
       - use more of the machine
       - can now do more computational intensive work wihtout hindering game experience
         - AI/Pathing ex:  If paths end up taking a long time (even a couple ms), that is time not spent updating your game.  Path results are not critical immediately (you can always just start moving toward your target until you have a path), so you can push paths to a thread and wait for them to come back on later frames. 
     - Hardware Threads -vs- Software Threads
-      - Hardware Threads - ???
-      - Software Threads - ???
+      - Hardware Threads - Number of hardware thread contexts supported by your hardware.  On some hardware you may have access to make them, but in Windows these are managed by the OS; 
+        - Hardware threads are going to give us our maximum achievable speedup due to threading.  At *BEST* (and basically impossible to achieve), a 4 core machine can improve you performance 4x.  Threads are NOT the cure-all - but they do help.
+          - GPUs on the othe rhand have 10s of thousands of hardware threads.  
+      - Software Threads - A thread context managed by the OS.  Can have as many as possible, and will be scheduled to use hardware threads by the OS (typically)
+        - Thread Affinity - Hints that a software thread should only run on a specific set of hardware threads
+        - Thread Priority - how likley a software thread is going to be given a time slice of hardware thread time; 
     - If your threads are "busy", it is ideal to have only as many threads as you have hardware cores.  Spinning up a 1000 threads does not make your application 1000x faster.  On the contrary, it will usually end up making your program slower as you are now paying the cost for a thread context switch (a hardware thread loading in a software thread)
+      - If you have work that is not CPU instensive (ie, mostly idle), such as file or network io, spinning up an extra thread for that usually doesn't hurt performance as it is mostly asleep and not taking hardware threads away from busy threads; 
   - Race Conditions
     - Deadlock Empire - highly recommend playing with this site to develop an intuition
   - Atomic Operations
   - Locks
     - Amdahl's Law
-    - Minimize Lock Time
+      - Read: Minimize Lock Time
     - `CRITICAL_SECTION`, `std::mutex`, and **Fair Locks**
-    - Other lock types `SpinLock`, `Semaphore`, `ReaderWriterLock` or `std::shared_lock`...
+    - Other lock types; `SpinLock`, `Semaphore`, `ReaderWriterLock` or `std::shared_lock`...
       - `SpinLock` is an unfair lock
       - `Semaphore` supports multiple locks - can be thought of as a shared counter.  useful for signals
       - `Events`, `OverlappedOperations`, `Futures` and `Promises`
@@ -88,13 +107,13 @@
     - ThreadSafeQueue
       - Problem with `std::queue`
         - Why isn't `STL` thread safe?
-      - Atomic Enqueue
-      - Atomic Dequeue
+      - Atomic `Enqueue`
+      - Atomic `Dequeue`     
 
 - Joining a thread
 - Detaching a thread
-- Signaling a Thread
 - One thread running indefinintely vs a thread per piece of work.
+- Signaling a Thread
 - Thread Affinity
 
 - Optimizing the slow parts
@@ -118,9 +137,22 @@
     - Textures (#1)
     - Meshes (#2)
     - Shaders (maybe)
-  - Theoritical BEST case is we get 8x savings
-  
+  - Biggest problem is that rendering resources can NOT be created on a thread, but must be finished on the main therad!
+  - Theoretical BEST case is we get 8x savings
 
+- If time - a general purpose resource loading using a worker thread (we will be revisiting worker threads in SD3)
+  - Signaling Threads
+    - `Semaphore` - can be thought of as a thread-safe counter "take a penny, leave a penny" system.  Exists on most platforms, and I generally prefer the syntax
+      - Windows (Win32): `CreateSemaphore`
+      - Linux (POSIX):   `sem_init`
+    - `std::condition_variable` - if you want to keep to the std libaries, but heavy handed for the need;
+  - `AsyncMessagePump`
+    - Very similar to an `AsyncQueue`, but with slightly different behaviour
+      - Will wait until there is data ready before return
+      - Will sleep the thread while waiting on data (waiting on a lock will sleep a thread)
+      - Can be "disabled", caused threads waiting on it to continue and clean themselves up;
+  - Placeholder Resources/Resource States
+  - **Handshake** points
 
 
 ```cpp
@@ -148,7 +180,11 @@ double HPCToSeconds( uint64_t hpc )
 }
 
 // Talk about local static initialization - and why *not* to do it here; 
-
+void SystemGetCoreCount()
+{
+   // number of concurrent running threads (# of virtual cores usually)
+   return std::thread::hardware_concurrency(); 
+}
 
 // Thread Functions
 void ThreadWork( char const *str )
@@ -215,4 +251,14 @@ void Game::Update()
    // normal game processing
    // ...
 }
+
+// Find the index of the first element that exists in an array
+// return -1 on failure
+int FindElementIndex( std::vector<int> const &array, int elem ) 
+{
+   // ...
+
+   return -1; // not found; 
+}
+
 ```
