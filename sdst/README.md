@@ -104,28 +104,32 @@ That gives us 6 assignments worth of work.
     - [ ] Box (AABB2) collider for buildings
     - *Note: Similar to the Pachinko colliders, but doing much less.  There are no rigidbodies, physics systems, etc...*
 - [ ] Resources
-    - [ ] 05%: Supply - used as a limiter for how many units you can build
+    - [ ] 03%: Supply - used as a limiter for how many units you can build
           - Automatically add this when a unit is built and assigned to a team
           - Automatically remove this when that unit dies
-    - [ ] 05%: Wood - used as a currency to build new units/buildings
-    - [ ] 02%: Trees die when they run out resources; 
-        - [ ] 03%: Tree moves through different mesh states as it lowers on health
+    - [ ] 02%: Wood - used as a currency to build new units/buildings
+    - [ ] 05%: Display on the screen your teams current supply, supply limit, and wood resource values; 
 - [ ] Buildings are now property constructed;
+    - [ ] 05%: Display a build preview that is properly tile-snapped; 
     - [ ] 05%: Can only build in tiles that are not occupied (using Occupancy map)
-    - [ ] 05%: Can only build if you have the resources
-    - [ ] 05%: Resources are consumed upon building; 
+    - [ ] 02%: Can only build if you have the resources
+    - [ ] 03%: Resources are consumed upon building; 
+    - [ ] 04%: Peons then must be near the building to build it up, playing an attack animation while nearby; 
+      - [ ] 02%: Allow multiple peons to work on the same building; 
 - [ ] Townhall can build `peon`s
     - [ ] 04%: Up to max supply, and only if resources are available; 
     - [ ] 04%: Peons train at the townhall - visually show a progress bar for this
     - [ ] 02%: Upon finishing training, spawn a peon in an open tile near the building; 
 - [ ] Peons can chop trees for wood (Proper `Gather` behaviour)
-    - [ ] 03%: Peons move toward resource points (trees), and attack
-    - [ ] 03%: Upon attacking, gatherer should add resources to his supply and remove them from the tree
-    - [ ] 03%: When the gatherer is full, he should return to the town hall to drop off
-    - [ ] 03%: Upon reaching town hall, add his resources to the team, clearing his owned resources in the process
-    - [ ] 03%: Return to his target tree afterwards.  
-    - [ ] 03%: If the target tree is dead, find the closest tree to his current location as the new target
+    - [ ] 02%: Peons move toward resource points (trees), and attack
+    - [ ] 02%: Upon attacking, gatherer should add resources to his supply and remove them from the tree
+    - [ ] 02%: When the gatherer is full, he should return to the town hall to drop off
+    - [ ] 02%: Upon reaching town hall, add his resources to the team, clearing his owned resources in the process
+    - [ ] 02%: Return to his target tree afterwards.  
+    - [ ] 02%: If the target tree is dead, find the closest tree to his current location as the new target
     - [ ] 02%: If no new targets are present, the `Gather` task ends
+    - [ ] 02%: Trees die when they run out resources; 
+        - [ ] 03%: Tree moves through different mesh states as it lowers on health
 - [ ] 10%: Do your appropriate debugging. 
 
 #### Notes
