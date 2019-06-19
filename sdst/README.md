@@ -95,65 +95,99 @@ That gives us 6 assignments worth of work.
 ### Week 4 - Win Conditions and Profiling
 #### Task List
 - [ ] Occupancy Maps
-    - [ ] Buildings define their occupancy region in data
+    - [ ] 05%: Buildings define their occupancy region in data
         - *Note: could also infer it from the model size, but should allow an override through data*
-    - [ ] Static objects occupy cells that their origin occupy (may improve this later) once pathing isdone)
-- [ ] Collision Types for units
+    - [ ] 05%: Static objects when placed/built should snap to their correct tile location.
+- [ ] 05%: Make a tree a 1x1 "building" that is placed at a tile and occupies the map;
+- [ ] 10%: Collision Types for units
     - [ ] Disc Collider for units
     - [ ] Box (AABB2) collider for buildings
     - *Note: Similar to the Pachinko colliders, but doing much less.  There are no rigidbodies, physics systems, etc...*
 - [ ] Resources
-    - [ ] Supply - used as a limiter for how many units you can build
-    - [ ] Wood - used as a currency to build new units/buildings
-    - [ ] Tree can be cut down
+    - [ ] 05%: Supply - used as a limiter for how many units you can build
+          - Automatically add this when a unit is built and assigned to a team
+          - Automatically remove this when that unit dies
+    - [ ] 05%: Wood - used as a currency to build new units/buildings
+    - [ ] 02%: Trees die when they run out resources; 
+        - [ ] 03%: Tree moves through different mesh states as it lowers on health
 - [ ] Buildings are now property constructed;
-    - [ ] Can only build in tiles that are not occupied (using Occupancy map)
-    - [ ] Can only build if you have the resources
-    - [ ] Resources are consumed upon building; 
+    - [ ] 05%: Can only build in tiles that are not occupied (using Occupancy map)
+    - [ ] 05%: Can only build if you have the resources
+    - [ ] 05%: Resources are consumed upon building; 
 - [ ] Townhall can build `peon`s
-    - [ ] Up to max supply, and only if resources are available; 
-    - [ ] Supply is given by huts & town halls
-- [ ] Peons can chop trees for wood
-    - [ ] Add a `Resource` component to the tree object
-    - [ ] When attacking a `Resource`, remove the resources from the tree.  Killing tree when out of resources
-          - *Could use health as a resource count on the object.*
-    - [ ] Tree moves through different mesh states as it lowers on health
-    - [ ] If their target is destroyed, they should pick a new nearby target
-    - [ ] When peons are full, they return their resources to an object marked as a return point.  Adding resources to that team; 
-        - **This should be defined in data, with the Towncenter currently marked as one**
-    - [ ] After depositing, they should go back to chopping the same tree they started with; 
-- [ ] 15%: Do your appropriate debugging. 
+    - [ ] 04%: Up to max supply, and only if resources are available; 
+    - [ ] 04%: Peons train at the townhall - visually show a progress bar for this
+    - [ ] 02%: Upon finishing training, spawn a peon in an open tile near the building; 
+- [ ] Peons can chop trees for wood (Proper `Gather` behaviour)
+    - [ ] 03%: Peons move toward resource points (trees), and attack
+    - [ ] 03%: Upon attacking, gatherer should add resources to his supply and remove them from the tree
+    - [ ] 03%: When the gatherer is full, he should return to the town hall to drop off
+    - [ ] 03%: Upon reaching town hall, add his resources to the team, clearing his owned resources in the process
+    - [ ] 03%: Return to his target tree afterwards.  
+    - [ ] 03%: If the target tree is dead, find the closest tree to his current location as the new target
+    - [ ] 02%: If no new targets are present, the `Gather` task ends
+- [ ] 10%: Do your appropriate debugging. 
 
 #### Notes
 - todo: Video
 
 ### Week 5 - Minimap & Threaded Loading
 #### Task List
-- [ ] Buildings can have dependencies (can only build hut if townhall is built)
-- [ ] Map Editor
-    - [ ] Can place trees, goblin huts, and starting units on a map
-    - [ ] Can save out the map
-    - [ ] Can load and play these maps
-- [ ] Goblin Hut structure defiend
-- [ ] `AICommander` that controls the Goblin Team
-    - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group
-- [ ] Game completes in win condition when all goblin units are dead (buildings/units)
-- [ ] Game completes in loss condition when all local units are dead (buildings/units)
+- [ ] **ENGINE WORK**: Updated Time Functions
+- [ ] **ENGINE WORK**: `PROFILE_LOG_SCOPE` and supporting objects.  *Recommend `Core/Profiling.hpp`*
+- [ ] Time the load phase of your game, **in both DEBUG and RELEASE configurations**.  Write it down - I'll be asking for this number.
+    - [ ] DEBUG TIME:   ________________
+    - [ ] RELEASE Time: ________________
+- [ ] **ENGINE WORK**: Add an `AsyncQueue` templated class.  *Recommend 'Core/Async/AsyncQueue.hpp'*
+    - [ ] Support thread-safe `void AsyncQueue::Enqueue( T const &obj )` that enqueues the object safely
+    - [ ] Support thread-safe `bool AsyncQueue::Dequeue( T *out )` that will dequeue an safely, and return bool is it succeeds
+    - *Recommend using a `std::queue` and a `std::mutex` to implement this class*
+
+- [ ] Initial load screen now shows a smooth animation to show that the game isn't frozen
+      - [ ] This should never stutter for more than half a second, and rarely
+- [ ] Game will load textures asynchronous during the initial startup phase
+- [ ] Game will load models asynchronous during initial startup phase
+- [ ] Once all resources are loaded, stop the loading threads
+- [ ] Time the load phase after the work is done; 
+    - [ ] Debug Time:   _________________
+    - [ ] Release Time: _________________ 
+
+- [ ] Goblin Hut structure defined
+- [ ] Goblin Defined
+- [ ] Feature: Map Editor
+    - [ ] Can define number of teams for this map
+        - [ ] Can define team color for any team
+        - [ ] Can define starting resources for a given team
+    - [ ] Can place any defined unit/building.  Any *functional* UI is fine here; 
+          - Quickest option is a console command of `set_editor_cursor unit=<unitname> team=<team>`*
+          - Another option is to have cycling menus you can key through
+          - If you're using ImGUI for other projects - it would work well here too; 
+    - [ ] Can save out the map (xml is fine) to a *specified name*.  Recommend a console command `save_map name=<name>`
+    - [ ] Can load into these maps from the main menu.  Recommend a console command `load_map name=<name>`
+    - [ ] If a `level0.map` exists, load that by default; 
+- [ ] Game must compile & run in **Release** and **Debug** build configurations;
+
+**Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
+
+#### Notes
+- [Deadlock Empire](https://deadlockempire.github.io/) - Very good site for helping you gain intuition on race conditions; 
+- [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) - Theoritical Speed-Limit to how much parrallization can help a specific problem. 
+- [Instruction Pipelining](https://en.wikipedia.org/wiki/Instruction_pipelinin) - More just light reading atm.  Useful to know about for micro-optimization; 
+
+
+### Week 6 - Pathing & Optimization
+#### Task List
 - [ ] Game shows a minimap
     - [ ] Shows buildings that belogn to a team
     - [ ] Shows units that belong to a team
     - [ ] Can click on minimap to move camera there
     - [ ] Can right click minimap to issue commands as if you were clicking the map terrain
-- [ ] Initial load screen now shows a smooth animation to show that the game isn't frozen
-    - [ ] Loading should mostly be handled on a secondary thread
-- [ ] Support custom binary formats for meshes to speed up loading time
-
-#### Notes
-- ???
-
-
-### Week 6 - Pathing & Optimization
-#### Task List
+- [ ] Game completes in win condition when all goblin units are dead (buildings/units)
+- [ ] Game completes in loss condition when all local units are dead (buildings/units)
+- [ ] Pathing!
+- [ ] `AICommander` that controls the Goblin Team
+    - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group- [ ] Support custom binary formats for meshes to speed up loading time
+- [ ] Buildings can have dependencies (can only build hut if townhall is built)
 - [ ] Units not navigate around obstacles instead of moving in a straight line toward a target
 - [ ] Improve loading times farther
 - [ ] General Visual and Audio Improves and Polish
