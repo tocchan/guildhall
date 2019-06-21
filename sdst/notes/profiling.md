@@ -104,31 +104,25 @@
       - Example: Doesn't solve shared resource problems (a Resource map for example - many threads may want to add to/remove from a resource database).  We can talk more about these kinds of problems in SD3; 
     - "I give you somtehing, you do work, and then give it back"...
     - If only one person is using it, you don't have to worry about threading;
-    - ThreadSafeQueue
+    - `ThreadSafeQueue`
       - Problem with `std::queue`
         - Why isn't `STL` thread safe?
       - Atomic `Enqueue`
       - Atomic `Dequeue`     
 
-- Joining a thread
-- Detaching a thread
+- Joining a thread   : 
+- Detaching a thread : 
+- Terminating a Thread
 - One thread running indefinintely vs a thread per piece of work.
 - Signaling a Thread
 - Thread Affinity
 
-- Optimizing the slow parts
-  - Measure the individual parts of the load - is it IO, is it decompression, or is it copying ot texture?
-    - Measure each invidually to figure out where your time is going!
-      - If it is disk reads - better/different compression would help overall
-      - If it is decompression - loading a raw format may help, or using a different format
-      - if it is transferring to CPU->GPU, perhaps try a compressed texture format, or generating mips on the fly
-    - Example above - for meshes, it is the decoding of the file that will likely be slow.  Creating a custom binary format could speed this up (a bake step)
+
 
 - Optimization is tricky (what works on my machine may make your machine worse)
   - Example: Disk Reads
     - If using an HDD or other physical media (bluray), the more threads I have accessing the disk, the worse the performance gets, as I'm constantly having to seek to a new read head and I end up "thrashing" the disk.  If I instead serialize all access to the disk through one thread, I'll end up getting much better performance. 
     - If using an SSD, this may be counter productive.  SSDs actually benefit from having multiple IO threads making requests since the SSD itself may be internally parallel
-
 
 - Game Example : Threading our Resource Loader
   - Verifying it works.  Add something "animated" to your loader
@@ -139,6 +133,14 @@
     - Shaders (maybe)
   - Biggest problem is that rendering resources can NOT be created on a thread, but must be finished on the main therad!
   - Theoretical BEST case is we get 8x savings
+
+- Optimizing the slow parts
+  - Measure the individual parts of the load - is it IO, is it decompression, or is it copying ot texture?
+    - Measure each invidually to figure out where your time is going!
+      - If it is disk reads - better/different compression would help overall
+      - If it is decompression - loading a raw format may help, or using a different format
+      - if it is transferring to CPU->GPU, perhaps try a compressed texture format, or generating mips on the fly
+    - Example above - for meshes, it is the decoding of the file that will likely be slow.  Creating a custom binary format could speed this up (a bake step)
 
 - If time - a general purpose resource loading using a worker thread (we will be revisiting worker threads in SD3)
   - Signaling Threads
@@ -159,9 +161,20 @@
 // Note:  I don't usually use std::thread, but instead use windows or pthread functions.  
 // So be aware there might be some problems; 
 
+#include <atomic>
+
 // Timing Functions
 uint64_t TimeGetPerformanceCounter()
 {
+   InterlockedIncrement( &var ); 
+   InterlockedCompareExchange( )
+
+   int old_a = a; 
+   if (a == c) {
+      a = s; 
+   }
+   return old_a; 
+
    uint64_t hpc;
    ::QueryPerformanceCounter((LARGE_INTEGER*)&hpc);
    return hpc;
@@ -179,8 +192,14 @@ double HPCToSeconds( uint64_t hpc )
    return (double)hpc * gSecondsPerHPC;
 }
 
+double HPCToSeconds( uint64_t time ) 
+{
+   static double seconds_per_hpc = GetSecondsPerHPC(); 
+   return (double)hpc * seconds_per_hpc;  
+}
+
 // Talk about local static initialization - and why *not* to do it here; 
-void SystemGetCoreCount()
+int SystemGetCoreCount()
 {
    // number of concurrent running threads (# of virtual cores usually)
    return std::thread::hardware_concurrency(); 

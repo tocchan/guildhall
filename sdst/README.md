@@ -99,7 +99,7 @@ That gives us 6 assignments worth of work.
         - *Note: could also infer it from the model size, but should allow an override through data*
     - [ ] 05%: Static objects when placed/built should snap to their correct tile location.
 - [ ] 05%: Make a tree a 1x1 "building" that is placed at a tile and occupies the map;
-- [ ] 10%: Collision Types for units
+- [ ] -: Collision Types for units
     - [ ] Disc Collider for units
     - [ ] Box (AABB2) collider for buildings
     - *Note: Similar to the Pachinko colliders, but doing much less.  There are no rigidbodies, physics systems, etc...*
@@ -130,10 +130,10 @@ That gives us 6 assignments worth of work.
     - [ ] 02%: If no new targets are present, the `Gather` task ends
     - [ ] 02%: Trees die when they run out resources; 
         - [ ] 03%: Tree moves through different mesh states as it lowers on health
-- [ ] 10%: Do your appropriate debugging. 
+- [ ] 20%: Do your appropriate debugging. 
 
 #### Notes
-- todo: Video
+- [Video Example](https://www.youtube.com/watch?v=ilvaslSdLgs)
 
 ### Week 5 - Minimap & Threaded Loading
 #### Task List
