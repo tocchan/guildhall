@@ -174,10 +174,15 @@ That gives us 6 assignments worth of work.
 **Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
 
 #### Notes
+- [CriticalSection.hpp](./notes/CriticalSection.cpp) : Critical Section Class Notes
+- [Semaphore.hpp](./notes/Semaphore.cpp) : Semaphore Class Notes
+- [AsyncQueue.hpp](./notes/AsyncQueue.hpp) : AsyncQueue Class Notes
+- [Distributed Texture Load](./notes/AsyncTextureLoad.md) : Texture Loading Example
 - [Deadlock Empire](https://deadlockempire.github.io/) - Very good site for helping you gain intuition on race conditions; 
 - [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) - Theoritical Speed-Limit to how much parrallization can help a specific problem. 
 - [Instruction Pipelining](https://en.wikipedia.org/wiki/Instruction_pipelinin) - More just light reading atm.  Useful to know about for micro-optimization; 
 - [Mike Acton: Data Oriented programming](https://www.youtube.com/watch?v=rX0ItVEVjHc) - Good talk about data oriented programming.
+- [Acquire & Release Semantics](https://preshing.com/20120913/acquire-and-release-semantics/) - More technical information about memory fences. 
 
 
 ### Week 6 - Pathing & Optimization
