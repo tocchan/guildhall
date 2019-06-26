@@ -158,17 +158,6 @@ That gives us 6 assignments worth of work.
 
 - [ ] Goblin Hut structure defined
 - [ ] Goblin Defined
-- [ ] Feature: Map Editor
-    - [ ] Can define number of teams for this map
-        - [ ] Can define team color for any team
-        - [ ] Can define starting resources for a given team
-    - [ ] Can place any defined unit/building.  Any *functional* UI is fine here; 
-          - Quickest option is a console command of `set_editor_cursor unit=<unitname> team=<team>`*
-          - Another option is to have cycling menus you can key through
-          - If you're using ImGUI for other projects - it would work well here too; 
-    - [ ] Can save out the map (xml is fine) to a *specified name*.  Recommend a console command `save_map name=<name>`
-    - [ ] Can load into these maps from the main menu.  Recommend a console command `load_map name=<name>`
-    - [ ] If a `level0.map` exists, load that by default; 
 - [ ] Game must compile & run in **Release** and **Debug** build configurations;
 
 **Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
@@ -196,6 +185,17 @@ That gives us 6 assignments worth of work.
 - [ ] Units not navigate around obstacles instead of moving in a straight line toward a target
 - [ ] Improve loading times farther
 - [ ] General Visual and Audio Improves and Polish
+- [ ] Feature: Map Editor
+    - [ ] Can define number of teams for this map
+        - [ ] Can define team color for any team
+        - [ ] Can define starting resources for a given team
+    - [ ] Can place any defined unit/building.  Any *functional* UI is fine here; 
+          - Quickest option is a console command of `set_editor_cursor unit=<unitname> team=<team>`*
+          - Another option is to have cycling menus you can key through
+          - If you're using ImGUI for other projects - it would work well here too; 
+    - [ ] Can save out the map (xml is fine) to a *specified name*.  Recommend a console command `save_map name=<name>`
+    - [ ] Can load into these maps from the main menu.  Recommend a console command `load_map name=<name>`
+    - [ ] If a `level0.map` exists, load that by default; 
 - [ ] Users Choice
 
 #### Notes
