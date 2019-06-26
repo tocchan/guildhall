@@ -8,6 +8,7 @@ class Semaphore
    public:
       Semaphore(); 
       Semaphore( uint max_count, uint initial_count ); 
+      Semaphore( Semaphore const& copy ) = delete; // NO COPYING - these are unique!
       ~Semaphore(); 
 
       Semaphore( Semaphore const& copy ) = delete; 

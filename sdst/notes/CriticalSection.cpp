@@ -8,6 +8,7 @@ class CriticalSection
 {
    public:
       CriticalSection(); 
+      CriticalSection( CriticalSection const& copy ) = delete; // NO COPYING!  Object is shared and dont' want copy accidently deleting it
       ~CriticalSection(); 
 
       // keeping with these names
