@@ -1,17 +1,17 @@
 //------------------------------------------------------------------------
 // Engine/Async/AsyncQueue.hpp
 //------------------------------------------------------------------------
+
 template <typename TYPE>
 class AsyncQueue
 {
    public:
-      void queue( TYPE const &v ); 
+      void enqueue( TYPE const &v );
 
       // I prefer my default dequeue to be
       // non-blocking (do not wait)
       // hence it will return 'true' if we successfully got something
-      bool dequeue( TYPE* out ); 
-
+      bool dequeue( TYPE* out );
       // May be useful - especially for a persistant consumer model
       // bool blocking_dequeue( TYPE* out ); 
 
@@ -28,20 +28,31 @@ class AsyncQueue
 
    private:
       // TODO
+      std::queue<T> m_queue; 
+      std::mutex m_mutex;  // fair and non-recursive;
+      // std::recursive_mutex m_mutex; // fair and recursive
 };
 
 
 //------------------------------------------------------------------------
 template <typename TYPE>
-void AsyncQueue<TYPE>::queue( TYPE const& v )
+void AsyncQueue<TYPE>::enqueue( TYPE const& v )
 {
-   // TODO
+   std::scoped_lock<std::mutex> locky(m_mutex); 
+   m_queue.push( v );
 }
 
 //------------------------------------------------------------------------
 template <typename TYPE>
 bool AsyncQueue<TYPE>::dequeue( TYPE *out )
 {
-   // TODO
-   return false; 
-}
+   std::scoped_lock<std::mutex> locky(m_mutex); 
+   if (is_empty()) {
+      return false; 
+   } else {
+      *out = m_queue.front(); 
+      m_queue.pop();
+      return true;
+   } 
+} 
+

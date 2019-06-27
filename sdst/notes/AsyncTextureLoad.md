@@ -58,6 +58,103 @@ void InitState::End()
 }
 ```
 
+## Goal
+
+```cpp
+
+// AsyncQueue<ImageLoadWork*> InitState::m_load_queue; 
+// AsyncQueue<ImageLoadWork*> InitState::m_finish_queue; 
+
+// This is THE thread; 
+static void ImageLoadThread( InitState *state )
+{
+   ImageLoadWork* work; 
+
+   while (!state->IsFinished()) {
+      while (state->load_queue->dequeue(&work)) {
+         work->image.load_from_file( work->image_name );  
+         state->finish_queue.enqueue( work ); 
+      }
+   }
+}
+
+static void PrintMeLots( std::string str, int count )
+{
+   for (int i = 0; i < count; ++i) {
+      printf( str.c_str() ); 
+   }
+}
+
+struct ImageLoadWork 
+{
+   std::string image_name; 
+   Image image;  
+};
+
+void InitState::StartLoadingTexture( InitState* state );
+{
+   ImageLoadWork* work = new ImageLoadWork(); 
+   work->image_name = filename; 
+
+   ++m_objectLoading; 
+   m_load_queue->enqueue( work ); 
+}
+
+// std::vector<std::thread> InitState::m_threads; 
+
+void InitState::Begin()
+{
+   StartLoadingTexture( "somebigtexture0.png" ); 
+   StartLoadingTexture( "somebigtexture1.png" ); 
+   StartLoadingTexture( "somebigtexture2.png" ); 
+   StartLoadingTexture( "somebigtexture3.png" ); 
+   StartLoadingTexture( "somebigtexture4.png" ); 
+   StartLoadingTexture( "somebigtexture5.png" ); 
+   StartLoadingTexture( "somebigtexture6.png" ); 
+
+ uint core_count = std::thread::hardware_concurrency(); 
+   for (uint i = 0; i < core_count; ++i) {
+      // Things we have to do still
+      std::thread loadThread = std::thread( ImageLoadThread, this ); 
+      // loadThread.detach(); // not bad, will work kinda - rare bug will happen (remind me later)
+      m_threads.push_back( loadThread );
+
+      // loadThread.join();   // bad -> I would deadlock
+   }
+}
+
+void InitState::FinishReadyTextures()
+{
+   LoadImageWork* work; 
+   RenderContext *rc = App::GetRenderContext(); 
+   while (m_finish_queue->dequeue( &work )) {
+      Texture2D *tex = new Texture( rc, work->image );
+      rc::RegisterTexture( work->name, tex ); 
+      delete work; 
+
+      --m_objectLoading;       
+      ASSERT( m_objectLoading >= 0 ); 
+   }
+}
+
+void InitState::Update()
+{
+   FinishReadyTextures(); 
+   if (IsFinished()) {
+      Game::SetState( GAME_STATE_MAINMENU ); 
+   }
+}
+
+bool InitState::IsFinished() 
+{
+   return (m_objectLoading == 0); 
+}
+
+void InitState::End()
+{
+   // nothing really
+}
+```
 
 ## Cleanup
 - Generalize to make this easier to update?
@@ -66,11 +163,12 @@ void InitState::End()
 ## Threading it
 
 What is the work involved in loading a texture?  Where does it need to run?
-- 
-- 
-- 
+- Load File
+- Decompress File (PNG/JPG/etc) to Byte Buffer (if you're Colin, to Image... for reasons???)
+- Byte Buffer to Texture
+- Register in our Database
 
-### Prelinary Work
+### Preliminary Work
 Before we can thread this - best to break up our threaded pieces in a single-threaded environment to make sure they work.  
 
 *Side Note: Would recommend profiling these pieces now.  From what I remember, there are some easy wins here.*

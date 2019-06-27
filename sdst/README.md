@@ -156,8 +156,9 @@ That gives us 6 assignments worth of work.
     - [ ] Debug Time:   _________________
     - [ ] Release Time: _________________ 
 
+- [ ] Human Hut structure define; 
 - [ ] Goblin Hut structure defined
-- [ ] Goblin Defined
+- [ ] Goblin Unit Defined
 - [ ] Game must compile & run in **Release** and **Debug** build configurations;
 
 **Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
