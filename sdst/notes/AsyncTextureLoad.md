@@ -75,6 +75,7 @@ static void ImageLoadThread( InitState *state )
          work->image.load_from_file( work->image_name );  
          state->finish_queue.enqueue( work ); 
       }
+      Sleep(0); 
    }
 }
 
@@ -152,7 +153,10 @@ bool InitState::IsFinished()
 
 void InitState::End()
 {
-   // nothing really
+   for (std::thread& threadHandle : m_threads) {
+      threadHandle.join(); 
+   }
+   m_threads.clear(); 
 }
 ```
 

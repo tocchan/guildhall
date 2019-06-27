@@ -157,8 +157,15 @@ That gives us 6 assignments worth of work.
     - [ ] Release Time: _________________ 
 
 - [ ] Human Hut structure define; 
+      - Ups max supply (4)
 - [ ] Goblin Hut structure defined
+      - Ups max supply (3)
+      - Can train Goblins
 - [ ] Goblin Unit Defined
+      - Can move/attack/follow
+      - Can build goblin huts
+      - Can gather
+      
 - [ ] Game must compile & run in **Release** and **Debug** build configurations;
 
 **Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
