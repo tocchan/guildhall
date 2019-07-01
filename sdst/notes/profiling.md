@@ -166,15 +166,6 @@
 // Timing Functions
 uint64_t TimeGetPerformanceCounter()
 {
-   InterlockedIncrement( &var ); 
-   InterlockedCompareExchange( )
-
-   int old_a = a; 
-   if (a == c) {
-      a = s; 
-   }
-   return old_a; 
-
    uint64_t hpc;
    ::QueryPerformanceCounter((LARGE_INTEGER*)&hpc);
    return hpc;
