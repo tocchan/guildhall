@@ -137,36 +137,38 @@ That gives us 6 assignments worth of work.
 
 ### Week 5 - Minimap & Threaded Loading
 #### Task List
-- [ ] **ENGINE WORK**: Updated Time Functions
-- [ ] **ENGINE WORK**: `PROFILE_LOG_SCOPE` and supporting objects.  *Recommend `Core/Profiling.hpp`*
-- [ ] Time the load phase of your game, **in both DEBUG and RELEASE configurations**.  Write it down - I'll be asking for this number.
+- [ ] 05%: **ENGINE WORK**: Updated Time Functions
+    - [ ] `uint64_t GetCurrentTimeHPC()`
+    - [ ] `double HPCToSeconds( uint64_t hpc );`
+- [ ] 05%: **ENGINE WORK**: `PROFILE_LOG_SCOPE` and supporting objects.  *Recommend `Core/Profiling.hpp`*
+- [ ] 06%: Time the load phase of your game, **in both DEBUG and RELEASE configurations**.  Write it down - I'll be asking for this number.
     - [ ] DEBUG TIME:   ________________
     - [ ] RELEASE Time: ________________
-- [ ] **ENGINE WORK**: Add an `AsyncQueue` templated class.  *Recommend 'Core/Async/AsyncQueue.hpp'*
-    - [ ] Support thread-safe `void AsyncQueue::Enqueue( T const &obj )` that enqueues the object safely
-    - [ ] Support thread-safe `bool AsyncQueue::Dequeue( T *out )` that will dequeue an safely, and return bool is it succeeds
+- [ ] 20%: **ENGINE WORK**: Add an `AsyncQueue` templated class.  *Recommend 'Core/Async/AsyncQueue.hpp'*
+    - [ ] 10%: Support thread-safe `void AsyncQueue::Enqueue( T const &obj )` that enqueues the object safely
+    - [ ] 10%: Support thread-safe `bool AsyncQueue::Dequeue( T *out )` that will dequeue an safely, and return bool is it succeeds
     - *Recommend using a `std::queue` and a `std::mutex` to implement this class*
 
-- [ ] Initial load screen now shows a smooth animation to show that the game isn't frozen
-      - [ ] This should never stutter for more than half a second, and rarely
-- [ ] Game will load textures asynchronous during the initial startup phase
-- [ ] Game will load models asynchronous during initial startup phase
+- [ ] 05%: Initial load screen now shows a smooth animation to show that the game isn't frozen
+      - [ ] 05%: This should never stutter for more than half a second, and rarely
+- [ ] 10%: Game will load textures asynchronous during the initial startup phase
+- [ ] 10%: Game will load models asynchronous during initial startup phase
 - [ ] Once all resources are loaded, stop the loading threads
-- [ ] Time the load phase after the work is done; 
+- [ ] 05%: Time the load phase after the work is done; 
     - [ ] Debug Time:   _________________
     - [ ] Release Time: _________________ 
 
-- [ ] Human Hut structure define; 
+- [ ] 06% Human Hut structure define; 
       - Ups max supply (4)
-- [ ] Goblin Hut structure defined
+- [ ] 10%: Goblin Hut structure defined
       - Ups max supply (3)
       - Can train Goblins
-- [ ] Goblin Unit Defined
+- [ ] 10%: Goblin Unit Defined
       - Can move/attack/follow
       - Can build goblin huts
       - Can gather
       
-- [ ] Game must compile & run in **Release** and **Debug** build configurations;
+- [ ] 08%: Game must compile & run in **Release** and **Debug** build configurations;
 
 **Warning:  Once you start working with threads - a lot of your engine systems are not thread-safe.  In particular your `ConsolePrintf`, and potentially some logging functions.  You have the tools to fix this now if you so desire, but it not required for the assignment.**
 
