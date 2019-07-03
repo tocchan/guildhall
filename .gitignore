@@ -103,3 +103,5 @@ data/*.dll
 **/.vs
 *.idb
 *.pdb
+
+!*.obj
