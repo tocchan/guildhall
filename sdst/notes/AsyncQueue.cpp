@@ -38,7 +38,7 @@ class AsyncQueue
 template <typename TYPE>
 void AsyncQueue<TYPE>::enqueue( TYPE const& v )
 {
-   std::scoped_lock locky(m_mutex); 
+   std::lock_guard<std::mutex> locky(m_mutex); 
    m_queue.push( v );
 }
 
@@ -46,7 +46,7 @@ void AsyncQueue<TYPE>::enqueue( TYPE const& v )
 template <typename TYPE>
 bool AsyncQueue<TYPE>::dequeue( TYPE *out )
 {
-   std::scoped_lock locky(m_mutex); 
+   std::lock_guard<std::mutex> locky(m_mutex); 
    if (is_empty()) {
       return false; 
    } else {
