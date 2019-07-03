@@ -118,7 +118,7 @@ void InitState::Begin()
       // Things we have to do still
       std::thread loadThread = std::thread( ImageLoadThread, this ); 
       // loadThread.detach(); // not bad, will work kinda - rare bug will happen (remind me later)
-      m_threads.push_back( loadThread );
+      m_threads.push_back( std::move(loadThread) );
 
       // loadThread.join();   // bad -> I would deadlock
    }
