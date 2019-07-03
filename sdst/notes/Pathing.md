@@ -1,56 +1,54 @@
-```cpp
+PATHING
+======
 
+## Overview Steps: 
+- Goal
+- Dijkstra Example 
+  - Why no A*?
+- Data Structures
+- Feeding the Beast
+- Having a unit follow a path; 
+- Shortcutting
+  - Grid Raycasting
+
+- Enemy Commander
+  - Seeding the map
+  - Some basic behaviour
+
+- Array2D (if time)
+  - `Array2D` iterator
+  - `irect` iterator;  
+- A* (if time)
+
+
+## End Goal
+```cpp
 //------------------------------------------------------------------------
-// Interface we're going to give out Entity
+// Interface we're going to give our Unit
 //------------------------------------------------------------------------
 class Unit 
 {
    public:
       void PathTo( vec2 position );    // path to a specific location
-      void PathTo( Entity* target );   // path to a particular target (building/tree)
+      void PathTo( Unit* target );     // path to a particular target (building/tree)
 
 };
+```
 
 
-//------------------------------------------------------------------------
-// NOT NECESSARY - but very helpful for us working with grids; 
-// as we'll be accessing using 2d coordinates, and this can do 
-// smoe additional bounds checking for us; 
-//------------------------------------------------------------------------
-template <typename TYPE>
-class Array2D
-{
-   public:
-      Array2D(); 
-      Array2D( ivec2 size, T const& value ); 
+## Dijkstra Example
+-- in class --
 
-      void init( ivec2 size, T const& value ); 
+### Why no A\*?
+Turns out - Dijkstra for multiple-target pathing just works out better, and felt more intuitive to understand.  The other point - it jus didn't end up being slow enough to matter.
 
-      void set( ivec2 cell, T const& value ); 
-      void set_all( T const& value ); 
+The other nice part of Dijkstra is the results can be shared - which for a lot of the common paths (go gather/return to base), can be a big win; 
 
-      TYPE& get( ivec2 cell ); 
-      TYPE try_get( ivec2 cell, T const& def_value ); 
-      TYPE const& get( ivec2 cell ) const; 
+If you want to add a A\* solver to the `PathSolver`, is is a very minimal step addition.   
 
-      // helper accessors
-      int get_width() const; 
-      int get_height() const; 
-      ivec2 get_size() const; 
-      bool contains_cell( ivec2 cell ) const; // good for debugging
 
-      inline TYPE& operator[]( ivec2 cell )              { return get(cell); }
-      inline TYPE const& operator[]( ivec2 cell ) const  { return get(cell); }
-
-   public:
-      uint get_index( ivec2 cell ) const; 
-
-   private: 
-      ivec2 m_size; 
-      std::vector<DATA> m_data; // if you want more of an excercise - use DATA* m_data and manage the memory yourself (including copy/move/etc...)
-
-};
-
+## Data Structures
+```cpp
 //------------------------------------------------------------------------
 // Pathing 
 //------------------------------------------------------------------------
@@ -75,6 +73,8 @@ struct path_info_t
 }; 
 
 // some common types we'll be using for this
+// see: Array2D.hpp for interface for that
+// Not a necessary add - could easily be done with std::vector; 
 typedef Arrray2D<float> TileCosts; 
 typedef Array2D<path_info_t> PathInfo; 
 typedef std::vector<ivec2> Path; 
@@ -135,6 +135,7 @@ class PathSolver
 };
 ```
 
+## Feeding the Beast
 ```cpp
 // Pather Map::m_pather; 
 void Map::Update()
@@ -152,3 +153,76 @@ void Map::Update()
    // done preparing pather
 }
 ```
+
+## Following a Path
+So, my intended use case is my tasks will each frame likely want to `PathTo` a target, so I'm going to make the `PathTo` be kind to when I'm repathing to a new target; 
+
+```cpp
+bool Unit::PathTo( vec2 target ) 
+{
+   // 1. Determine if I have a path that works for this target; 
+   // 2. If not, clear the current path if I have one
+   // 3. If no path, create path for the target
+   // 4. If path...
+   //    4a. Follow path
+   //    5b. return true; 
+   // 5. else if no path...
+   //    5a. Just move toward the target (like before)
+   //    5b. Return false (could not get there)
+} 
+```
+
+Most of the above should be fairly straight foward, outside of `FollowPath`, so let's look into that...
+
+```cpp
+// Should be private - as it should only be used internally;
+void Unit::FollowPath()
+{
+   ASSERT( m_path != nullptr ); // if we're here, we better have had a path
+
+   // if I have reached the next node on the path...
+   //    if more nodes... advance target node in path
+   //    if no more nodes... move to exact target within node
+   // else 
+   //    move toward target node
+   //    if I end up being blocked - clear the path (causing repath next frame)
+}
+```
+
+*Note: If you can move REALLY quickly, and can pass multiple nodes in a frame, you may want call this and keep track of how much movement was used.  Move until you reach the destination or you run out of distance for this frame*
+
+**TODO** 
+So what members does our Unit need to follow this path?
+- ...
+
+
+`PathTo( Entity* )` is similar, though when first calcultaing the path, you path to all tiles the building occupies, and pick the best one. 
+
+
+## Path Shortcutting
+The above paths will look fairly unnatural, but should work;
+
+Since we're a realspace game, and are allowed to move any direction - what we want to do is try to skip forward along the path as far as possible as long as we can take a direct line unobstructed to that target; 
+
+One way to accomplish this is that every time we're about to advance our target ndoe forward, we instead raycast to our end-goal and see if we can go there directly.  If that files, we step back along out path one node and repeat.  Keep going until we are at our next node or we find a shortcut.
+
+Mark the shortcut node as our next node - which will cause our unit to move directly there. 
+
+Every frame, recommend repeating the process, so see if a new path opens up (start at the end, and move back to our next target). 
+
+If you're worried about speed, you can do one step of this each frame, keeping track of the last shortcut attempted.  
+
+**TODO: Grid Raycast**
+```cpp
+```
+
+## Enemy Commander
+You have a `PlayerCommander` or `PlayerController` currently.
+
+This task is make another `AIController` or `AICommander`, and give them a common base.  When the game starts up, assign an `AICommander` to the other team and give him some starting units/buildings.  
+
+Be sure he only communicates with the game through commands.  
+
+Some refactoring of what you should move from `PlayerCommander` to the base `Commander` so that `AICommander` can leverage will need to happen.  In my experience, it was very minimal (team, ability to issue commands, and an update), but your designs may vary; 
+
+The AI presented in the assignment should be fairly short to implement.  If you find it taking longer - take a look at what sort of helper methods you can add to `Game`/`Map`/`Commander` etc to make it go quicker; 

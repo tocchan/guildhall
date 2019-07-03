@@ -184,8 +184,42 @@ That gives us 6 assignments worth of work.
 - [Acquire & Release Semantics](https://preshing.com/20120913/acquire-and-release-semantics/) - More technical information about memory fences. 
 
 
-### Week 6 - Pathing & Optimization
+### Week 6 - Pathing & AI
 #### Task List
+
+- [ ] 60%: Pathing
+      - [ ] 20%: Units can properly navigate a difficult terrain
+          - [ ] Be able to create an obstacle course quickly (tie create hut to a hotkey for example)
+      - [ ] 10%: A block path (only static blockers) should cause the unit to repath; 
+      - [ ] 10%: Framerate should not be terrible with at least 20 units gathering; 
+      - [ ] 10%: If a single unit is selected - visualize their current path (debug toggle)
+      - [ ] 10%: Paths shortcut.  If you can go directly to a farther node in a path, take that route instead (creates more efficient paths).  Recommend a grid-raycast using occupancy map; 
+- [ ] 40%: Simple Swarm Commander AI
+      - [ ] 10%: Map starts with two teams with some starting resources and units
+      - [ ] 10%: Commander should gather and build units up to a certain count (8) and current bank (enough to rebuild two units)
+      - [ ] 10%: Once past certain population and bank, all units randomly attack an enemy target
+      - [ ] 10%: Once back to no units, repeat above
+
+
+#### Notes
+- [Pathing Class Notes](./notes/Pathing.md)
+- [Array 2D](./notes/Array2D.hpp)
+
+
+### Week 7 - Work Week
+
+### Week 8 - Work Week & Final Presentation
+- Show what you have
+- Do a post mortem of your code-base *for this project* up to this point; 
+  - Things you tried that worked
+  - Things you tried that didn't work
+  - What would you do differently starting from scratch
+
+*Note: If you tried something different then solutions presented in class - would be especially interested in your retrospective on this;* 
+
+
+
+### Overflow
 - [ ] Game shows a minimap
     - [ ] Shows buildings that belogn to a team
     - [ ] Shows units that belong to a team
@@ -193,13 +227,7 @@ That gives us 6 assignments worth of work.
     - [ ] Can right click minimap to issue commands as if you were clicking the map terrain
 - [ ] Game completes in win condition when all goblin units are dead (buildings/units)
 - [ ] Game completes in loss condition when all local units are dead (buildings/units)
-- [ ] Pathing!
-- [ ] `AICommander` that controls the Goblin Team
-    - [ ] Will build goblins, and sends them to attack the town center when he has a big enough group- [ ] Support custom binary formats for meshes to speed up loading time
 - [ ] Buildings can have dependencies (can only build hut if townhall is built)
-- [ ] Units not navigate around obstacles instead of moving in a straight line toward a target
-- [ ] Improve loading times farther
-- [ ] General Visual and Audio Improves and Polish
 - [ ] Feature: Map Editor
     - [ ] Can define number of teams for this map
         - [ ] Can define team color for any team
@@ -212,11 +240,29 @@ That gives us 6 assignments worth of work.
     - [ ] Can load into these maps from the main menu.  Recommend a console command `load_map name=<name>`
     - [ ] If a `level0.map` exists, load that by default; 
 - [ ] Users Choice
-
-#### Notes
-- ???
-
-
-### Week 7 - Work Week
-
-### Week 8 - Work Week & Final Presentation
+    - [ ] AI 
+        - [ ] Idle Behaviour
+        - [ ] Better Commander (the forever task)
+            - [ ] Better Commander API 
+            - [ ] Scriptable Commander
+    - [ ] Audio
+        - [ ] Cross Faded Music based on game state
+        - [ ] More and better mixed audio
+    - [ ] Gameplay 
+        - [ ] Fog of War
+        - [ ] Building Dependencies
+        - [ ] Tech Buildings (research)
+        - [ ] More resource types
+        - [ ] Ranged Units
+    - [ ] Rendering
+        - [ ] Skybox
+        - [ ] Forward Renderer
+        - [ ] Dynamic Lights
+        - [ ] Shadowmaps
+        - [ ] Particle Effects
+    - [ ] UI
+        - [ ] Real UI
+        - [ ] Minimap
+        - [ ] Acknowdgement effects
+        - [ ] Target highlighting
+        - [ ] Task preview (select units display their current task)
