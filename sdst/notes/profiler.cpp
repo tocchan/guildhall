@@ -58,7 +58,10 @@ class LogProfileScope
 // otherwise, display in seconds (with 3 values after decimal) -> ex 120482.294719 -> "120482.295 s"
 std::string GetProfileTimeString( double seconds );
 
-#define PROFILE_LOG_SCOPE( tag )  LogProfileScope _____scopeLog ## __LINE__ ## ( tag )
+#define COMBINE1(X,Y) X##Y  // helper macro
+#define COMBINE(X,Y) COMBINE1(X,Y)
+
+#define PROFILE_LOG_SCOPE( tag )  LogProfileScope COMBINE(__scopeLog, __LINE__) ## ( tag )
 
 void Foo()
 {
