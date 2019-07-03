@@ -75,7 +75,7 @@ struct path_info_t
 // some common types we'll be using for this
 // see: Array2D.hpp for interface for that
 // Not a necessary add - could easily be done with std::vector; 
-typedef Arrray2D<float> TileCosts; 
+typedef Array2D<float> TileCosts; 
 typedef Array2D<path_info_t> PathInfo; 
 typedef std::vector<ivec2> Path; 
 
@@ -214,6 +214,69 @@ If you're worried about speed, you can do one step of this each frame, keeping t
 
 **TODO: Grid Raycast**
 ```cpp
+float BetterFract( float f ) 
+{
+   float fraction = fract(f); 
+   if (fraction < 0.0f) {
+      fraction += 1.0f; 
+   }
+
+   return fraction; 
+}
+
+float GridRaycast( Grid grid, vec2 start, vec2 end )
+{
+   // assume for now that we are always moving top-right
+   vec2 dir = end - start; 
+   vec2 sign = Sign( dir ); // 1.0f if postive, -1.0f if negative
+   ivec2 isign = ivec2(sign); 
+
+   dir = Abs(dir); 
+   vec2 inverse_dir = vec2(1.0f) / dir; 
+
+   // assume grid lines fall on whole numbers
+   // 0, 1, 2, 3, 4, 5...
+   vec2 pos_distance = 1.0f - fract(start); // if moving positive
+   vec2 neg_distance = fract(start); // if moving negative
+   vec2 distance = pos_distance; 
+   if (sign.x < 0.0f) {
+      distance.x = neg_distance.x; 
+   }
+   if (sign.y < 0.0f) {
+      distance.y = neg_distance.y; 
+   }
+
+   ivec2 tile = grid.get_tile( start ); 
+   float time_moved = 0.0f; 
+
+   // not in the same tile is one way to check
+   // could also keep track of total distance travelled (1.0f)
+   while (time_moved < 1.0f) {
+      if (grid.is_blocked(tile)) {
+         return time_moved; 
+      }
+
+      vec2 time = distance * inverse_dir; 
+      // time.x = distance.x / dir.x;
+      // time.y = distance.y / dir.y;
+
+      if (time.x <= time.y) {
+         // move to right
+         tile += ivec2( isign.x, 0 ); 
+         distance.x = 1.0f; 
+         distance.y -= dir.y * time.x; 
+         time_moved += time.x; 
+      } else {
+         // move up
+         tile += ivec2( 0, isign.y );
+         distance.x -= dir.x * time.y;  
+         distance.y = 1.0f; 
+         time_moved += time.y; 
+      }
+   }
+
+   return 1.0f; 
+}
 ```
 
 ## Enemy Commander
