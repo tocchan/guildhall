@@ -152,7 +152,7 @@ That gives us 6 assignments worth of work.
 - [ ] 05%: Initial load screen now shows a smooth animation to show that the game isn't frozen
       - [ ] 05%: This should never stutter for more than half a second, and rarely
 - [ ] 10%: Game will load textures asynchronous during the initial startup phase
-- [ ] 10%: Game will load models asynchronous during initial startup phase
+- [ ] 10%: Game will load meshes asynchronous during initial startup phase
 - [ ] Once all resources are loaded, stop the loading threads
 - [ ] 05%: Time the load phase after the work is done; 
     - [ ] Debug Time:   _________________
