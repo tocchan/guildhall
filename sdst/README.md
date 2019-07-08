@@ -183,22 +183,21 @@ That gives us 6 assignments worth of work.
 - [Mike Acton: Data Oriented programming](https://www.youtube.com/watch?v=rX0ItVEVjHc) - Good talk about data oriented programming.
 - [Acquire & Release Semantics](https://preshing.com/20120913/acquire-and-release-semantics/) - More technical information about memory fences. 
 
-
 ### Week 6 - Pathing & AI
 #### Task List
 
 - [ ] 60%: Pathing
-      - [ ] 20%: Units can properly navigate a difficult terrain
-          - [ ] Be able to create an obstacle course quickly (tie create hut to a hotkey for example)
-      - [ ] 10%: A block path (only static blockers) should cause the unit to repath; 
-      - [ ] 10%: Framerate should not be terrible with at least 20 units gathering; 
-      - [ ] 10%: If a single unit is selected - visualize their current path (debug toggle)
-      - [ ] 10%: Paths shortcut.  If you can go directly to a farther node in a path, take that route instead (creates more efficient paths).  Recommend a grid-raycast using occupancy map; 
+    - [ ] 20%: Units can properly navigate a difficult terrain
+        - [ ] Be able to create an obstacle course quickly (tie create hut to a hotkey for example)
+    - [ ] 10%: A block path (only static blockers) should cause the unit to repath; 
+    - [ ] 10%: Framerate should not be terrible with at least 20 units gathering; 
+    - [ ] 10%: If a single unit is selected - visualize their current path (debug toggle)
+    - [ ] 10%: Paths shortcut.  If you can go directly to a farther node in a path, take that route instead (creates more efficient paths).  Recommend a grid-raycast using occupancy map; 
 - [ ] 40%: Simple Swarm Commander AI
-      - [ ] 10%: Map starts with two teams with some starting resources and units
-      - [ ] 10%: Commander should gather and build units up to a certain count (8) and current bank (enough to rebuild two units)
-      - [ ] 10%: Once past certain population and bank, all units randomly attack an enemy target
-      - [ ] 10%: Once back to no units, repeat above
+    - [ ] 10%: Map starts with two teams with some starting resources and units
+    - [ ] 10%: Commander should gather and build units up to a certain count (8) and current bank (enough to rebuild two units)
+    - [ ] 10%: Once past certain population and bank, all units randomly attack an enemy target
+    - [ ] 10%: Once back to no units, repeat above
 
 
 #### Notes
