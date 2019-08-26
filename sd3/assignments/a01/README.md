@@ -34,7 +34,7 @@ This will be more a excercise in learning an API, so I'm just going to give you 
 
 
 ## Goal
-Goal of this assignment is to implement the following [./Header.hpp](./UnitTest.hpp). 
+Goal of this assignment is to implement the following [./UnitTest.hpp](./UnitTest.hpp). 
 
 This will allow you to declare a `UNITTEST` in any *SOURCE* file (not header), and have it automatically be picked up and run
 when the user asks to runs tests.
