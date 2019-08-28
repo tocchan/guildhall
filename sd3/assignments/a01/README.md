@@ -5,7 +5,7 @@ SD3.a01 - Unit Test Framework & Callstacks
 - [ ] 80%: Unit Tests
     - [ ] 20%: Will have you create a single UNITTEST in a source file and set a breakpoint.  I want to see this breakpoint hit. 
     - [ ] 10%: Will change the priority to a high number, and confirm it still runs
-    - [ ] 10%; Change your test run priority to a lower number, and the test should not run.
+    - [ ] 10%: Change your test run priority to a lower number, and the test should not run.
     - [ ] 10%: Give your test a category and low priority again, and it should not run. 
     - [ ] 10%: Add a line to run tests of that category - breakpoint should hit again. 
     - [ ] 20%: Cause the test to fail.  The failed test should be logged to output, and a breakpoint hit once all tests have run. 
