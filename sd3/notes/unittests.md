@@ -148,7 +148,7 @@ static bool TestCallback()										// part of macro
 #define UNITTEST( name, cat, pri ) 	\
 	static bool MACRO_COMBINE(__UnitTest_,__LINE__)(); 	\		// this expands to bool __UnitTest_123();
 	static UnitTest MACRO_COMBINE(__UnitTestObj_,__LINE__)( name, cat, pri, MACRO_COMBINE(__UnitTest_,__LINE__) ); \
-	static bool MACRO_COMBINE(__UnitTest_,__LINE__)() 	\
+	static bool MACRO_COMBINE(__UnitTest_,__LINE__)() 
 
 ```
 
