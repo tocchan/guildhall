@@ -118,6 +118,11 @@ We care mostly about symbols, so the functions you want to look into are;
 - `SymFromAddr`:  Convert a callstack pointer into symbol.  Pay special attention to the documentation for `SYMBOL_INFO`!  This is how you get your function name. 
 - `SymGetLineFromAddr64`:  Given an address, will give you the file and line from where this is called.  
 
+Try to stick to the format;
+`filepath.cpp(line,offset): function_name`
+
+For example; 
+`Engine/Image.cpp(127,8): Image::LoadFromFile`
 
 ## Extensions
 - `CONFIRM` can be changed to automatically log the test that condition that failed, as well as break.  This makes it quicker to figure out exactly which part of the test failed and put the coder there to quickly re-walk it.  
