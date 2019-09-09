@@ -2,26 +2,25 @@ SD3.a03 : Log System and Allocators
 ======
 
 ## Grading
-[ ] Log system can be initialized with a given log file name. 
-    [ ] All log functions do nothing if `LogSystem` is not initialized, but this is not an error. 
-[ ] All logging happens on a dedicated logging thread.
-[ ] Log thread test works without error/crashing
-[ ] Log filtering works (see test below)
-[ ] Log flushing works (see test below)
-[ ] Log system can be subscribed to - shown using the dev console; 
+- [ ] Log system can be initialized with a given log file name. 
+    - [ ] All log functions do nothing if `LogSystem` is not initialized, but this is not an error. 
+- [ ] All logging happens on a dedicated logging thread.
+- [ ] Log thread test works without error/crashing
+- [ ] Log filtering works (see test below)
+- [ ] Log flushing works (see test below)
+- [ ] Log system can be subscribed to - shown using the dev console; 
 
-[ ] `AsyncRingBuffer` implemented
-    [ ] Used to pass information to the logging thread
-    [ ] If your `DevConsole` isn't already thread safe - can be used to remedy that; 
+- [ ] `AsyncRingBuffer` implemented
+    - [ ] Used to pass information to the logging thread
+    - [ ] If your `DevConsole` isn't already thread safe - can be used to remedy that; 
 
 ### Extra
-[ ] Keep a history of log files around (attach a timestamp to them)
-[ ] Keep only N most recent log files; 
-[ ] Support a seperate filter for the dev console -vs- file  
-[ ] Support filter colors (useful for dev conssole) 
-    [ ] Output logs using HTML (allows coloring, tables, etc)
-    [ ] HTML file includes a way to live filter (javascript is your friend)
-
+- [ ] Keep a history of log files around (attach a timestamp to them)
+- [ ] Keep only N most recent log files; 
+- [ ] Support a seperate filter for the dev console -vs- file  
+- [ ] Support filter colors (useful for dev conssole) 
+    - [ ] Output logs using HTML (allows coloring, tables, etc)
+    - [ ] HTML file includes a way to live filter (javascript is your friend)
 
 ## Notes
 ...
