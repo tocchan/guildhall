@@ -189,3 +189,44 @@ void UntrackAllocation( void* ptr );
 
 //
 ```
+
+### Log Live Allocation Example
+
+When you call `MemTrackLogLiveAllocations`, the output depends on the mode you're in;
+
+1. None:  `Memory tracking is not enabled.`
+2. Alloc Count:  `%u live allocation(s).`
+3. Verbose...
+
+```
+=== BEGIN MEMORY LOG === 
+2.430 MiB live from 16 allocation(s)...
+
+- 1.400 MiB from 7 allocation(s)
+  path/to/file0.cpp(123): Foo
+  path/to/file0.cpp(100): PathToTarget
+  path/to/main.cpp(40): WinMain
+
+- 800.000 KiB from 2 allocation(s)
+  path/to/game.cpp(111): CreateBullet
+  path/to/entity.cpp(10): Entity::TryFireProjectile
+  path/to/game.cpp(493): Game::UpdateEntities
+  path/to/main.cpp(40): WinMain
+
+- 200.000 KiB from 1 allocation(s)
+  path/to/game.cpp(80): CreateEntity
+  path/to/game.cpp(10): Game::SpawnPlayer
+  path/to/game.cpp(120): Game::Startup
+  path/to/main.cpp(40): WinMain
+
+- 30.000 KiB from 6 allocations(s)
+  path/to/game.cpp(824): SpawnExplosion
+  path/to/game.cpp(320): Entity::TakeDamage
+  path/to/game.cpp(120): Game::Update
+  path/to/main.cpp(40): WinMain
+
+=== END MEMORY LOG ===
+
+```
+
+Import part is they're grouped by similar callstack, and ordered largest to smallest.  
