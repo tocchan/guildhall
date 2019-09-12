@@ -1,5 +1,11 @@
-// NOTE: As with ConsolePrintf, you may use variadic templates instead if you prefer
+struct log_message_t 
+{
+   char const* filter; 
+   char const* message; 
+   callstack_t* callstack; // callstack if there was one
+}; 
 
+// NOTE: As with ConsolePrintf, you may use variadic templates instead if you prefer
 void LogSystemInit( char const* log_file ); 
 void LogSystemShutdown(); // will do a final flush of the log file and properly close donw
 
@@ -36,13 +42,6 @@ void LogDisable( char const* filter );    // this filter will no longer appear i
 // NOTE - this message is only valid for the lifetime of the callback
 // and is not guaranteed to valid after your hook returns, so be sure to 
 // copy data you need!
-struct log_message_t 
-{
-   char const* filter; 
-   char const* message; 
-   callstack_t* const callstack; // callstack if there was one
-}; 
-
 typedef std::function<void(log_message_t)> log_hook_cb; 
 void LogHook( log_hook_cb cb ); 
 void LogUnhook( log_hook_cb cb ); 
