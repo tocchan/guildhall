@@ -2,6 +2,15 @@
 #include <malloc.h>
 
 //------------------------------------------------------------------------
+// use this to help with initialization order problems
+// that'll happen with this assignment
+std::mutex& GetStaticMutex() 
+{
+	static std::mutex mut; 
+	return mut; 
+}
+
+//------------------------------------------------------------------------
 std::string GetSizeString( size_t byte_count )
 {
 	// TODO 
