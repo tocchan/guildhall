@@ -21,12 +21,12 @@ class AsyncRingBuffer
 
       // helpers - optional
       bool write( void const* data, size_t byte_size ); 
-      bool try_try( void const* data, size_t byte_size ); 
+      bool try_write( void const* data, size_t byte_size ); 
 
       // return 0 on failure, otherwise number of bytes read; 
       // be sure buffer is large enough.  Non-async version could do a peek; 
       size_t read( void* out_data ); 
-      size_t try_tread( void* out_data ); 
+      size_t try_read( void* out_data ); 
 
    private: 
       // data we need to support this; 
