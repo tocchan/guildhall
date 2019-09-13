@@ -128,8 +128,8 @@ void UntrackAllocation( void* ptr );
 
             // just doing this to slow it down
             // (and later, to confirm memory didn't get currupted)
-            for (uint i = 0; i < MEMTEST_ALLOC_BYTE_SIZE; ++i) {
-               ptr[i] = (byte)i; 
+            for (uint byte_idx = 0; byte_idx < MEMTEST_ALLOC_BYTE_SIZE; ++byte_idx) {
+               ptr[byte_idx] = (byte)0; 
             }
 
             mem_queue.enqueue( ptr ); 
@@ -162,7 +162,8 @@ void UntrackAllocation( void* ptr );
          // wpin up that many threads; 
          uint core_count = std::thread::hardware_concurrency(); 
          for (uint i = 0; i < core_count; ++i) {
-            std::thread test_thread( AllocTest, mem_queue, count );  
+            std::thread test_thread( [&]() { AllocTest( mem_queue, count ); } ); 
+            test_thread.detach();  
          } 
 
          while (live_count.load() > 0) {
