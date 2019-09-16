@@ -24,7 +24,7 @@ SD3.a03 : Log System and Allocators
 
 ## Notes
 
-## Links
+### Links
 - https://www.justsoftwaresolutions.co.uk/threading/locks-mutexes-semaphores.html
 - https://en.cppreference.com/w/cpp/thread/condition_variable
 - https://en.cppreference.com/w/cpp/thread/shared_mutex
