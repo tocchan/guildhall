@@ -37,8 +37,8 @@ void Rigidbody2D::ApplyImpulseAt( vec2 linear_impulse, vec2 point_of_contact )
 	vec2 linear = linear_impulse; 
 
 	vec2 displacement = point_of_contact - GetCenterOfMass();  // world location of rigidbody (probably)
-	vec2 perp_disp = displacement.Rotate90(); 
-	float angular = Dot( linear_impulse, perp_disp ); 
+
+	float angular = Cross( linear_impulse, displacement ); 
 
 	ApplyImpulses( linear, angular ); 
 }
