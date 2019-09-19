@@ -2,15 +2,15 @@ SD3.a03 : Log System and Allocators
 ======
 
 ## Grading
-- [ ] Log system can be initialized with a given log file name. 
-    - [ ] All log functions do nothing if `LogSystem` is not initialized, but this is not an error. 
-- [ ] All logging happens on a dedicated logging thread.
-- [ ] Log thread test works without error/crashing
-- [ ] Log filtering works (see test below)
-- [ ] Log flushing works (see test below)
-- [ ] Log system can be subscribed to - shown using the dev console; 
+- [ ] 03%: Log system can be initialized with a given log file name. 
+    - [ ] 02%: All log functions do nothing if `LogSystem` is not initialized, but this is not an error. 
+- [ ] 20%: All logging happens on a dedicated logging thread.
+- [ ] 20%: Log thread test works without error/crashing
+- [ ] 15%: Log filtering works (see test below)
+- [ ] 10%: Log flushing works (see test below)
+- [ ] 10%: Log system can be subscribed to - shown using the dev console; 
 
-- [ ] `AsyncRingBuffer` implemented
+- [ ] 20%: `AsyncRingBuffer` implemented
     - [ ] Used to pass information to the logging thread
     - [ ] If your `DevConsole` isn't already thread safe - can be used to remedy that; 
 

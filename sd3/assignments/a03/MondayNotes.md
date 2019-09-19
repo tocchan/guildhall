@@ -287,7 +287,7 @@ class MPSCRingBuffer
          uint new_head = m_write_head + total_size; 
          if (new_head > m_size) {
             // need to wrap;
-            ringbuffer_header_t* skip_header = (ringbuffer_header_t*)(m_buffer + new_head); 
+            ringbuffer_header_t* skip_header = (ringbuffer_header_t*)(m_buffer + m_write_head); 
             skip_header->size = 0;  // 0 means skip; 
             skip_header->ready = 1; 
 
