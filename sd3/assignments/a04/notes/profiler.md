@@ -9,6 +9,7 @@ Views
 
 Recording: Theory
 - end goal views
+  - usage
 - data structure that makes sense
 - don't want to slow down our game *too much*. 
 
