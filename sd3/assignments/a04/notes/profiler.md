@@ -1,15 +1,39 @@
 
 Profiling System
 - Instrumentation
+
+```cpp
+
+void Game::Update()
+{
+	ProfilePush( "run system messages" ); 
+	//...
+
+	ProfilePop(); 
+
+	ProfilePush( "update input" ); 
+	// ...
+	ProiflePop(); 
+}
+
+void Physics::Update()
+{
+	PROFILE_SCOPE( "physics" ); 
+}
+
+```
+
 - Design
+  - Tree structure - build as we go; 
 
 Views
-- Cost Graph
+- *Cost Graph*
 - Timeline View
+- *Reports*
 
 Recording: Theory
 - end goal views
-  - usage
+  - usage - push and pops
 - data structure that makes sense
 - don't want to slow down our game *too much*. 
 
@@ -19,6 +43,7 @@ Reports: Theory
 
 
 Recording: Practice
+- [./profiler_impl.cpp](./profiler_impl.cpp)
 - What do we have to record
 - Error Checking
 - Grabbing old trees

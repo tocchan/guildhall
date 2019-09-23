@@ -103,7 +103,7 @@ If memory tracking is enabled, the following columns are also desired
 A tree view report will clump similar nodes only if they are siblings, and will also show the relationship to the 
 parent by indentation.  Useful for figuring out which part of the frame is taking the most time.  
 
-This example is sorted by `total`
+This example is sorted by `self`
 
 ```
 LABEL                                                CALLS    TOTAL%   TOTAL TIME         SELF%    SELF_TIME       

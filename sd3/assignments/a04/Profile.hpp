@@ -13,7 +13,7 @@ void ProfilerResume(); // resume recording (new trees can be created)
 // Recording again should allocate no heap memory, and try to be fairly quick;
 // While active, profiler is always recording, and wants to do its best to not
 // slow down the calling thread; 
-void ProfilePush( char const* tag );	// pushes a new child node, and marks it as the active node.  
+void ProfilePush( char const* label );	// pushes a new child node, and marks it as the active node.  
 void ProfilePop(); 						// pops active node in the tree, or errors if no node is present
 
 // memory tracking fed to the profiler system 
@@ -25,8 +25,8 @@ void ProfileFree( size_t byte_size = 0 );
 // A context can be thought of as a frame of work
 // optional in the system, but can add some additional
 // error checking to make sure people are using it correctly
-void ProfileBeginFrame( char const* context_name = "frame" );  // 
-void ProfileEndEnd();  
+void ProfileBeginFrame( char const* label = "frame" );  // 
+void ProfileEndFrame();  
 
 // EXTRA -> more important to the job system for tracking timing across threads
 // manually construct a tree without relying on thread_local storage; 
@@ -56,8 +56,8 @@ class ReportNode;
 class ProfilerReport
 {
 	public:
-		void create_flat_view( profile_node_t* node ); 
-		void create_tree_view( profile_node_t* node ); 
+		void append_flat_view( profile_node_t* root ); 
+		void append_tree_view( profile_node_t* root ); 
 
 		ReportNode* get_root() const;
 
