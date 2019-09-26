@@ -38,7 +38,7 @@ Instrumented Profiler
   - [ ] highwater and current count is displayed at end of graph
 
 ## Instrumented Profiler
-For points - must support at lesat the following methods; 
+For points - must support at least the following methods; 
 
 ```cpp
 bool ProfilerSystemInit(); 
@@ -59,11 +59,45 @@ void ProfileEndEnd();
 The system being only callable from the main thread safely gets you single-threaded points, otherwise you get 
 the multi-threaded version. 
 
+### RAII Macros
+`PROFILE_SCOPE` and `PROFILE_FUNCTION` are macros that wrap `ProfilePush` and `Pop`.
+
+Example use case; 
+
+```cpp
+void Game::Update()
+{
+    PROFILE_SCOPE( "Game::Update" ); // ProfilePush("Game::Update"); 
+
+    // do stuff in update
+    {
+        PROFILE_SCOPE("Physics"); // ProfilePush("Physics");  
+        Physics::Update(); 
+        // ProfilePop() for "Physics" happens here due to leaving scope
+    }
+
+    // ProfilePop() for Game::Update happens here due to leaving scope
+}
+
+void Game::Render()
+{
+    PROFILE_FUNCTION(); // Same as PROFILE_SCOPE("Game::Render"); 
+
+    // render...
+
+    // ProfilePop(); happens here due to leaving scope; 
+}
+```
+
+`PROFILE_FUNCTION` is just `PROFILE_SCOPE`, using the bulit-in macro `__FUNCTION__` to get the name of the function 
+or method you are currently in; 
+
+
 ### Thread Safety
 Concepts used for this assignment; 
 
 - using `std::thread::id` to identify where work is coming from; 
-- An thread-safe `ObjectAllocator` for allocating/freeing nodes; 
+- A thread-safe `ObjectAllocator` for allocating/freeing nodes; 
 - `thread_local` storage qualifier to access the current threads active tree
 - `shared_mutex` or reader-writer locks for accessing node history
 - reference counting for tracking when a tree can be destroyed
