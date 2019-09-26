@@ -1,8 +1,15 @@
 ## Allocator Implementation
 
 ### Notes
+- Why?  Access and Usage patterns.
+  - malloc/new are general purpose allocators
+  - solve fragmentation
+  - try to be fast - are not guaranteed to be; 
 - Allocators are usually given a **pool** of memory.
   - Think `BLOB` or Binary Large OBjects - generally a large buffer
+  - Allocators job is to decide how to give pieces of that memory to people
+  - Some allocators take a base allocator to suballocate from.  
+    - useful when memory usage is less important, but speed is (depends on the type of allocator)
   - So allocator should be able to fully work within that block of memory without asking for more
     - If given a base, try to allocate from base as little as possible; 
 - Block allocators will only grow.
@@ -25,11 +32,22 @@
 ## Linear Allocator
 aka: Static Allocator
 
-### Async Version
-
-## Static Allocator
+Not needed for this assignment;  Easiest allocator to talk about; 
 
 ### Async Version
+...
+
+## Stack Allocator
+aka: n/a
+
+Not needed for this assignment;  Very useful for large temporary (scope based) storage.
+
+### Async Version
+- No.  By its nature it is designed for stack based work, which means using the same thread.  
+
+## Stereo and Mailbox Buffers/Allocators
+Variants of the Linear Allocator;  Not used in this assignment, but are fairly common in multi-threaded system design; 
+
 
 ## Block Allocator
 
@@ -183,7 +201,8 @@ Solutions to this problem personally encounted fall into two basic camps;
 
 2. Preventing things from being recycled until you have a safe 'sync' point.  Early on most lockless algorithsm were proved out in Java, C#, or some other managed language.  Since garbage collection is a hard lock on the entire system.  In C++, we can do this by saving off freed nodes into a secondary list, and then adding the list back to the main list if our list becomes empty.  
 
-
+### ObjectAllocator and ObjectPool Variants
+...
 
 ## Sign Post Allocator (theory only)
 ...
