@@ -73,7 +73,9 @@ class ReportNode
 		// compare returns <0 if a should appear before b
 		//         returns >0 if a should appear after b
 		//         returns =0 if it doens't matter
-		typedef int compare_op( ReportNode const* a, ReportNode const* b ); 
+      //
+      // Note: Also common is to use a std::less style, ie: bool less_op( lhs, rhs ); that returns true if lhs comes before rhs; 
+		typedef int compare_op( ReportNode const* lhs, ReportNode const* rhs ); 
 		void sort( compare_op op ); 
 
 	public:

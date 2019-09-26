@@ -105,6 +105,25 @@ Concepts used for this assignment;
 
 We will also be using in-place linked lists again to prevent the need to allocating new memory for a node; 
 
+### Cleaning up Old Frames
+When a frame/tree completes, 
+
+
+### Pausing/Resuming the System
+If you pause the profiler - all current trees are allowed to finish (ie, `Push` and `Pop` behaviour is 
+unchanged if that thread has an active node).  But no new trees are allowed to start.
+
+Resuming is a bit trickier.  We don't want to just immediatley start creating new trees the moment
+resume is called, as if we're in the middle of the frame we may end up with lots of little branches thinking 
+they're full trees.  
+
+We need to keep track of *when* a new tree would have started.  One way to accomplish this is to keep a depth
+count, keeping track of how deep a tree would be.  Only allow a new tree to start if we're currently in a 
+record mode, and the current depth is 0.
+
+This depth is per thread - similar to the active node.
+
+
 ## Reports
 
 You must support a console command, such as `profile_report` that takes the following parameters; 
@@ -125,6 +144,7 @@ Optional columns that can be useful;
 - `SELF TIME`: Actual time spent, not including children
 - `AVG TIME`: Average time per call. 
 - `AVG SELF TIME`: Average time per call, not including children. 
+- `MAX TIME` & `MAX_SELF_TIME`:  Longest a certain sample took in the collection
 
 If memory tracking is enabled, the following columns are also desired
 - `ALLOC COUNT`: number of allocations while this node was active (includes children)
@@ -178,4 +198,69 @@ DevConsole::render                                  1        8.82%    1487 us   
 Game::run_frame                                     1        100.00%  16.8610 ms         0.31%    51 us          
 Game::update_sim                                    1        0.03%    4 us               0.02%    4 us           
 Game::process_input                                 1        0.00%    0 us               0.00%    0 us     
+```
+
+### Generating a Report
+An example of how to get a report with how the system is currently designed; 
+
+```cpp
+//all of these will use a method for logging
+void LogReport( ReportNode* node ) 
+{
+   // TODO: log the current node
+   // ...
+
+   // TODO: log all the children of the node
+   // ...
+}
+
+void TreeViewSortedByTotalTime()
+{
+   ProfilerReport report; 
+
+   // get this threads last recorded tree
+   profile_node_t* prev_frame = ProfilerAcquirePreviousTreeForCallingThread(); 
+
+   // this parses through the samples and adds them to the report
+   report.append_tree_view( prev_frame ); 
+
+   // release the tree so the system can potentially clean it up
+   ProfilerReleaseTree( prev_frame ); 
+
+   // sort by self time (passing in a lambda as my compare_op 
+   report.sort( []( ReportNode const* a, ReportNode const* b ) {
+      return a->get_total_time() < b->get_total_time() ? -1 : 1; 
+   }); 
+
+   // Print
+   ReportNode* root = report->get_root(); 
+   LogReport( root ); 
+}
+
+void FlatViewSortedBySelfTime() 
+{
+   ProfilerReport report; 
+
+   // get this threads last recorded tree
+   profile_node_t* prev_frame = ProfilerAcquirePreviousTreeForCallingThread(); 
+
+   // this parses through the samples and adds them to the report
+   report.append_flat_view( prev_frame ); 
+
+   // Release the frame so it can be cleaned up
+   ProfilerReleaseTree( prev_frame ); 
+
+   // sort by self time (passing in a lambda as my compare_op 
+   report.sort( []( ReportNode const* a, ReportNode const* b ) {
+      return a->get_total_time() < b->get_total_time() ? -1 : 1; 
+   }); 
+
+   // note in 'flat' view, the 'root' is a dummy node that I can add children 
+   // to (so root will have a lot of children, but no grandchildren if done correctly)
+   ReportNode* root = report->get_root(); 
+   LogReport( root ); 
+}
+
+// if you wanted to run a report on multiple frames (average over a time for example)
+// it is the same as above, but you just append multiple frames into the report; 
 ```
