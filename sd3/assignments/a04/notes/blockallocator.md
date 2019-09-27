@@ -12,13 +12,7 @@
     - useful when memory usage is less important, but speed is (depends on the type of allocator)
   - So allocator should be able to fully work within that block of memory without asking for more
     - If given a base, try to allocate from base as little as possible; 
-- Block allocators will only grow.
-- Are very fast (mostly)
-  - When allocating a chunk, at the mercy of the parent allocator, but this should be a rare occurance
-  - Once saturated, all frees and allocations amount to a couple of pointer assignments; 
-- Predictable internal fragmentation and no external fragmentation
-- Bad cache-coherency (initially blocks will allocate linearly, but soon get shuffled by usage)
-- Fairly simple to make thread-safe, even lockless
+
 
 ### New Concepts
 - Alignment and `alignof`
@@ -29,18 +23,205 @@
     - why?
 
 
+## UntrackedAllocator and/or TrackedAllocator
+aka: DefaultAllocator
+
+```cpp
+class TrackedAllocator : public Allocator 
+{
+	public:
+		void* alloc( size_t size ) final 
+		{
+			return TrackedAlloc( size ); 
+		}
+
+		void free( void* ptr ) final 
+		{	
+			TrackedFree( ptr ); 
+		}
+
+		static TrackedAllocator s_instance; 
+};
+```
+
 ## Linear Allocator
 aka: Static Allocator
 
 Not needed for this assignment;  Easiest allocator to talk about; 
 
-### Async Version
-...
+```cpp
+class LinearAllocator : public Allocator 
+{
+	public:
+		bool init( void* buffer, size_t max_byte_size )
+		{
+			m_buffer = (byte*)buffer; 
+			m_max_size = max_byte_size;
+			m_offset = 0; 
+		}
 
-## Stack Allocator
+		virtual void* alloc( size_t size ) final 
+		{	
+			size_t new_offset = m_offset + size; 
+			if (new_offset > m_max_size) {
+				return nullptr; 
+			}
+
+			void* ret = m_buffer + m_offset; 
+			m_offset = new_offset;  
+
+			return ret; 
+		}
+
+		virtual void free( void* ) final
+		{
+			// do nothing...
+		}
+
+		inline void reset() 
+		{
+			m_offset = 0;   
+		}
+
+	private: 
+		byte* m_buffer; 
+		size_t m_max_size; 
+		size_t m_offset; 
+};
+
+```
+
+### Use Case
+Dev Console System
+
+```cpp
+static byte DevConsolePool[1 MB]; 
+
+void DevConsoleStartup() 
+{
+	m_command_allocator = LinearAllocator( DevConsolePool, sizeof(DevConsolePool) ); 
+	//...
+}; 
+
+void RegisterCommand() 
+{
+	Command* cmd = m_command_allocator.create<Command>(); 
+	cmd->m_name = m_command_allocator.alloc( name_len ); 
+	strcpy_s( cmd->m_name, ... ); 
+	// ... finish setting it up; 
+	// don't use anything that uses heap/stack/etc... nothing requiring a delete; 
+}
+
+// THERE IS NO UNREGISTER
+void DevConsoleShutdown()
+{
+	//... nothing
+}
+
+```
+
+### Async Version
+
+```cpp
+class AsyncLinearAllocator : public Allocator 
+{
+	public:
+		virtual void* alloc( size_t size ) final 
+		{	
+			if (m_offset > m_max_size) {
+				return nullptr; 
+			}
+
+			size_t new_offset = (m_offset += size);  
+			if (new_offset > m_max_size) {
+				return nullptr; 
+			}
+
+			size_t old_offset = new_offset - size; 
+			return m_buffer + old_offset; 
+		}
+
+		// option 2
+		virtual void* alloc( size_t size ) 
+		{
+			while (true) {
+				size_t old_offset = m_offset; 
+				size_t new_offset = old_offset + size; 
+
+				if (m_offset.compare_exchange_weak( old_offset, new_offset )) {
+					break; 
+				}
+			}
+		}
+
+	public:
+		byte* m_buffer; 
+		size_t m_max_size; 
+		
+		std::atomic<size_t> m_offset; 
+};
+
+
+class SpinLock
+{
+	public:
+		void lock()
+		{
+			m_value.compare_exchange_strong( 0, 1 ); 
+		}
+
+		void unlock()
+		{
+			m_value.exchange( 0 );  
+		}
+
+		std::atomic<int> m_value; 
+}
+
+
+// compare_exchange -> Compare and Set, or CAS operator
+// YOU DO NOT WRITE THIS!
+int CompareAndSet( volatile int* ptr, int comparand, int set_to )
+{
+	int old_value = *ptr; 
+	if (old_value == comparand) {
+		*ptr = set_to; 
+	}
+
+	return old_value; 
+}
+```
+
+
+## Stack Allocator (theory)
 aka: n/a
 
 Not needed for this assignment;  Very useful for large temporary (scope based) storage.
+
+```cpp
+class StackAllocator
+{
+	alloc
+	free
+
+	push(); // save current head           
+	pop();  // restore to last save head
+};
+
+// use case
+void BlurImage( Image& img ) 
+{
+	gStackAllocator.push(); 
+
+	byte* img_memory = gStackAllocator.alloc( /* enoug hmemory for the image*/ ); 
+
+	// blur image in place
+
+	// copy result back to passed in image; 
+
+	gStackAllocator.pop(); 
+}
+```
 
 ### Async Version
 - No.  By its nature it is designed for stack based work, which means using the same thread.  
@@ -50,6 +231,13 @@ Variants of the Linear Allocator;  Not used in this assignment, but are fairly c
 
 
 ## Block Allocator
+- Block allocators will only grow.
+- Are very fast (mostly)
+  - When allocating a chunk, at the mercy of the parent allocator, but this should be a rare occurance
+  - Once saturated, all frees and allocations amount to a couple of pointer assignments; 
+- Predictable internal fragmentation and no external fragmentation
+- Bad cache-coherency (initially blocks will allocate linearly, but soon get shuffled by usage)
+- Fairly simple to make thread-safe, even lockless
 
 ```cpp
 struct block_t
@@ -107,6 +295,10 @@ class BlockAllocator : public Allocator
 		size_t m_alignment; 
 		size_t m_block_size; 
 		size_t m_blocks_per_chunk; 	// may prefer chunk_size?
+
+		// AsyncBlockAllocator
+		std::mutex m_chunk_lock; // when allocating chunks 
+		std::mutex m_block_lock; // when allocating a single block
 }
 ```
 
@@ -115,6 +307,19 @@ bool BlockAllocator::init( Allocator* base,
 	size_t block_size, 
 	size_t alignment, 
 	uint blocks_per_chunk )
+{
+	m_base = base; 
+	m_block_size = block_size; 
+	m_alignment = alignment; 
+	m_blocks_per_chunk = blocks_per_chunk; 
+
+	m_free_blocks = nullptr; 
+	m_chunk_list = nullptr; 
+
+	alloc_chunk();  // up to you to do this here or not; 
+
+	return true ;
+}
 
 bool BlockAllocator::init( void* buffer, 
 	size_t buffer_size,  
@@ -122,42 +327,122 @@ bool BlockAllocator::init( void* buffer,
 	size_t alignment )
 {
 	// infer class members based on parameters
+	m_blocks_per_chunk = buffer_size / block_size; 
+	m_buffer_size = buffer_size; 
+	m_block_size = block_size; 
+
+	m_base = nullptr; 
+	m_free_blocks = nullptr; 
+
+	// allocating blocks from a chunk
+	// may move this to a different method later; 
+	break_up_chunk( buffer ); 
+}
+
+void BlockAllocator::break_up_chunk( void* chunk ) 
+{
+	byte* buf = (byte*)chunk; 
+	block_t* first = (block_t*)buf;
+	block_t* head = nullptr; 
+
+	for (uint i = 0; i < m_blocks_per_chunk; ++i) {
+		block_t* node = (block_t*)buf; 
+		buf += m_block_size; 
+
+		node->next = head; 
+		head = node; 
+	}
+
+	{
+		// scope lock list_lock
+		first->next = m_free_blocks; 
+		m_free_blocks = head; 
+	}
 }
 
 void BlockAllocator::deinit() 
 {
 	// if we have a base pool, free all chunks
+	if (m_base) {
+		// free chunks
+		while (m_chunk_list != nullptr) {
+			list = m_chunk_list; 
+			m_chunk_list = m_chunk_list->next; 			
+			m_base->free( list ); 
+		}
+	} // else - normal cleanup; 
 
-	// reset to an invalid state
+	// reset
+	m_base = nullptr; 
+	m_free_blocks = nullptr;
+	m_block_size = 0U; 
+	m_blocks_per_chunk = 0U;  
 }
 
 void* BlockAllocator::alloc_block()
 {
-	Block* block = get_free_block(); 
-	if (block == nullptr) {
+	block_t* block = pop_free_block(); 
+	while (block == nullptr) {
 		if (!alloc_chunk()) {
 			return nullptr; 
 		}
 
-		block = get_free_block(); 
+		block = pop_free_block(); 
 	}
 
 	return block; 
 }
 
+block_t* BlockAllocator::pop_free_block() 
+{
+	// scope lock - list_lock
+	block_t* head = m_free_blocks; 
+	if (head != nullptr) {
+		m_free_blocks = head->next; 
+	}
+
+	return head; 
+}
+
 BlockAllocator::free_block( void* ptr ) 
 {
-	Block* block = (Block*)ptr;
+
+	block_t* block = (block_t*)ptr;
 	push_free_block( block );  
+}
+
+void BlockAllocator::push_free_block( block_t* block ) 
+{
+	// scope lock - list_lock
+	block->next = m_free_blocks;
+	m_free_blocks = block; 
 }
 
 bool BlockAllocator::alloc_chunk()
 {
-	// allocate a chunk of memory from base if able
+	if (m_base == nullptr) {
+		return false; 
+	}
 
-	// track this chunk so we can free it later
+	if (m_chunk_lock.try_lock()) {
+		// allocate a chunk of memory from base if able
 
-	// break chunk 
+		size_t chunk_size = m_blocks_per_chunk * m_block_size + sizeof(block_t); 
+
+		block_t* chunk = (block_t*)m_base->alloc( chunk_size ); 
+		if (chunk == nullptr) {
+			return false; 
+		}
+
+		// track this chunk so we can free it later
+		chunk->next = m_chunk_list; 
+		m_chunk_list = chunk; 
+
+		// break chunk 
+		break_up_chunk( chunk + 1 ); 
+	}
+
+	return true; 
 }
 
 ```

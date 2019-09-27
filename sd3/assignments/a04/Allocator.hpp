@@ -6,7 +6,7 @@
 // - Previous companies I've worked use interfaces
 //   - This allows using the same pattern with different blocks of memeory
 //   - Lets us give systems memory blocks/pools, and letting the system decide how to divvy them up; 
-class IAllocator  // or just Allocator if you prefer
+class Allocator  // or just Allocator if you prefer
 {
    public:
       // get memory
@@ -48,8 +48,12 @@ class IAllocator  // or just Allocator if you prefer
 // at is 'final'.  So good use case for that here; 
 
 // news that take an allocator to use; 
-void* operator new( size_t size, IAllocaotr& pool ) { return pool->alloc(size); }
-void operator delete( void* ptr, IAllocator& pool ) { pool->free(size); }
+void* operator new( size_t size, Allocator& pool ) { return pool.alloc(size); }
+void operator delete( void* ptr, Allocator& pool ) { pool.free(size); }
+//
+// new (my_allocator) SomeObject();
+// delete (my_allocator) SomeObject(); // error
+// my_allocator.destroy( obj ); // non-error
 
 // To make an allocator for our tracked memory, it is as easy as this; 
 class TrackedAllocator : public IAllocator 

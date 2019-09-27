@@ -11,8 +11,8 @@ Instrumented Profiler
 - [ ] 40pts: Profiler Implemented
     - [ ] 20pts: Profiler Single-threaded Functionality
     - [ ] 10pts: Profiler Mutli-threaded Functionality 
-    - [ ] 03pts: PROFILE_SCOPE( tag )
-        - [ ] 02pts: PROFILE_FUNCTION()
+    - [ ] 03pts: `PROFILE_SCOPE( tag )`
+        - [ ] 02pts: `PROFILE_FUNCTION()`
     - [ ] 05pts: Profiler/Memory Hookup
 - [ ] 20pts: Profiler Reports
     - [ ] 15pts: `profile_report` console command (see below)
