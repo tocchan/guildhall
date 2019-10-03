@@ -341,6 +341,10 @@ bool BlockAllocator::init( void* buffer,
 
 void BlockAllocator::break_up_chunk( void* chunk ) 
 {
+	// TODO
+	// move the chunk forward to the next alignment; 
+	// ie: align that pointer; 
+
 	byte* buf = (byte*)chunk; 
 	block_t* first = (block_t*)buf;
 	block_t* head = nullptr; 
