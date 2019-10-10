@@ -189,6 +189,10 @@ For example;
 StreamChunkJob
    while (read 4096B of data)
       create decompress job for that 4096B
+      chain this to final create mesh job
+      run the job
+
+run create mesh job
 ```      
 
 So as work is ready, we can kick off a job to process that work immediately.  Once you get chaining, you could also 
@@ -312,7 +316,7 @@ a callback.
 
 
 ### Polling (Overlapped/Async Operations)
-**Polling** means to just *pole* or ask if the job is done - usually the system providing an object in which to ask.  
+**Polling** means to just *poll* or ask if the job is done - usually the system providing an object in which to ask.  
 
 For Win32 Async calls, they use an `OVERLAPPED` structure.  This is just a structure you provide to the operation, that
 you can then ask for when it is finished;  This memory has to be valid for the lifetime of the call. 
