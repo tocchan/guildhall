@@ -444,6 +444,8 @@ bool BlockAllocator::alloc_chunk()
 
 		// break chunk 
 		break_up_chunk( chunk + 1 ); 
+
+		m_chunk_lock.unlock(); 
 	}
 
 	return true; 

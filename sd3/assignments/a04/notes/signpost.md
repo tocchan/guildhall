@@ -126,8 +126,8 @@ lock around `alloc` and `free` will make this safe.
 
 In the `free` case, this is fine. It is a very short function and we're not impacted by the lock.
 
-In the `alloc` case, this is less fine due to the relatively large search times for a free block (even after 
-optimization)
+In the `alloc` case, this is worse due to the relatively large search times for a free block (even after 
+optimization).  
 
 
 ## Fragmentation
