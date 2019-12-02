@@ -163,12 +163,12 @@ This example is sorted by `self`
 LABEL                                                CALLS    TOTAL%   TOTAL TIME         SELF%    SELF_TIME       
  Game::run_frame                                     1        100.00%  15.5460 ms         0.18%    28 us          
   Game::render                                       1        99.76%   15.5080 ms         1.75%    271 us         
-   RHIOutput::present                                1        20.28%   3.1520 ms          20.28%   3.1520 ms      
    ProfilerView::render                              1        76.38%   11.8740 ms         11.60%   1.8030 ms      
     ImmediateRenderer::draw_text2d                   37       64.78%   10.0700 ms         57.23%   8.8970 ms      
      FontAddMeshForText                              37       7.55%    1173 us            1.85%    287 us         
       FontAddMeshForTextInfo                         37       3.83%    596 us             3.83%    596 us         
       TextStyle::get_text_info                       37       1.87%    290 us             1.87%    290 us         
+   RHIOutput::present                                1        20.28%   3.1520 ms          20.28%   3.1520 ms      
    DevConsole::render                                1        1.35%    210 us             0.66%    103 us         
     ImmediateRenderer::draw_text2d                   3        0.65%    101 us             0.45%    70 us          
      FontAddMeshForText                              3        0.20%    31 us              0.06%    9 us           
