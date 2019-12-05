@@ -164,7 +164,7 @@ Next, the code to load it `data\scripts\test.py`
 //------------------------------------------------------------------------
 void PythonTest()
 {
-   char const* filename = "test"; 
+   char const* module_name = "test";
    char const* func_name = "SomeFunction"; 
 
    PyObject* py_name; 
@@ -172,7 +172,7 @@ void PythonTest()
    PyObject* py_func;
 
    // convert a locale filesystem string into a python string
-   py_name = PyUnicode_DecodeFSDefault( filename ); 
+   py_name = PyUnicode_DecodeFSDefault( module_name ); 
 
    // load the file into an module
    py_module = PyImport_Import( py_name ); 
@@ -199,7 +199,8 @@ void PythonTest()
             PyTuple_SetItem( args, 1, value );  // set the second argument
 
             // call the function with this arguments
-            PyObject_CallObject( py_func, args );
+            PyObject* ret = PyObject_CallObject( py_func, args );
+            Py_DECREF(ret); 
 
 
             // done using it, release the local reference to it
@@ -456,6 +457,9 @@ A. **NO IDEA** - Could find no resources on it, outside of seeing Panda3D preloa
 - Official Documentation on Creating Types from C/C++
   - https://docs.python.org/3/extending/newtypes_tutorial.html
   - https://docs.python.org/3/extending/newtypes.html
+
+- Mixed Mode Debugging (only works with Python 3.7 and earlier)
+  https://docs.microsoft.com/en-us/visualstudio/python/debugging-mixed-mode-c-cpp-python-in-visual-studio?view=vs-2019
 
 - Some motivation for using a scripting language
   https://www.gamasutra.com/view/feature/131372/gdc_2002_game_scripting_in_python.php
