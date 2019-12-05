@@ -59,6 +59,10 @@ Library Reference: https://docs.python.org/2/library/index.html
 Feel free to remove libraries not needed for your project (for example, most graphic user interface libraries don't make sense in our engine)
 
 Recommend delete all graphical user interface and `test`, as it'll reduce file size considerably. 
+- `turtledemo`
+- `test`
+- `tkinter`
+- `lib2to3`
 
 *Note: Still new to this.  Not sure quite yet if there is a way to hide all required modules internally or within a compressed folder.  If anyone wants to do the digging let me know!*
 
@@ -249,27 +253,31 @@ Below is an example of us exposing my engine's `Logf` function to Python...
 // "self" is the object it is being called on
 // "args" is the tuple of arguments being passed in
 // @return is value returned by method (can be nullptr)
-//
-// (don't worry about references unless you need to hold onto something
-// in which case add a method manually
 static PyObject* PyHookLog( PyObject* self, PyObject* args )
 {
    UNREFERENCED( self ); 
-   // int arg_count = (int) PyTuple_Size(args);
    
-   char const* str; 
-   int success = PyArg_ParseTuple( args, "s", &str );
-   if (!success) {
-      LogWarningf( "PythonLog failed to pass a string" ); 
-   } else {
-      if (!StringIsWhitespace(str)) {
-         LogTagf( "python", str ); 
+   int arg_count = (int) PyTuple_Size(args);
+   if (arg_count > 0) {
+      PyObject* arg0 = PyTuple_GetItem( args, 0 );
+
+      PyObject* str = nullptr; 
+      if (PyUnicode_CheckExact(arg0)) {
+         str = PyUnicode_AsEncodedString(arg0, "utf-8", "~E~");
+      } else {
+         PyObject* repr = PyObject_Repr(arg0);
+         str = PyUnicode_AsEncodedString(repr, "utf-8", "~E~");
+         Py_DecRef(repr);
       }
+
+      char const* bytes = PyBytes_AS_STRING(str);
+      if (!StringIsWhitespace(bytes)) {
+         LogTagf( "python", bytes ); 
+      }
+      
+      Py_DecRef(str);
    }
 
-   // return nullptr is an error, 
-   // so always return something
-   // there is a global called "Py_None", but be sure to add a reference
    Py_INCREF(Py_None); 
    return Py_None; 
 }

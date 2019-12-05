@@ -28,6 +28,7 @@ When dealing with decimals in programming, we have two major tools we use,
 - https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
 - https://en.wikipedia.org/wiki/IEEE_754
 - https://blog.penjee.com/binary-numbers-floating-point-conversion/
+- https://www.ias.ac.in/article/fulltext/reso/021/01/0011-0030
 
 Floating point numbers encode both the value and the exponent into the binary representation.
 As mentioned above though, there are multiple ways to represent the same value, 
