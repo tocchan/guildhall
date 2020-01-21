@@ -9,60 +9,27 @@ Class meets...
 
 - **Monday 2PM-4PM**:  Lecture
 - **Wednesday 2PM-3PM**:  Recitation 
-- **Thursday 2PM-4PM** (*Sectioned*): Lab
+- **Thursday 2PM-5PM**: Lab
+
+## [Notes](./c29/notes)
+...
+
+## [Assignments](./c29/assignments/)
+- [A01 - D3D11 Setup](./c29/assignments/a01_setup/)
+- [A02 - The Triangle](./c29/assignments/a02_triangle/)
+- [A03 - Dev Console](./c29/assignments/a03_devconsole/)
+- [A04 - Perspective Projection](./c29/assignments/a04_perspective/)
+- [A05 - Debug Render System](./c29/assignments/a05_debugrender/)
+- [A06 - Blinn-Phong Vertex Lighting](./c29/assignments/a06_vertexlighting/)
+- [A07 - Per Pixel Lighting](./c29/assignments/a07_pixellighting/)
+- [A08 - Billboards](./c29/assignments/a08_billboards/)
+- [A09 - Meshes](./c29/assignments/a09_meshes/)
+- [A10 - Projectiles](./c29/assignments/a10_projectiles/)
+- [A11 - Object Shaders](./c29/assignments/a11_objectshaders/)
+- [A12 - Post Effects](./c29/assignments/a12_posteffects/)
 
 ### Special Dates
-- Jan 18 (Fri) - Start
-- Jan 21 (Mon) - Holiday (MLK)
-- Jan 25-27    - Global Game Jam
-- Feb 13       - C28 Rope Day
-- Mar 11-17    - Spring Break
-- Mar 18-22    - GDC (C27)
-- Apr ??       - Ludum Dare
-- Apr 19 (Fri) - Holiday (Good Friday)
-- May 7  (Tue) - Reading Day
-- May 8+       - Finals
 
-## Weekly Schedule
-- *2019/01/21*: Windows Classes and D3D11 Setup
-- *2019/01/28*: Shaders, Constant Buffers, and VBOs
-- *2019/02/04*: Debug Draw System 
-- *2019/02/11*: 3D Perspective Cube & Lighting
-- *2019/02/18*: Normal Maps, TBN Space, and RTS Setup
-- *2019/02/25*: Terrain Rendering and Vertex Painting
-- *2019/03/04*: Units and Billboarding, basic AI and pathing
-- *2019/03/11*: Buildings and OBJ Loading
-- *2019/03/18*: **SPRING BREAK**
-- *2019/03/25*: Minimaps, Rendertargets, and Viewports 
-- *2019/04/01*: Tech Trees and more advanced pathing  
-- *2019/04/08*: Archers, Casters, and Decals 
-- *2019/04/15*: Multipass Effects (Heat Distortion, Fog of War) 
-- *2019/04/22*: Additional Topics in Support of Gold 
-- *2019/04/29*: Additional Topics in Support of Gold
-- *2019/05/06*: Gold Final Presentations 
-
-## Assignments
-Assignments will be due at the end of your Lab Section each week starting the week of the 28th. 
-
-**ICC**: In Class Checked:  Most assignments will be graded visually, with a compnent of the grade being attributed to the project being checked in compilable state on Git with no warnings. 
-
-**CRS & CRC**:  Code Review Start and Code Review Check.  Two additional grades for code reviews will happen throughout the semester.  CRS is the date in which I will start the code review and get you feedback within a week.  You will then have a week to apply whatever changes were requested (if needed), due by the CRC date.
-
-- *2019/01/31*: **ICC**: [Shader Triangle](assignments/a01_setup/)
-- *2019/02/07*: **ICC**: [VBOs and Uniforms](assignments/a02_buffers/)
-- *2019/02/14*: **ICC & CRS**: [Dev Console](assignments/a03_devconsole/)
-- *2019/02/21*: **ICC**: [3D Mesh Cube & Sphere](assignments/a04_perspective/)
-- *2019/02/28*: **ICC**: Normal Mapped Cube & Sphere.  **CRS** for rendering system; 
-- *2019/03/07*: **ICC & CRC**: Terrain and Basic Camera Movement
-- *2019/03/14*: **ICC**: Units, Selection, and Basic movement. 
-- *2019/03/21*: **SPRING BREAK**
-- *2019/03/28*: **ICC**: Buildings and Objects, Enemies, and Combat
-- *2019/04/04*: **ICC**: Minimap and Basic UI, Unit Construction
-- *2019/04/11*: **ICC & CRS**: Data backed tech tree, Resource Gathering.  **CRS** for user's choice;
-- *2019/04/18*: **ICC**: 2 Additional Player Unit Types and 2 Additional Enemy Types
-- *2019/04/25*: **ICC**: Gold Checkin 1
-- *2019/04/02*: **ICC & CRC**: Gold Checkin 2
-- *2019/05/09*: **Gold Final Presentations** 
 
 
 ## Hopeful Topics
