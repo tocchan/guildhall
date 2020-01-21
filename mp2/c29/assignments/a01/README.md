@@ -35,6 +35,9 @@ Use the branch name `mp2/turnin/a01` for grading, and you have the checklist cop
 
 ## Notes
 
+- [Setting Up Git](https://github.com/tocchan/guildhall/tree/master/examples/common/git)
+- [Cloning Git & Submodules](https://github.com/tocchan/guildhall/tree/master/examples/common/gitclone)
+
 ### Buddy Build
 To do a buddy build, make a new folder, for example `D:\BuddyBuild`, and make sure it is empty.
 

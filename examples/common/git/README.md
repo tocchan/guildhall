@@ -11,13 +11,9 @@ This will require that we restructure our Game/Engine relationship by having our
 ## Walkthrough
 
 ### Create a GitHub account
-There are other possible hosts to use, but github has a free student account that allows you to create unlimited private repots, as well as it is the service I use for grading.
+We'll be using GitHub as it allows for private repots;  If you can not make a private repot, you may need to sign up for the [GitHub Education](https://education.github.com/pack) pack. 
 
-Next, sign up for a student account.
-https://education.github.com/pack
-
-
-### Create 2 New Repots (Engine & Protogame)
+### Create 2 New Repots (Engine & Guildhall)
 We will leave them empty for now; 
 
 First, go to your homepage in GitHub, and select Repositories, and click "New".
@@ -29,14 +25,12 @@ Next, create your Repot.
 ![Create](create.png)
 
 ### (Optional) Download Atlassian SourceTree
-To make this easier - I recommend getting this GUI client for Git.
-https://www.sourcetreeapp.com/
+To make this easier - I recommend getting this GUI client for Git.  There are [numerous options](https://git-scm.com/download/gui/windows), but I personally prefer to use [SourceTree](https://www.sourcetreeapp.com/)
 
-There are others, including Visual Studio has an integration, but I prefer this one, as it exposes more of Git functionality, as well as a console for when you have to do somtehing more specialized (which we'll be doing with submodules).
-
+SourceTree tends to be more 1-1 with what Git is actually doing, and has a command console installed with it if you ever need to do something a little more esoteric. 
 
 ### Prepare your Project
-Make your Protogame project.  Just copy into a new folder, preferably not under your P4 workspace.  
+Make your `Guildhall` project.  Just copy root SD folder to a new location, *not under your current P4 workspace*.
 
 Open up SourceTree, and create a new repot, and point it at this folder.
 
@@ -53,13 +47,13 @@ The left side shows our current working branch - we'll get more into that later.
 
 Up top is Staged files, these are files to be commited (like a changelist in P4). 
 
-Below that is Unstaged files.  These are files that have been edited from either what is currently commited, or what is in staged files.  You will likley see a lot of files here that you don't want to track.    
+Below that is Unstaged files.  These are all files that have been edited since the last commit, or from a currently staged file (and may need to be re-staged).  
 
-Now, git works reactively unlike P4 - it will automatically track changed files (added, removed, edited, etc...).  This means we a way to tell Git to ignore certain files, and we do this with a .gitignore file. 
+Now, git works reactively, detecting changes (edits/adds/removes) automatically, and it will pick up a lot of files and edits we may not care about.  To sovle this, we add a `.gitignore` file to tell it what files we want it to, well, ignore. 
 
 Download and copy this [.gitignore](gitignore_example.txt) file to your root folder, and rename it to ".gitignore".  This file helps git figure out what files do not need to be tracked.  
 
-Go back to sourcetree, and Unstaged files should now show a `.gitignore` file near the top and you should see less files.  If you see files you don't want ot track, you can write click and select "Ignore", and either ignore just that file, that extension, or that folder.  If you need more rules, the `.gitignore` file is plain text, that applies rules top to bottom (so you can ignore all, then stop ignoring a specific file). 
+Go back to sourcetree, and Unstaged files should now show a `.gitignore` file near the top and you should see less files.  If you see files you don't want to track, you can right-click and select "Ignore", and either ignore just that file, that extension, or that folder.  If you need more rules, the `.gitignore` file is plain text, that applies rules top to bottom (so you can ignore all, then stop ignoring a specific file). 
 
 Once you're happy that only the files you want tracked are in Unstaged, select "Stage All", write a commit message (bottom part of that window), and select Commit.  
 
@@ -102,21 +96,20 @@ So go to SourceTree, and we're going to open a new tab and clone a repot.  All y
 Once cloned, you should be able to navigate to that folder, and compile.  If all went well, you should still be able to compile your Engine. 
 
 
-### Protogame and Submodules
-Repeat the above steps for your Protogame.  This should not compile as your project depends on Engine being in a folder relative to Protogame (usually pu the tree and back down). 
+### Engine and Submodules
+If you want to track your `Engine` as a submodule, we're going to repeat a number of the steps above, but just for our engine folder; 
 
-This doesn't work with Git unless your users know to pull both projects relative to each other.  A better way with Git is to put your Engine as a submodule of your game (ie, your game depends on Engine).  This allows your engine to exist under protogame, but is tracked seperately.
+After your `Engine` is its own Repot, we will delete it from our `Guildhall` repot and commit that change.
 
-To do this, Under your Protogame root, add a new folder called "Submodules". If you want to try doing this by command line, you can follow this tutorial;
+Next, we add `Engine` back, but this time as a submodule, which is saying this other project is part of our project, but tracked seperately.  Our project will point to a specific commit of our `Engine` after we do this.
+
+You can add a submodule using SourceTree by selecting `Repository > Add Submodule`.  Use the git link as the URL, and give it the path of where your `Engine` should live.
+
+![Submodule](submodule.png)
+
+If you're curious on the command line way to do this, see the following; 
+
 https://git-scm.com/book/en/v2/Git-Tools-Submodules
-
-You can also do this through SourceTree, by going to your Protogame project, and select Repository > Add Submodule.  Use the git link as the URL, and give it the path "Submodule/Engine" for example.  
-
-This repot now lives under Protogame, but is tracked seperately.  You can select the Submodule from the left side to open it.  
-
-
-### Fix up Engine Links
-Protogame is now pointing to an Engine that now longer exists.  You have to go now and manually fix up the links so Protogame compiles.  Once this is all done, commit and push the changes.  
 
 
 ### Common Pitfalls
