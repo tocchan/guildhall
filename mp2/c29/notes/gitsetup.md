@@ -27,7 +27,7 @@ Git Setup
 ## Current Folder Setup
 
 ### Perforce Structure
-- * *`Root/`*
+- `Root/`
   - `Engine/`
     - `Code/`
       - `Engine/`
@@ -40,6 +40,7 @@ Git Setup
          - ...
      - `Run`
        - ...
+  - *other projects...*
 
 So, trying to maintain this structure, we'll be making our Git repot at the *`Root/`* location.  
 

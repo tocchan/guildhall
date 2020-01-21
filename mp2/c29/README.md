@@ -3,6 +3,10 @@ Math and Physics 2
 
 ## Syllabus
 
+### Class Time
+- **Tuesday 2PM-3:30PM, Room 212**:  Lecture
+
+
 ### [Lectures](./notes/)
 - [Jan 21 - Git Setup](./notes/gitsetup.md)
 - Jan 28 - Intersection Tests 
@@ -38,6 +42,13 @@ Math and Physics 2
 - [A12 - `Physics2D::Spherecasts`](./assignments/a12/)
 - [A13 - Scene Management](./assignments/a13/)
 
-
 ### Final 
 Written test.  More information will be added later; 
+
+---
+
+## Helpful Sites
+- (Realtime Rendering: Intersections)[http://www.realtimerendering.com/intersections.html]:  Site contains links/references to different shape intersection tests; 
+- (Geometric Tools)[https://www.geometrictools.com/]: Bunch of code samples for doing common physics operations; 
+- (EuclideanSpace.com)[https://www.euclideanspace.com/]: Wide assortment of math/physics tutorials - mostly pure math but easy to follow; 
+- (ScratchAPixel.com)[https://www.scratchapixel.com/]: Great low-level explanation of multiple rendering and math concepts we use in class.
