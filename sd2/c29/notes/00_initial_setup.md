@@ -1,64 +1,64 @@
-## Code Considerations
-My code looks very different from your engines.  In class notes I will try to use my best guess at what you named them in Semester 1.  So if something is unclear, let me know.  You may not have it, or you may have it by a different name. 
+## Add Me as a Collaborator
+Ran out of time for this during MP2
 
-My coding style is also different, and I may fall into it by habit writing samples.  Just make sure that if you're transcribing to your code base, you match the style you want for *your* engine. 
+## Mag-Lock Doors!
+Are locked permantly starting next week, so always bring your key-card.  
 
-I will not dictate much outside of code interface in this class.  As long as your application can do what I ask, and is readable, it is fine.  
+## Syllabus
 
+## Project
+- Wolfenstein 3D style game. 
+- Incursion Gameplay
+- Hexen/Heretic Theme (High Fantasy)
+- Focus is on making it look good, not the game!
 
-## D3D11
+------
+
+## OpenGL to D3D11
+- OpenGL 1
+- Why not OpenGL 3.3+?
+  - *magic*
+  - the time cost would not be any less
+- Why not Vulkan/D3D12?
+  - TTT - Time To Triangle
+    - Also used to refer how long it takes to 
+      fully take advantage of the hardware, but harder to quantify
+- D3D11 Benefits
+  - Getting much more comfortable with how we interface with a GPU
+  - Memory and synchronization is mostly taken care of for us
+  - Very streamlined, usually one way to do the thing you want as they have no legacy support to older versions
+  - Sane errors
+  - Works reliable with RenderDoc and Visual Studio Visual Debugger
+  - I'm very comfortable with it
+  
+
+## Pipelines
+- Fixed Function Pipeline, OpenGL1
+- Programmable Pipelines
+  - [Graphics Pipeline](https://docs.microsoft.com/en-us/windows/win32/direct3d11/overviews-direct3d-11-graphics-pipeline)
+  - Compute
+  - *Raytracing*
+  - Mesh Shader Pipeline
+
+## D3D11 Concepts 
 
 - Physical Device
 - Device
 - Device Context
 - SwapChain
+  - Display
+  - Desktop
 - Textures
-  - Render Targets (ie: Color Target)
+  - Views (similar to an alias)
+    - Shader Resource
+    - Color Target
 
 - Host -vs- Client
   - *Host* - The GPU, who we are making requests to
-  - *Client* - Out application
+  - *Client* - Our application
+
+------
+
+  ## Window
 
 
-## Overview
-
-- Refactoring Macros, `UNIMPLEMENTED` and `TODO` *optional*
-- Bind up `Window` code into a new `Window` class
-- Remove all `OpenGL` initialization code
-- Go strip out all OpenGL functionals from `RenderContext`, replace with `UNIMPLEMENTED`.  This will tell us what we have left to fix, or break if we hit an unimplemented code path; 
-
-
-- `Device`
-- `DeviceContext`
-- `Texture`
-- D3D11 Reference Counting
-- `TextureView`
-
-
-## Goal 
-
-```cpp
-void App
-
-void App::BeginFrame()
-{
-    m_window->BeginFrame(); 
-    g_theRenderer->BeginFrame(); 
-}
-
-void App::Render()
-{
-    // optional game/render
-    float r = RangeMap( SinDegrees(seconds), -1.0f, 1.0f, 0.0f, 1.0f ); 
-    RGBA clearColor = RGBA( r, 0, 0, 1 ); 
-    m_camera->SetClearMode( CLEAR_COLOR_BIT, clearColor ); 
-
-}
-
-void App::EndFrame()
-{
-    g_theRenderer->EndFrame();
-    g_theRenderer->Present(); 
-}
-
-## `UNIMPLEMENTED` macro

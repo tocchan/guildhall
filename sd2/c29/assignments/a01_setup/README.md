@@ -108,11 +108,30 @@ void Game::Render() const
 ### Required Tasks
 **Required Tasks** are tasks that the course relies on being complete, and will most likely be built upon on later assignments.  All required tasks must be attempted before a bonus task will be graded. 
 
-- [ ] `Window` class
-- [ ] `RenderContext` changes
-- [ ] `SwapChain` created (seperately)
-- [ ] Ability to create a debug context by pre defining `RENDER_DEBUG`
-    - [ ] All non-release builds should define `RENDER_DEBUG` for now
+- [ ] *10pts*: `Window` class created in Engine to spec, with Protogame being updated; 
+- [ ] *20pts*: `RenderContext` changes
+      - [ ] All broken `RenderContext` methods a stripped with an assert to todo added to the body.
+      - [ ] `RenderContext` can be setup by giving it a window
+- [ ] *05pts* `Camera::SetClearMode` added
+- [ ] *05pts* `RenderContext::BeginCamera` should now clears depending on clear mode 
+      - [ ] For  now, clear the default swapchain on `RenderContext`
+- [ ] *10pts* `SwapChain` implemented
+    - [ ] Default `SwapChain` is added to your `RenderContext`, created during setup
+    - [ ] Ability to get the backbuffer texture.
+- [ ] *10pts*: `Texture` class added/modified
+- [ ] *10pts*: `Texture::GetOrCreateView` will return a texture view;    
+- [ ] *10pts*: Game code should cycle clear color each frame to show everything working. 
+- [ ] *20pts* Ability to create a debug context by pre defining `RENDER_DEBUG`
+    - [ ] All builds should define `RENDER_DEBUG` for now
+    - [ ] Be sure there are no leaked resources on shutdown (check `Output`)
+
+**How I will Grade**;  
+1. Pull, and compile your program in `Debug` and `Release`. 
+2. Run it, and look for the cycling color.
+3. Quit (`Escape`) and look for leaks in output
+4. Check the code to make sure all window/context creation has been moved out of App
+   - Also check that you are indeed making a debug context
+5. Grade extras if applicable
 
 ### Bonus Tasks
 **Bonus Tasks** are tasks that are related to the main assignment, but are not required for finishing the course, hopefully to allow for some personalization of your own engine.
@@ -134,9 +153,27 @@ Note, most bonus tasks are twice the work for half the points of a required task
 - [ ] (X01.14 : 02pts) Show window loading progress in task bar. 
 
 ------
+
 ## Notes
 
----
+### Stub Files
+- [Window.hpp](./Window.hpp)
+- [RenderContext.hpp](./RenderContext.hpp)
+- [SwapChain.hpp](./SwapChain.hpp)
+- [Texture.hpp](./Texture.hpp)
+- [TextureView.hpp](./TextureView.hpp)
+
+### Implementation Details
+- [Todo Macros](../../notes/Todo.hpp)
+- [Window Notes](../../notes/window.md)
+- [Device Creation](../../notes/devicecreation.md)
+- [Get Backbuffer Texture](../../notes/backbuffer.md)
+- [Clearing Backbuffer](../../notes/clearing.md)
+- [Presenting Backbuffer](../../notes/presenting.md)
+
+------
+
+## Extra Notes
 
 ### X01.00 : Borderless Window Support
 If you're going to support a full-screen mode, this is the one I'd recommend.

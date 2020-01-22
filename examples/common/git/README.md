@@ -11,6 +11,7 @@ This will require that we restructure our Game/Engine relationship by having our
 ## Resources
 - [GitKraken YouTube Channel](https://www.youtube.com/channel/UCp06FAzrFalo3txskS1gCfA/videos)
 
+
 ## Walkthrough
 
 ### Create a GitHub account
