@@ -8,6 +8,9 @@ We're also going to have a repot for our Engine and incorporate this into our pr
 
 This will require that we restructure our Game/Engine relationship by having our Engine be within the Game projects folder structure.  
 
+## Resources
+- [GitKraken YouTube Channel](https://www.youtube.com/channel/UCp06FAzrFalo3txskS1gCfA/videos)
+
 ## Walkthrough
 
 ### Create a GitHub account
