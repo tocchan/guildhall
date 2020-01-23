@@ -110,11 +110,11 @@ void Game::Render() const
 
 - [ ] *10pts*: `Window` class created in Engine to spec, with Protogame being updated; 
 - [ ] *20pts*: `RenderContext` changes
-      - [ ] All broken `RenderContext` methods a stripped with an assert to todo added to the body.
-      - [ ] `RenderContext` can be setup by giving it a window
+    - All broken `RenderContext` methods a stripped with an assert or `todo` added to the body.
+    - [ ] `RenderContext` can be setup by giving it a window
 - [ ] *05pts* `Camera::SetClearMode` added
 - [ ] *05pts* `RenderContext::BeginCamera` should now clears depending on clear mode 
-      - [ ] For  now, clear the default swapchain on `RenderContext`
+    - [ ] For  now, clear the default swapchain on `RenderContext`
 - [ ] *10pts* `SwapChain` implemented
     - [ ] Default `SwapChain` is added to your `RenderContext`, created during setup
     - [ ] Ability to get the backbuffer texture.
@@ -167,9 +167,15 @@ Note, most bonus tasks are twice the work for half the points of a required task
 - [Todo Macros](../../notes/Todo.hpp)
 - [Window Notes](../../notes/window.md)
 - [Device Creation](../../notes/devicecreation.md)
-- [Get Backbuffer Texture](../../notes/backbuffer.md)
-- [Clearing Backbuffer](../../notes/clearing.md)
 - [Presenting Backbuffer](../../notes/presenting.md)
+- [Clearing Backbuffer](../../notes/clearing.md)
+
+### Walkthrough
+
+0. Create and change to the branch to `feature/d3d11`
+1. Create the `Window.hpp` and `Window.cpp` in your Engine.
+   - If you like using lots of folders, I suggest either `OS` or `Platform` for this.  ie;  `Engine/OS/Window.hpp` or `Engine/Platform/Window.hpp`
+2. 
 
 ------
 
