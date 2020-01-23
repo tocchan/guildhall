@@ -2,6 +2,10 @@
 // PRAGMA TODO 
 // Idea from my friend Micheal Bosley
 // Source from http://www.flipcode.com/archives/FIXME_TODO_Notes_As_Warnings_In_Compiler_Output.shtml
+// Stringify the argument; 
+#define _QUOTE(x) # x
+#define QUOTE(x) _QUOTE(x)
+
 #define __FILE__LINE__ __FILE__ "(" QUOTE(__LINE__) ") : "
 
 #define DEBUGBREAK()  __debugbreak()
