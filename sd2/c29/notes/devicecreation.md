@@ -121,7 +121,7 @@ I'm going to encompass this in a macro (though feel free to use a template if yo
 So our shutdown for our context will look like this;
 
 ```cpp
-RenderContext::Shutdown()
+void RenderContext::Shutdown()
 {
     // swapchain is one of our engine objects
     delete m_swapchain; 

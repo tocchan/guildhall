@@ -167,15 +167,57 @@ Note, most bonus tasks are twice the work for half the points of a required task
 - [Todo Macros](../../notes/Todo.hpp)
 - [Window Notes](../../notes/window.md)
 - [Device Creation](../../notes/devicecreation.md)
+- [Debug Object Creation](../../notes/d3ddebug.md)
 - [Presenting Backbuffer](../../notes/presenting.md)
 - [Clearing Backbuffer](../../notes/clearing.md)
 
 ### Walkthrough
 
+Recommend checking in after each number step at least; 
+
 0. Create and change to the branch to `feature/d3d11`
-1. Create the `Window.hpp` and `Window.cpp` in your Engine.
+   - Create a new project called `FPS`*
+
+1. *Optional: add `todo` macros to your engine.*
+2. Create the `Window.hpp` and `Window.cpp` in your Engine.
    - If you like using lots of folders, I suggest either `OS` or `Platform` for this.  ie;  `Engine/OS/Window.hpp` or `Engine/Platform/Window.hpp`
-2. 
+3. Strip out all GL code from your Engine/Game
+   - First stop including any GL headers
+   - Go through and delete any handles (believe `Texture` may be the only problem)
+   - Compile to find places that are broken.  Comment out or delete the GL code and replace with an `ASSERT` or `UNIMPLEMENTED` macro to remind to you come back here later
+   - Once it compiles, commit and push. 
+
+4. Update `App` and `Game` code to be similar to the code at the beginning of assignment.
+
+5. Update `RenderContext` `Startup` and `Shutdown` to the D3D11 resources, see [Device Creation](../../notes/devicecreation.md)
+
+6. Test that you can see leaks.
+   - Be sure `RENDER_DEBUG` is defined in a visible location.  Preferably a `EngineBuildConfig.hpp` or similar header.
+   - "Forget" to release your `Context` or `Swapchain` d3d object and see if it reports at shutdown
+   - "Remember" to release your resources, and make sure no more leaks show up
+
+7. *Optional: Create a debug object.  This gives you better error reporting, but is not strictly required*
+
+8. Setup your SwapChain so you can present each frame (should see black or garbage on your screen after this)
+   - `SwapChain::Present` should be called from `RenderContext::EndFrame`
+
+9. Get clear screen working
+   - Be able to get the backbuffer texture
+   - Be able to create a texture view for that texture
+   - Update your `Camera` to have clear information on it.
+   - Update `RenderContext::BeginCamera` to clear the render target view for the backbuffer
+   - Test and see if it works.
+
+10. Create your readme for this assignment, `sd2.a01.md` in the root of your dept.
+
+11. Create your turnin branch, `sd2/turnin/a01`, and push it.
+
+12. Do a buddy build.
+
+13. Do any extras you want, either in your turnin branch or working branch, just be sure to merge between them as you complete tasks.  
+
+
+
 
 ------
 
