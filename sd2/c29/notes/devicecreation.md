@@ -45,7 +45,7 @@ memset( &swapchain_desc, 0, sizeof(swapchain_desc) );
 
 // how many back buffers in our chain - we'll double buffer (one we show, one we draw to)
 swapchain_desc.BufferCount = 2;      
-swapchain_desc.SwapEffect = SWAP_EFFECT_DISCARD; // on swap, the old buffer is discarded
+swapchain_desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD; // on swap, the old buffer is discarded
 swapchain_desc.Flags = 0; // additional flags - see docs.  Used in special cases like for video buffers
 
 // how swap chain is to be used

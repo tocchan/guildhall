@@ -13,6 +13,7 @@ class Window
 
       // SD2.A01
       void BeginFrame(); // process window messages
+	  void EndFrame(); 
 
    private:
       void* m_hwnd                  = nullptr; 

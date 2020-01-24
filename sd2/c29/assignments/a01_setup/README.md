@@ -27,8 +27,8 @@ void App::Startup()
 
     // create the window
     m_window = new Window();  
-    m_window->Open( window_title, windowClientRatioOfHeight, aspectRatio ); 
-    m_window->SetInputSystem( g_InputSystem ); )
+    m_window->Open( windowTitle, aspectRatio, windowClientRatioOfHeight ); 
+    m_window->SetInputSystem( g_InputSystem ); 
 
     // create the render context
     g_RenderContext = new RenderContext(); 
