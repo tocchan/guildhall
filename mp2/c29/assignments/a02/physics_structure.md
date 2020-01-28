@@ -25,7 +25,8 @@ Though we are going to use `new` and `delete` internally for now to create most 
 we are going to force creation and destruction to happen through the `Physics2D` object.  That is, the `Physics2D` object is a
 **Factory** for `Rigidbody2D` and all `Collider2D` objects.  
 
-The reason for this is to 
+The reason for this is to allow for a much easier conversion to cache friendly data structures. 
+
 
 
 ### Preventing Accidental Delete
@@ -47,15 +48,18 @@ only rigidbody locations, and that colliders are calculating their world locatio
 class Physics2D
 {
    public:
+      void BeginFrame();
       void Update();
+      void EndFrame();
 
       // factory style ccreate/destroy
       Rigidbody2D* CreateRigidbody(); 
       void DestroyRigidbody( Rigidbody2D* rb ); 
 
       DiscCollider2D* CreateDiscCollider( vec2 localPosition, float center ); 
+      void DestroyCollider( Collider2D* collider ); 
 
-}
+};
 ```
 
 ```cpp

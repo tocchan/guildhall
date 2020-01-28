@@ -99,7 +99,7 @@ GameObject* Game::CreateDisc()
 ------
 
 ## Checklist
-- [ ] *05pts*: Insantiate a physic system into the game.
+- [-] *05pts*: Insantiate a physic system into the game.
 - [ ] *10pts*: Be able to create game objects with a collider based on button press,
     - [ ] `1` should create random radius disc centered at cursor
 - [ ] *10pts*: Camera changes implemented

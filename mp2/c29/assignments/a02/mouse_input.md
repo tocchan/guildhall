@@ -6,7 +6,7 @@ Mouse clicks are told to the user with the following **Windows Messages**, handl
 - `WM_LBUTTONUP`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-lbuttonup
 - `WM_RBUTTONDOWN`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-rbuttondown
 - `WM_RBUTTONUP`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-rbuttonup
-- `Wm_MBUTTONDOWN`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-mbuttondown
+- `WM_MBUTTONDOWN`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-mbuttondown
 - `WM_MBUTTONUP`: https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-mbuttonup
 
 All those messages contain the same data, and can be handled the same way, so I'll just do `WM_LBUTTONDOWN` as an example, though be sure to handle *all* the messages.
@@ -14,6 +14,8 @@ All those messages contain the same data, and can be handled the same way, so I'
 ```cpp
 
 case WM_LBUTTONDOWN:
+case WM_LBUTTONUP:
+case WM_RBUTTONDOWN:
    // doesn't matter which message it was, the wParam and lParam all contain the same information
 
    // wparam tells us which buttons are down
@@ -51,7 +53,7 @@ From the documentation;
 So to get the highword, we'll shift it down 16-bits, and then devide by `120` to get the 'amount' of scroll as a float;  
 
 ```cpp
-DWORD scrollFixedPoint = wParm >> 16; // shift away low word part, leaving only the highword
+DWORD scrollFixedPoint = wParam >> 16; // shift away low word part, leaving only the highword
 float scrollAmount = (float)scrollFixedPoint / 120.0f; // convert to a numeric value
 inputSystem->AddMouseWheelScrollAmount( scrollAmount ); // let the input system know that the mouse wheel has moved - again, interface design is up to you - this is just a suggestion
 ```
