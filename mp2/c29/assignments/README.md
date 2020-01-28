@@ -1,8 +1,8 @@
 MP2 Assignments
 ======
 
-- [A01 - Git Setup](./a01)
-- [A02 - `Physics2D::Init`](./a02)
+- [Jan 30: A01 - Git Setup](./a01)
+- [Mar 06: A02 - `Physics2D::Init`](./a02)
 - [A03 - `Physics2D::Update`](./a03)
 - [A04 - Physics Response](./a04)
 - [A05 - Rotation](./a05)
