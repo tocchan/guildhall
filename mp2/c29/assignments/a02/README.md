@@ -16,8 +16,8 @@ Some example code for how the system will be used in this assignment;
 // Assume we have some game object
 class GameObject
 {
-	public:
-		Rigidbody2D* m_rigidbody; 
+   public:
+      Rigidbody2D* m_rigidbody; 
 };
 
 GameObject::~GameObject()
@@ -32,6 +32,12 @@ GameObject::~GameObject()
 void Game::Startup()
 {
 	m_physics = new Physics2D(); 
+
+   // for camera conversions to work, camera needs to know our
+   // position, and size.  This will also make it easier to move the camera around
+   m_gameCamera->SetOutputSize( vec2(resolutionX, resoulutionY) ); 
+   m_gameCamera->SetPosition( m_focalPoint ); 
+   m_gameCamera->SetProjectionOrthographic( screenSize ); 
 }
 
 Game::Shutdown()
@@ -42,6 +48,7 @@ Game::Shutdown()
 void Game::Update()
 {
    // input handling
+
    // ...
 
    // GameObject* m_selectedObject
@@ -92,10 +99,11 @@ GameObject* Game::CreateDisc()
 ------
 
 ## Checklist
-- [ ] *10pts*: Insantiate a physic system into the game.
+- [ ] *05pts*: Insantiate a physic system into the game.
 - [ ] *10pts*: Be able to create game objects with a collider based on button press,
     - [ ] `1` should create random radius disc centered at cursor
-- [ ] *10pts*: Can move around using `WASD` or equivalent (if different, make note in readme)
+- [ ] *10pts*: Camera changes implemented
+- [ ] *05pts*: Can move around using `WASD` or equivalent (if different, make note in readme)
 - [ ] *10pts*: Can zoom in and out using mouse-wheel.
     - [ ] Make sure this is clamped at a max and min "zoom" so zoom can't go negative.
 - [ ] *05pts*: Pressing 'O' (capitol letter 'Oh') should reset camera position and zoom to default (ie, move to origin)
@@ -105,11 +113,13 @@ GameObject* Game::CreateDisc()
 - [ ] *10pts* If mouse is inside the object, render the border yellow.
 - [ ] *15pts* Be able to drag them around
     - [ ] If the mouse is dragging the object, render the border dark green.
-- [ ] *10pts* If the object is touching another object, render the interior 50% alpha red.
+- [ ] *10pts* If the object is touching another object, render the entire interior at 50% alpha red instead of white. 
     - [ ] Disc-vs-Disc collision should be same as MP1
 - [ ] *10pts* If dragging, and `delete` or `backspace` is pressed, destroy object.
 - [ ] *05pts* Press `Escape` to quit.
 - [ ] Add `mp2.a02.md` readme to root folder
+
+Makes sure you mouse position is correct for your current view - converting the client position (offset from top-left of window) to a world location.  
 
 
 ## Resources
@@ -118,5 +128,10 @@ GameObject* Game::CreateDisc()
 - [Physics System Structure](./physics_structure.md)
 - [Mouse Input](./mouse_input.md)
 - [Mouse Dragging](./mouse_drag.md)
+- [Translating Points](./client_to_world.md)
+
+### Links
+- [Gift Wrapping Algorithm, Wikipedia](https://en.wikipedia.org/wiki/Gift_wrapping_algorithm).
+  More useful to next weeks assignment, but doesn't hurt to look over it first
 
 
