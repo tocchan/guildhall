@@ -7,19 +7,84 @@
     - reflection
   - linking/creation
 
-```cpp
-//------------------------------------------------------------------------
-// Shader.hpp
-//------------------------------------------------------------------------
-enum eShaderStage
+## The GPU
+
+So a GPU is like another computer within our computer.   Our `ID3D11DeviceContext` is the current setup of the machine, and we can execute programs on that machine by calling a function like `Draw`.
+
+A context will have all the state it needs for a `Draw` to work, so for example, an extremely simplified context; 
+
+```c
+
+struct DeviceContext
 {
-   SHADER_STAGE_VERTEX, 
-   SHADER_STAGE_FRAGMENT, 
+   void* input_data; 
+
+   VertexFunc vertex_func; 
+   RasterState raster_state; 
+   FragmentFunc fragment_func;
+
+   Texture* output;  
 };
 
+void Draw( DeviceContext* context, uint vertex_count )
+{
+   // let us assume we're drawing triangles
+   int offset = 0; 
+   for (3 vertices in context->input_data up to vertex_count) {
+      // output of the vertex stage
+      vertex_output vs_out[3]; 
 
+      // get the next three vertices and transform them
+      vertex_input* vs_in = context->input_data + offset;
+      vs_out[0] = context->vertex_func( vs_in[offset + 0] ); 
+      vs_out[1] = context->vertex_func( vs_in[offset + 1] ); 
+      vs_out[2] = context->vertex_func( vs_in[offset + 2] );
+      offset += 3; 
+
+      // for each pixel in that triangle, we call a pixel shader to get a color      
+      foreach (pixel in triangle defined by vs_out) {
+         // pixel shader doesn't know aabout the output, and returns a color
+         rgba color = context->fragment_func( pixel );
+
+         // color is then put into the output (blended in, coming later)
+         output->set_pixel( pixel, color );  
+      } 
+   }
+}
+
+```
+
+Our job is to fill out that context, so `Draw` does work.  
+
+Let us first deal with the functions, and then we'll move onto getting input to them; 
+
+
+## The Shader
+D3D11 uses **High Level Shading Language**, or **HLSL** as its shading language.  See the [Triangle](./triangle.hlsl) or [Default](./default.hlsl) shaders.
+
+This is what we'll be using to write programs for our GPU.  This type of shader is called a **Graphics Shader**, as it is meant for the graphics pipeline.
+
+A `Shader` is made up of multiple stages, like the `vertex` and `fragment` functions above.  We'll call these `ShaderStage`s in code. 
+
+For this class, all graphics shaders will need to support a **Vertex** and **Fragment** shader stage.
+
+In our case, we'll use the term `Shader` to encompass all shader stages, as well as some configurable state having to do with **how** the object is drawn.  
+
+---
+
+## Compiling Shaders
+
+The first step to using shaders is to be able to compile a shader stage.  Stage is code, similar to C++.  So we also have to go through 
+the same steps to make it runnable - ie, **Build** and **Link**.  
+
+
+```cpp
+
+// header needed for compilation
+#include <d3dcompiler.h>
 
 //------------------------------------------------------------------------
+// What function is the entry point to this stage
 static char const* GetEntryForStage( eShaderstage stage ) 
 {
    switch (stage) {
@@ -30,6 +95,7 @@ static char const* GetEntryForStage( eShaderstage stage )
 }
 
 //------------------------------------------------------------------------
+// what version of the shader language do we want to use - similar to say, C++11 vs C++14
 static char const* GetShaderModelForStage( eShaderstage stage ) 
 {
    switch (stage) {
@@ -38,6 +104,7 @@ static char const* GetShaderModelForStage( eShaderstage stage )
       default: GUARANTEE_OR_DIE(false, "Unknown shader stage"); 
    }
 }
+
 
 //------------------------------------------------------------------------
 static ID3DBlob* CompileHLSLToByteCode( char const *opt_filename,  // optional: used for error messages
@@ -93,21 +160,9 @@ static ID3DBlob* CompileHLSLToByteCode( char const *opt_filename,  // optional: 
    // will be nullptr if it failed to compile
    return code;
 }
+```
 
-//------------------------------------------------------------------------
-// Just initialize handle null; 
-ShaderStage::ShaderStage()
-   : m_handle(nullptr) 
-{
-}
-
-//------------------------------------------------------------------------
-ShaderStage::~ShaderStage()
-{
-   // cleanup the D3D Resource
-   DX_SAFE_RELEASE(m_handle); 
-}
-
+```cpp
 //------------------------------------------------------------------------
 bool ShaderStage::LoadShaderFromSource( RenderContext *ctx, 
    std::string const &filename, 
@@ -165,6 +220,7 @@ bool ShaderStage::LoadShaderFromSource( RenderContext *ctx,
    // if we have a handle, this succeeded; 
    return IsValid();
 }
+
 //------------------------------------------------------------------------
 // Takes an *.hlsl file and loads
 // a shader.  Eventually this optionally take
@@ -183,6 +239,8 @@ bool Shader::CreateFromFile( RenderContext *ctx, std::string const &filename )
       && m_pixelShader.IsValid(); 
 }
 ```
+
+## Raster State
 
 ```cpp
 
@@ -211,3 +269,4 @@ void RenderContext::BindShader( Shader* shader )
 	m_device->CreateRasterizerState( &desc, &m_defaultRasterState );
 	m_context->RSSetState( shader->GetRasterState() ); 
 }
+```

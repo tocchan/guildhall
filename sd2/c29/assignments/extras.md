@@ -15,6 +15,9 @@ All extras are good for the assignment assigned or any assignment afterwards;
 ## A02
 - [ ] *X02.00 : 04pts*:  **Requires X01.00 -or- X01.01** - Allow user to change resolution at runtime and properly recreate the swapchains.
 - [ ] *X02.01 : 05pts*:  Hook into DirectX output feed and forward it through your own `DebuggerPrintf` or `ConsolePrintf`
+- [ ] *X02.10 : 02pts*:  Shader Reloading.  On key press (`F10` suggested), reload all shaders in your shader database 
+- [ ] *X02.11 : 04pts*:  Directory Watch.  Write a system that prints when a file changes (is added, removed, or changed) in your data folder during run-time. 
+- [ ] *x02.12 : 02pts*:  **Requires X02.10 and X02.11**:  Auto reload shaders when changed on disc.   
 
 ## A03
 - [ ] *X03.00 : 02pts*: Built-in default shader to use by default if `BindShader` is not called after `StartCamera`, or `BindShader(nullptr)` is called
