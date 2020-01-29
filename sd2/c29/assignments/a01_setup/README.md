@@ -144,13 +144,13 @@ Example, say for the `DevConsole` assignment, you attempt the extra `auto-comple
 
 Note, most bonus tasks are twice the work for half the points of a required task, and will not be graded at all if not all required tasks are attempted.  
 
-- [ ] (X01.00 : 05pts) Borderless Window Support
-- [ ] (X01.01 : 05pts) Fullscreen Support.  See notes, the default D3D11 support for this will not count.
-- [ ] (X01.10 : 02pts) Window alignment options
-- [ ] (X01.11 : 01pts) Allow change of window title at runtime
-- [ ] (X01.12 : 02pts) Set a custom window icon
-- [ ] (X01.13 : 02pts) Allow change of window icon at runtime
-- [ ] (X01.14 : 02pts) Show window loading progress in task bar. 
+- [ ] *X01.00 : 05pts*:  Borderless Window Support
+- [ ] *X01.01 : 05pts*:  Fullscreen Support.  See notes, the default D3D11 support for this will not count.
+- [ ] *X01.10 : 02pts*:  Window alignment options
+- [ ] *X01.11 : 01pts*:  Allow change of window title at runtime
+- [ ] *X01.12 : 02pts*:  Set a custom window icon
+- [ ] *X01.13 : 02pts*:  Allow change of window icon at runtime
+- [ ] *X01.14 : 02pts*:  Show window loading progress in task bar. 
 
 ------
 
@@ -284,7 +284,7 @@ void Window::SetTitle( std::string const& title );
 When creating your window, be able to specify a set of icons to use.  This is handled when you
 register the window class.  You can have the icon loaded as a resource embedded in your executable, as a file near your exe, or as an image your construct in code. 
 
-Icons use the *.ico file format.
+Icons use the \*.ico file format.
 
 ---
 
