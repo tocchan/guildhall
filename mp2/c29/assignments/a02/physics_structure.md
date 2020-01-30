@@ -50,15 +50,20 @@ class Physics2D
    public:
       void BeginFrame();
       void Update();
-      void EndFrame();
+      void EndFrame();    // cleanup destroyed objects
 
       // factory style ccreate/destroy
       Rigidbody2D* CreateRigidbody(); 
       void DestroyRigidbody( Rigidbody2D* rb ); 
 
-      DiscCollider2D* CreateDiscCollider( vec2 localPosition, float center ); 
+      DiscCollider2D* CreateDiscCollider( vec2 localPosition, float radius ); 
       void DestroyCollider( Collider2D* collider ); 
 
+    public:
+      // add members you may need to store these
+      // storage for all rigidbodies
+      // storage for all colliders
+      // ...
 };
 ```
 
@@ -68,9 +73,11 @@ class Rigidbody2D
    friend class Physics2D;
 
    public:
-      void Destroy(); // helper for destroying myself (uses owner to destroy self)
+      void Destroy(); // helper for destroying myself (uses owner to mark self for destruction)
 
       void TakeCollider( Collider2D* collider ); // takes ownership of a collider (destroying my current one if present)
+
+      void SetPosition( vec2 position ); 
 
    public:
       Physics2D* m_system;     // which scene created/owns this object
@@ -97,7 +104,7 @@ class Collider2D
    public: // Interface 
       // cache off the world shape representation of this object
       // taking into account the owning rigidbody (if no owner, local is world)
-      virtual void UpdateWorldShape() const                     = 0; 
+      virtual void UpdateWorldShape()                             = 0; 
 
       // queries 
       virtual vec2 GetClosestPoint( vec2 pos ) const              = 0; 
@@ -106,10 +113,9 @@ class Collider2D
 
 
       // debug helpers
-      virtual void DebugRender( rgba const& borderColor, rgba const& fillColor ) = 0; 
+      virtual void DebugRender( RenderContext* ctx, rgba const& borderColor, rgba const& fillColor ) = 0; 
 
-   private: 
-      // 
+   protected: 
       virtual ~Collider2D() = 0; // private - make sure this is virtual so correct deconstructor gets called
 
    public: // any helpers you want to add
@@ -127,6 +133,7 @@ class DiscCollider2D : public Collider2D
 {
    public: // implement the interface of Collider2D
       // A02 TODO
+      // ...
 
    public:
       vec2 m_localPosition; // my local offset from my parent
