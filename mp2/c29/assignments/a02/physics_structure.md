@@ -49,7 +49,7 @@ class Physics2D
 {
    public:
       void BeginFrame();
-      void Update();
+      void Update();      // nothing in A01, but eventually it is the update, collision detection, and collision response part
       void EndFrame();    // cleanup destroyed objects
 
       // factory style ccreate/destroy
@@ -73,20 +73,20 @@ class Rigidbody2D
    friend class Physics2D;
 
    public:
-      void Destroy(); // helper for destroying myself (uses owner to mark self for destruction)
+      void Destroy();                             // mark self for destruction, and mark collider as destruction
 
-      void TakeCollider( Collider2D* collider ); // takes ownership of a collider (destroying my current one if present)
+      void TakeCollider( Collider2D* collider );  // takes ownership of a collider (destroying my current one if present)
 
-      void SetPosition( vec2 position ); 
+      void SetPosition( vec2 position );          // update my position, and my colliders world position
 
    public:
       Physics2D* m_system;     // which scene created/owns this object
       Collider2D* m_collider; 
 
-      vec2 m_worldPosition;   // where in the world is this rigidbody
+      vec2 m_worldPosition;     // where in the world is this rigidbody
 
    private:
-      ~Rigidbody2D(); // destroys the collider
+      ~Rigidbody2D();           // assert the collider is already null 
 };
 ```
 
@@ -116,7 +116,7 @@ class Collider2D
       virtual void DebugRender( RenderContext* ctx, rgba const& borderColor, rgba const& fillColor ) = 0; 
 
    protected: 
-      virtual ~Collider2D() = 0; // private - make sure this is virtual so correct deconstructor gets called
+      virtual ~Collider2D(); // private - make sure this is virtual so correct deconstructor gets called
 
    public: // any helpers you want to add
       // ...

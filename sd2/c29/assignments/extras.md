@@ -22,13 +22,14 @@ All extras are good for the assignment assigned or any assignment afterwards;
 ## A03
 - [ ] *X03.00 : 02pts*: Built-in default shader to use by default if `BindShader` is not called after `StartCamera`, or `BindShader(nullptr)` is called
 - [ ] *X03.01 : 03pts*: Built-in error shader to use when a shader fails to compile.   
-- [ ] *X03.02 : 05pts*: AutoComplete
-- [ ] *X03.03 : 04pts*: Command History
-- [ ] *X03.04 : 03pts*: Persistant Command History (requires X03.02)
-- [ ] *X03.05 : 05pts*: Text Selection 
+- [ ] *X03.02 : 04pts*: AutoComplete
+- [ ] *X03.03 : 04pts*: Context Sensitive Auto Complete
+- [ ] *X03.04 : 04pts*: Command History
+- [ ] *X03.05 : 03pts*: Persistant Command History (requires X03.02)
+- [ ] *X03.06 : 05pts*: Text Selection 
 - [ ] *X03.10 : 04pts*: Cut, Copy & Paste from Window's Clipboard (Requires X03.04)
 - [ ] *X03.11 : 02pts*: Text Scrolling
-- [ ] *X03.12 : 02pts*: Scroll Bar (Requires X03.11)
+- [ ] *X03.12 : 02pts*: Vertical Scroll Bar (Requires X03.11)
 - [ ] *X03.13 : 06pts*: Contextual Auto Complete (Requies X03.01)
 - [ ] *X03.20 : 04pts*: Text Color Markup
 - [ ] *X03.21 : 02pts*: Command Scripts

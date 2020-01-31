@@ -26,7 +26,7 @@ struct DeviceContext
    Texture* output;  
 };
 
-void Draw( DeviceContext* context, uint vertex_count )
+void GPU::Draw( DeviceContext* context, uint vertex_count )
 {
    // let us assume we're drawing triangles
    int offset = 0; 
@@ -85,7 +85,7 @@ the same steps to make it runnable - ie, **Build** and **Link**.
 
 //------------------------------------------------------------------------
 // What function is the entry point to this stage
-static char const* GetEntryForStage( eShaderstage stage ) 
+static char const* GetDefaultEntryForStage( eShaderstage stage ) 
 {
    switch (stage) {
       case SHADER_STAGE_VERTEX: return "VertexFunction"; 
@@ -108,10 +108,10 @@ static char const* GetShaderModelForStage( eShaderstage stage )
 
 //------------------------------------------------------------------------
 static ID3DBlob* CompileHLSLToByteCode( char const *opt_filename,  // optional: used for error messages
-   void const *source_code,                                          // buffer containing source code.
-   size_t const source_code_size,                                    // size of the above buffer.
-   char const *entrypoint,                                           // Name of the Function we treat as the entry point for this stage
-   char const* target  )                                             // What stage we're compiling for (Vertex/Fragment/Hull/Compute... etc...)
+   eShaderStage stage,                                           // What stage we're compiling for (Vertex/Fragment/Hull/Compute... etc...)
+   void const *source_code,                                        // buffer containing source code.
+   size_t const source_code_size,                                  // size of the above buffer.
+   char const *entrypoint )                                        // Name of the Function we treat as the entry point for this stage )                       
 {
    /* DEFINE MACROS - CONTROLS SHADER
    // You can optionally define macros to control compilation (for instance, DEBUG builds, disabling lighting, etc...)
@@ -119,6 +119,12 @@ static ID3DBlob* CompileHLSLToByteCode( char const *opt_filename,  // optional: 
    defines[0].Name = "TEST_MACRO";
    defines[0].Definition = nullptr;
    */
+
+   // if no entrypoint is specified, use a default one
+   if (entrypoint == nullptr) {
+      entry_point = GetDefaultEntryForStage( stage ); 
+   }
+   char const* shader_model = GetShaderModelForStage( stage ); 
 
    DWORD compile_flags = 0U;
    #if defined(DEBUG_SHADERS)
