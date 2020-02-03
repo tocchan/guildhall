@@ -22,7 +22,7 @@ class RenderBuffer
 		RenderBuffer( RenderContext* owner, eRenderBufferUsage usage, eRenderMemoryHint memoryHint ); 
 		~RenderBuffer(); 
 
-		void update( void const* data, size_t totalByteSize, size_t elemByteSize = 1 ); 
+		void Update( void const* data, size_t totalByteSize, size_t elemByteSize = 1 ); 
 
 	public:
 		RenderContext* m_owner; 
