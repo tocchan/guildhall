@@ -1,8 +1,6 @@
 C29.SD2.A01 - DirectX11 Setup
 ======
 
-
-
 ## Goal 
 
 *I recommend creating a new project for this titled `FPS`, and creating a `D3D11` branch to work in so you don't affect your MP2 project or current protogame.  By about week 3 or 4 the `RenderContext` should be back to fully functional again and we'll merge in.*

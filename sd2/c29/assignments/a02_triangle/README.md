@@ -1,4 +1,4 @@
-C29.SD2.A02
+C29.SD2.A02 : Happy Triangle
 ======
 
 ## Goal

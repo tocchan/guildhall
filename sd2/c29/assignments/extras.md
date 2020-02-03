@@ -20,7 +20,6 @@ All extras are good for the assignment assigned or any assignment afterwards;
 - [ ] *x02.12 : 02pts*:  **Requires X02.10 and X02.11**:  Auto reload shaders when changed on disc.   
 
 ## A03
-- [ ] *X03.00 : 02pts*: Built-in default shader to use by default if `BindShader` is not called after `StartCamera`, or `BindShader(nullptr)` is called
 - [ ] *X03.01 : 03pts*: Built-in error shader to use when a shader fails to compile.   
 - [ ] *X03.02 : 04pts*: AutoComplete
 - [ ] *X03.03 : 04pts*: Context Sensitive Auto Complete
