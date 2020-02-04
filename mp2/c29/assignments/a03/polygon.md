@@ -26,7 +26,7 @@ class Polygon2D
 		// accessors
 		int GetVertexCount() const;
 		int GetEdgeCount() const; 
-		void GetEdge( Vec2* outStart, Vec2* outEnd ); 
+		void GetEdge( int idx, Vec2* outStart, Vec2* outEnd ); 
 
 	public: // static constructors (feel free to just use a constructor - I just like descriptive names)
 			// in this case, these two take the same parameters but behave differently
