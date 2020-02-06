@@ -1,0 +1,11 @@
+- The `Camera` buffer
+- The `View` matrix (translation)
+  - The **Camera's Model** - where the Camera is in the world
+  - The **View** is the reverse of the **Camera's Model**
+- Update and bind in `BeginCamera`
+- Projection
+  - Fitting things to a box
+  - Orthographic Projection
+  - The actual math
+  - Converting it to a matrix
+  - Construct and bind in `BeginCamera`

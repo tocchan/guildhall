@@ -25,12 +25,13 @@ class RenderContext
       void BindShader( Shader* shader );        // A02
       void BindShader( char const* filename );  // A02
 
-      void BindTexture( uint slot, Texture* tex ); 
+      void BindTexture( uint slot, Texture* tex );     // A03
+      void BindSampler( uint slot, Sampler* sampler ); // A03
 
-      void BindConstants( uint slot, RenderBuffer* constants ); 
+      void BindConstantBuffer( uint slot, RenderBuffer* cbo ); // A03
 
       // Resource Creation
-      Shader* GetOrCreateShader( char const* filename ); 
+      Shader* GetOrCreateShader( char const* filename ); // A02
 
       // Drawing
       void Draw( int vertexCount, int vertexOffset = 0 );   // A02

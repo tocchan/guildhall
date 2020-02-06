@@ -1,0 +1,11 @@
+- Creating a Texture from an Image
+- UV considerations (v is flipped from GL)
+  - fix up during construction
+    - `vec2 FixUV(vec2 uv)` as part of `RenderCommon.hpp` that can be API specific is a nice approach here.
+  - fix in shader
+  - flip the texture on load (do not recommend, though Unity goes this route)
+- Creating a Sampler
+  - What does a sampler do
+  - What are the options
+  - When will you have to revisit this code?
+- Using this in a shader

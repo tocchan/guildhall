@@ -87,10 +87,11 @@ and remember you can submit extras from previous assignments.
     - [ ] *05pts*: Camera now owns a `UniformBuffer` for their matrices
     - [ ] *05pts*: Camera updates and binds their uniform buffer in `BeginCamera`
 - [ ] *18pts*: Get Working Textures
-    - [ ] *05pts*: Be able to create a `Texture` from an Image/File
-    - [ ] *05pts*: `TextureView` supports shader resource views (srv)
-    - [ ] *05pts*: Make a `Sampler` class
+    - [ ] *04pts*: Be able to create a `Texture` from an Image/File
+    - [ ] *04pts*: `TextureView` supports shader resource views (srv)
+    - [ ] *04pts*: Make a `Sampler` class
     - [ ] *03pts*: Default Samplers (Linear+Wrap, Point+Wrap)
+    - [ ] *03pts*: `RenderContext::GetOrCreateTexture` works again.
 - [ ] *08pts*: Blend States supported by shader.
     - [ ] *04pts*: Blend state is created/recreated and bound when shader is bound.
     - [ ] *04pts*: Only recreate blend state if changed since last binding
@@ -145,17 +146,23 @@ and remember you can submit extras from previous assignments.
 
 ------
 
-## Notes
-- [ ] [Sample RenderContext.hpp](./RenderContext.hpp)
-- [ ] [Sample Cammera.hpp](./Camera.hpp)
-- [ ] [Sample Shader.hpp](./Shader.hpp)
-- [ ] [No Input Shader](./triangle.hlsl)
-- [ ] [Sample RenderBuffer.hpp](./RenderBuffer.hpp)
-- [ ] [Sampler VertexBuffer.hpp](./VertexBuffer.hpp)
-- [ ] [Shader Compilation](./shadercompile.md)
-- [ ] [Render Buffer Creation & Updating](./renderbuffer.md)
-- [ ] [Creating an Input Layout](./inputlayout.md)
-- [ ] [Default Shader v0.1](./default.hlsl)
+
+
+## Documents
+
+### New Headers
+- [ ] [RenderContext.hpp](./RenderContext.hpp)
+- [ ] [Camera.hpp](./Camera.hpp)
+- [ ] [MatrixUtils.hpp](./MatrixUtils.hpp)
+- [ ] [Texture.hpp](./Texture.hpp)
+- [ ] [TextureView.hpp](./TextureView.hpp)
+- [ ] [Sampler.hpp](./Sampler.hpp)
+
+### Class Notes
+- [ ] [New Default Shader](./default.hlsl)
+- [ ] [Constant Buffers](./constantbuffer.md)
+- [ ] [Orthographic Projection](./ortho.md)
+- [ ] [Textures & Samplers](./textures.md)
 
 ------
 

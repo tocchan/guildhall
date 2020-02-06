@@ -1,0 +1,7 @@
+- What Is It
+- Creating
+- Binding
+- Updating
+- Passing Up Time to the shader
+- Data Groupings 
+  - https://developer.nvidia.com/content/constant-buffers-without-constant-pain-0
