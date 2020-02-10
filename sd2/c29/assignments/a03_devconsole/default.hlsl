@@ -71,7 +71,7 @@ v2f_t VertexFunction( vs_input_t input )
    vec4 local_pos = float4( input.position );               // passed in position is usually inferred to be "local position", ie, local to the object
    vec4 world_pos = local_pos;  // mul( MODEL, local_pos ); // world pos is the object moved to its place int he world by the model, not used yet
    vec4 camera_pos = mul( VIEW, world_pos ); 
-   vec4 clip_pos = mul( PROJECTION, camera_pos ); 
+   vec4   = mul( PROJECTION, camera_pos ); 
 
    v2f.position = clip_pos; // we want to output the clip position to raster (a perspective point)
    v2f.color = input.color; 
