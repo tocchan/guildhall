@@ -3,7 +3,7 @@ Friction *in our simulation* is a way to limit the *tangental force* being appli
 
 The `friction` value is used to calculate a `frictional coefficient` to scale the resultant tangent force by.  
 
-- The **Tangental Impulse** is calculated identical to the **Normal Impulse**, except you use a tangent to put of contact.  In 2D, we can just rotate the normal. 
+- The **Tangental Impulse** is calculated identical to the **Normal Impulse**, except you use a tangent to the point of contact.  In 2D, we can just rotate the normal. 
   - A tangent impulse should not be greater than the normal impulse (ie, if the object isn't pushing into the surface, than it should not be "grinding" together).  
 
 ```cpp

@@ -1,0 +1,89 @@
+MP2.A04 Collision REsponse
+======
+
+## Overview
+Add in basic collision response; 
+
+**Turn-In Branch Name: `mp2/turnin/a04`**
+
+**Due Date: Feb 20, 2020**
+
+### Goal 
+Some example code for how the system will be used in this assignment;
+
+------
+
+## Checklist
+I may mark tasks as **CHALLENGE** if I believe them to be more difficult relative to the rest of the assignment.  This is just to hint to you that you may want to save those tasks for the end if you have time, or skip altogether if not.  
+
+- [ ] Add support for `aabb2 Collider2D::GetWorldBounds` for existing colliders
+- [ ] Switch `Collider2D::Intersects` to be non-virtual, and instead use a matrix lookup
+- [ ] Add `Collider2D::GetManifold` that also uses a collision matrix or half matrix
+    - [ ] Early out if world bounds do not intersect
+    - [ ] Can get a disc versus disc manifold
+    - [ ] Can get a disc versus polygon manifold
+    - **Note: We are not doing polygon -vs- polygon yet**
+- [ ] `Rigidbody2D` gets gets a `PhysicsMaterial`
+    - [ ] `PhysicsMaterial` has a property for `restitution` or `bounciness`
+- [ ] Add a `Collision2D` object that contains..
+    - Two pointers to the `Collider2D` objects involved in the collision
+    - A `manifold2` struct containing...
+      - `normal` describing the normal at the impact point
+      - `penetration` How deeply interpenetrated are the two objects.
+- [ ] `Physics2D` during a `SimulateStep` should now do the following
+    - [ ] `DetectCollisions` to compute all collisions between all colliders.
+    - [ ] `ResolveCollisions` to resolve all detected collisions
+    - [ ] `ResolveCollision` to resolve a single collision
+- [ ] `ResolveCollision` should...
+    - [ ] `CorrectObjects`, pushing them out of their respective objects
+        - [ ] Push should depend on the ratio of the masses
+        - [ ] Static and Kinematic objects assume infinite mass vs dynamic objects
+        - [ ] Kinematic vs Kinematic resolves based on masses
+        - [ ] Static objects never move, and should fully push the other object
+        - [ ] Two static objects do not correct
+    - [ ] Calculate **normal impulse** at point of collision. 
+    - [ ] `Rigidbody2D::ApplyImpulseAt` to both objects (`impulse` to A, `-impulse` to B)
+- [ ] `Rigidbody2D::ApplyImpulseAt( vec2 worldPos, vec2 impulse )` implemented
+    - [ ] Impulse uses force to apply an instant change in velocity
+        - `delta_velocity = impulse * inverse_mass`
+    - [ ] Ignore `worldPos` for now, it is there for when we apply rotational forces
+------
+
+## Resources
+
+### Update Loop
+
+```cpp
+Physics2D::SimulateStep( float dt ) 
+	ApplyGlobalForcesToAllObjects();
+	MoveAllObjects();
+	DetectCollisions();
+	ResolveCollisions();
+
+Physics2D::ResolveCollisions
+	foreach (Collision) 
+		ResolveCollision(Collision); 
+
+Physics2D::ResolveCollision
+	CorrectObjectsInCollision();
+	CalculateCollisionImpulse();
+	ApplyImpulse( FirstObject, Impulse );
+	ApplyImpulse( SecondObject, -Impulse ); 
+```
+
+
+### Notes
+Note: I'm trying something new with this cohort where we detect all collisions first, 
+and then resolve all collisions based.  In previous cohorts we would correct during collision detection.  If the results are poor, we'll switch back to this (will be a fairly minimal change).
+
+- [Collision Matrix](./collisionmatrix.md)
+- [Manifold Generation](./manifold.md)
+- [Collision Resolution](./collision.md)
+- [Impulse Forces](./impulses.md)
+
+
+### Links
+- [Elastic Collisions - Khan Academy](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/a/what-are-elastic-and-inelastic-collisions):  Good explanation of the math involved (including Restitution). 
+- [Elastic Collision - Wikipedia](https://en.wikipedia.org/wiki/Elastic_collision):  Simple version (no restitution)
+- [Inelastic Collisions - Wikipedia](https://en.wikipedia.org/wiki/Inelastic_collision):  Equations we should use; 
+- [KhanAcademy.com - Deriving the shortcut to solve elastic collision problems](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/v/deriving-the-shortcut-to-solve-elastic-collision-problems) 

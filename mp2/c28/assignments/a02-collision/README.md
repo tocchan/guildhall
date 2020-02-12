@@ -28,7 +28,7 @@ The user should also be able to possess one of the objects.  Pressing TAB should
 **NEW** While possessed, mass/restitution controls affect the selected object.
 
 - **TAB** - Select the next object for possession.  If no object selected, select object closest to the cursor; 
-- **SPACE** - Deselect object and reutrn to cursor mode. 
+- **SPACE** - Deselect object and return to cursor mode. 
 - **DEL** - Destroy selected object
 - **ARROW KEYS** - Move the object. 
 
