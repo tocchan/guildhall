@@ -63,7 +63,7 @@ So steps are similar to above for calculating **Vn** and **Vf**, but this time w
 Using the elastic collision equations (found [here](https://en.wikipedia.org/wiki/Elastic_collision)), we then solve for **Vfn0** and **Vfn1**.  Scale
 both results by the collisions restitution, and then compute the final resulting velocity of each object using the same combination of terms as static (our derived velocity along the impact plane, and the unaffected tangental velocity)
 
-*Note - if you're curious on how to drive these equations - this is a great video;*
+*Note - if you're curious on how to derive these equations - this is a great video;*
 - [KhanAcademy.com - Deriving the shortcut to solve elastic collision problems](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/v/deriving-the-shortcut-to-solve-elastic-collision-problems) 
 
 

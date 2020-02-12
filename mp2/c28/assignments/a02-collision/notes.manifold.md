@@ -26,7 +26,7 @@ Suggested tasks and order to do them;
 ## Buckets
 
 ```cpp
-class RigidbodyBudcket
+class RigidbodyBucket
 {
   public:
     std::vector<Rigidbody2D*> m_rigidbodies; 
