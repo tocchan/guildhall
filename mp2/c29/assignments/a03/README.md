@@ -53,6 +53,9 @@ I may mark tasks as **CHALLENGE** if I believe them to be more difficult relativ
     - [ ] `KINEMATIC` objects do not apply forces, but will simulate.  
     - [ ] `DYNAMIC` objects apply forces and simulate
     - [ ] While selected, `1`, `2`, and `3` should switch the object to `STATIC`, `KINEMATIC`, or `DYNAMIC` respectively
+        - [ ] `STATIC` objects should render with a dark gray border
+        - [ ] `KINEMATIC` objects should render with a magenta border
+        - [ ] `DYNAMIC` objects should render with a blue border (same as previous)
 - [ ] *05pts*: `Physics2D::SetSceneGravity` implemented
     - [ ] Applies a flat acceleration force to every dynamic rigidbody in the scene beginning of frame. 
     - [ ] Use `+` and `-` keys to adjust gravity amount
