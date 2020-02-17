@@ -92,11 +92,10 @@ and remember you can submit extras from previous assignments.
     - [ ] *04pts*: Make a `Sampler` class
     - [ ] *03pts*: Default Samplers (Linear+Wrap, Point+Wrap)
     - [ ] *03pts*: `RenderContext::GetOrCreateTexture` works again.
-- [ ] *08pts*: Blend States supported by shader.
-    - [ ] *04pts*: Blend state is created/recreated and bound when shader is bound.
-    - [ ] *04pts*: Only recreate blend state if changed since last binding
+- [ ] *08pts*: Blend States
+    - [ ] *04pts*: Blend states creating when renderer starts up.
+    - [ ] *04pts*: `ADDITIVE`, `OPAQUE`, and `ALPHA` blend modes supported
 - [ ] *05pts*: Default Built-In Shader to use when `BindShader(nullptr)` is used
-    - [ ] `Renderer::SetBlendState` should affect this shader; 
 - [ ] *05pts*: Render two textured quads on screen
     - [ ] *04pts*: One using an invert color shader
     - [ ] *01pts*: One default
