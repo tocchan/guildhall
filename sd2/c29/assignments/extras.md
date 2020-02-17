@@ -38,3 +38,6 @@ All extras are good for the assignment assigned or any assignment afterwards;
 - [ ] *X03.25 : 02pts*: Audio Cues
 - [ ] *X03.26 : 02pts*: Open & Close Animations (Slides Open for Example)
 - [ ] *X03.27 : 04pts*: Undo/Redo History (Ctrl+Z, Ctrl+Y)
+
+## A04
+- [ ] *X04.01 : 
