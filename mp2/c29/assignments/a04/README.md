@@ -14,9 +14,9 @@ Some example code for how the system will be used in this assignment;
 ------
 
 ## Checklist
-I may mark tasks as **CHALLENGE** if I believe them to be more difficult relative to the rest of the assignment.  This is just to hint to you that you may want to save those tasks for the end if you have time, or skip altogether if not.  
 
-- [ ] Add support for `aabb2 Collider2D::GetWorldBounds` for existing colliders
+- [ ] Add support for `disc Collider2D::GetWorldBoundingDisc` for existing colliders
+	- [ ] Add a `disc` struct, containing a center and radius
 - [ ] Switch `Collider2D::Intersects` to be non-virtual, and instead use a matrix lookup
 - [ ] Add `Collider2D::GetManifold` that also uses a collision matrix or half matrix
     - [ ] Early out if world bounds do not intersect
