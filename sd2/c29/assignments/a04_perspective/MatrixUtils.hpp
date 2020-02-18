@@ -1,14 +1,18 @@
+// A03
+Mat44 MakeOrthographicProjectionMatrixD3D( 
+	float minX, float maxX, 
+	float minY, float maxY, 
+	float minZ, float maxZ ); 
+
+// A04
+Mat44 MakePerpsectiveProjectionMatrixD3D(
+	float fovDegrees,
+	float aspectRatio,  
+	float nearZ, 
+	float farZ ); 
 
 
-
-class Transform
-{
-   public:
-      mat44 ToMatrix() const; 
-      
-   public:
-      vec3 m_position               = vec3(0.0f);
-      vec3 m_rotationEulerDegrees   = vec3(0.0f);
-      vec3 m_scale                  = vec3(1.0f); 
-
-}
+// More Utility
+void MatrixTranspose( Mat44& mat );          // A04
+void MatrixInvertOrthoNormal( Mat44& mat );  // A04
+void MatrixInvert( Mat44& mat );             // A04   

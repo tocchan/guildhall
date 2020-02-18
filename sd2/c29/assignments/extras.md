@@ -29,7 +29,6 @@ All extras are good for the assignment assigned or any assignment afterwards;
 - [ ] *X03.10 : 04pts*: Cut, Copy & Paste from Window's Clipboard (Requires X03.04)
 - [ ] *X03.11 : 02pts*: Text Scrolling
 - [ ] *X03.12 : 02pts*: Vertical Scroll Bar (Requires X03.11)
-- [ ] *X03.13 : 06pts*: Contextual Auto Complete (Requies X03.01)
 - [ ] *X03.20 : 04pts*: Text Color Markup
 - [ ] *X03.21 : 02pts*: Command Scripts
 - [ ] *X03.22 : 02pts*: Mouse Input on Dev Console (scroll wheel to scroll, click to set carrot)

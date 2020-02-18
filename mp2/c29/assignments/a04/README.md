@@ -87,3 +87,6 @@ and then resolve all collisions based.  In previous cohorts we would correct dur
 - [Elastic Collision - Wikipedia](https://en.wikipedia.org/wiki/Elastic_collision):  Simple version (no restitution)
 - [Inelastic Collisions - Wikipedia](https://en.wikipedia.org/wiki/Inelastic_collision):  Equations we should use; 
 - [KhanAcademy.com - Deriving the shortcut to solve elastic collision problems](https://www.khanacademy.org/science/physics/linear-momentum/elastic-and-inelastic-collisions/v/deriving-the-shortcut-to-solve-elastic-collision-problems) 
+
+- [Three Points Defining a Circle](https://www.khanacademy.org/math/geometry-home/triangle-properties/perpendicular-bisectors/v/three-points-defining-a-circle) 
+- [Line-Line Intersection](https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection): How we can determine the circumcenter of three points

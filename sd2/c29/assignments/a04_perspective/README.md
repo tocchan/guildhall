@@ -106,6 +106,7 @@ By the end of this, we will have a 5-DoF (Degree of Freedom) camera, allowing mo
 
 ### Notes
 
+- [Task Notes](./tasks.md)
 
 ------
 

@@ -55,7 +55,7 @@ second.
 void App::Render()
 {
    g_theGame->Render(); // render game (will clear color)
-   g_theDevConsole->Render(); // render console, draws over top of game, using its own game
+   g_theDevConsole->Render(); // render console, draws over top of game, using its own camera
 }
 
 void DevConsole::Render()
@@ -93,7 +93,7 @@ and remember you can submit extras from previous assignments.
     - [ ] *03pts*: Default Samplers (Linear+Wrap, Point+Wrap)
     - [ ] *03pts*: `RenderContext::GetOrCreateTexture` works again.
 - [ ] *08pts*: Blend States
-    - [ ] *04pts*: Blend states creating when renderer starts up.
+    - [ ] *04pts*: Blend states created when renderer starts up.
     - [ ] *04pts*: `ADDITIVE`, `OPAQUE`, and `ALPHA` blend modes supported
 - [ ] *05pts*: Default Built-In Shader to use when `BindShader(nullptr)` is used
 - [ ] *05pts*: Render two textured quads on screen
@@ -126,24 +126,25 @@ and remember you can submit extras from previous assignments.
 
 - [ ] *X03.01 : 03pts*: Built-in error shader to use when a shader fails to compile.   
 - [ ] *X03.02 : 04pts*: AutoComplete
-- [ ] *X03.03 : 04pts*: Context Sensitive Auto Complete
+- [ ] *X03.03 : 04pts*: Context Sensitive Auto Complete (Requies X03.02)
 - [ ] *X03.04 : 04pts*: Command History
 - [ ] *X03.05 : 03pts*: Persistant Command History (requires X03.02)
 - [ ] *X03.06 : 05pts*: Text Selection 
 - [ ] *X03.10 : 04pts*: Cut, Copy & Paste from Window's Clipboard (Requires X03.04)
 - [ ] *X03.11 : 02pts*: Text Scrolling
 - [ ] *X03.12 : 02pts*: Vertical Scroll Bar (Requires X03.11)
-- [ ] *X03.13 : 06pts*: Contextual Auto Complete (Requies X03.01)
 - [ ] *X03.20 : 04pts*: Text Color Markup
 - [ ] *X03.21 : 02pts*: Command Scripts
 - [ ] *X03.22 : 02pts*: Mouse Input on Dev Console (scroll wheel to scroll, click to set carrot)
 - [ ] *X03.23 : 04pts*: Mouse Selection (Requires X03.05 and X03.22)
-- [ ] *X03.24 : 02pts*: Navigation Hotkeys 
-- [ ] *X03.25 : 02pts*: Audio Cues
+- [ ] *X03.24 : 02pts*: Navigation Hotkeys, Home, End, Ctrl + Arrows
+- [ ] *X03.25 : 02pts*: Audio Cues (Sound for Good Command, Bad Command, Console Open, and maybe keypress... though may get annoying)
 - [ ] *X03.26 : 02pts*: Open & Close Animations (Slides Open for Example)
 - [ ] *X03.27 : 04pts*: Undo/Redo History (Ctrl+Z, Ctrl+Y)
 
 ------
+
+
 
 
 

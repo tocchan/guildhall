@@ -15,6 +15,12 @@ class Camera
 
 		void SetClearMode( eCameraClearFlags flags, rgba color, float depth = 0.0f, uint8_t stencil = 0 ); // A01
 
+		void SetProjectionOrthographic( float size, float nearZ, float farZ );  // A03
+
+		// accessors
+		Mat44 GetViewMatrix() const; 
+		Mat44 GetProjectionMatrix() const; 
+
 
 	public:
 		Texture* m_colorTarget = nullptr; 
