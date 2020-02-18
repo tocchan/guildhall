@@ -15,18 +15,26 @@ Some example code for how the system will be used in this assignment;
 
 ## Checklist
 
-- [ ] Add support for `disc Collider2D::GetWorldBoundingDisc` for existing colliders
-	- [ ] Add a `disc` struct, containing a center and radius
+- [ ] Add support for `disc Collider2D::GetWorldBounds` for existing colliders
+	- [ ] **Easier Option**: Implement this using `AABB2` bounding boxes
+    - [ ] **Challenge Option**: Implement this using a bounding `Disc`
+    - [ ] Update this bounds whenever you update the world shape of the object
 - [ ] Switch `Collider2D::Intersects` to be non-virtual, and instead use a matrix lookup
+    - [ ] Use a *mid-phase* check to early out of a collision by comparing the bounds first.
+    - [ ] If passes the bounds check, lookup and call the appropriate callback
 - [ ] Add `Collider2D::GetManifold` that also uses a collision matrix or half matrix
-    - [ ] Early out if world bounds do not intersect
-    - [ ] Can get a disc versus disc manifold
-    - [ ] Can get a disc versus polygon manifold
+    - [ ] Again do an early out using the bounds.
+    - [ ] Implement a disc versus disc manifold
+    - [ ] Implement a disc versus polygon manifold
     - **Note: We are not doing polygon -vs- polygon yet**
-- [ ] `Rigidbody2D` gets gets a `PhysicsMaterial`
-    - [ ] `PhysicsMaterial` has a property for `restitution` or `bounciness`
+- [ ] `Collider2D` gets gets a `PhysicsMaterial`
+    - [ ] `PhysicsMaterial` has a property for `restitution` (or `bounciness` if you prefer)
+    - [ ] `Collider2D::GetBounceWith(Collider2D const* other) const` implemented to compute restitution between two objects
+        - There are multiple methods for computing the restitution.  Product, Min, Max, Spherical, Lookup, etc...   
+    - [ ] Allow user to adjust bounciness using `+` and `-` while the object is selected.
+    - [ ] Set the alpha for the fill color to the counciness of the object.
 - [ ] Add a `Collision2D` object that contains..
-    - Two pointers to the `Collider2D` objects involved in the collision
+    - Two pointers to the `Collider2D` objects involved in the collision (`me` and `them`)
     - A `manifold2` struct containing...
       - `normal` describing the normal at the impact point
       - `penetration` How deeply interpenetrated are the two objects.
@@ -39,14 +47,17 @@ Some example code for how the system will be used in this assignment;
         - [ ] Push should depend on the ratio of the masses
         - [ ] Static and Kinematic objects assume infinite mass vs dynamic objects
         - [ ] Kinematic vs Kinematic resolves based on masses
-        - [ ] Static objects never move, and should fully push the other object
-        - [ ] Two static objects do not correct
+        - [ ] Static objects never move, and should fully push the other object if it is not static.
+        - [ ] Two static objects do not correct at all.
     - [ ] Calculate **normal impulse** at point of collision. 
     - [ ] `Rigidbody2D::ApplyImpulseAt` to both objects (`impulse` to A, `-impulse` to B)
 - [ ] `Rigidbody2D::ApplyImpulseAt( vec2 worldPos, vec2 impulse )` implemented
     - [ ] Impulse uses force to apply an instant change in velocity
         - `delta_velocity = impulse * inverse_mass`
     - [ ] Ignore `worldPos` for now, it is there for when we apply rotational forces
+- [ ] Make sure your game creates polygons as `STATIC` by default, and discs create as `DYNAMIC` by default
+
+
 ------
 
 ## Resources
