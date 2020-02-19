@@ -37,9 +37,9 @@ By the end of this, we will have a 5-DoF (Degree of Freedom) camera, allowing mo
         - [ ] `MatrixTranspose` added
 - [ ] Draw a Quad at `(0, 0, -10)`, or 10 units in front of the origin (should be visible when you start)
 - [ ] Allow player to move the camera by change the camera transform position
-   - [ ] `W` & `S`: Forward & Back 
-   - [ ] `A` & `D`: Left and Right
-   - [ ] `Space` & `C`: Up and Down Movement
+   - [ ] `W` & `S`: Forward & Back (movement is relative to where you're looking)
+   - [ ] `A` & `D`: Left and Right (movement is relative to where you're looking)
+   - [ ] `Space` & `C`: Up and Down Movement (movement is absolute (world up and world down)
    - [ ] `Left-Shift`: Move faster while held.
    - *Note:  If you want different controls, just make a note in your readme*
 - [ ] Allow player to turn the camera using the mouse.
