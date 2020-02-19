@@ -2,7 +2,30 @@ void App::Startup()
 {
    SubscribeEvent( "help", ShowHelp ); 
 
+}
+
+void DevConsole::Startup()
+{
    DefineEvent( "help", ShowHelp, "Displays all available commands", EVENT_IS_VISIBLE_TO_DEVCONSOLE_BIT );
+}
+
+void DevConsole::RunCommand( char const* command )
+{
+   EventType* type = gEventSystem->FindEvent( command ); 
+   if ((type != nullptr) && type->CanRunFromConsole()) {
+      FireEvent( command );
+      // type->Fire(command);  
+   }
+}
+
+void EventSystem::GetOrCreateEvent( name ); 
+
+class EventType
+{
+   std::string name; 
+   std::vector<Callback> callbacks;
+   std::string description = "";  
+   uint flags        = 0; 
 }
 
 // Run a command
