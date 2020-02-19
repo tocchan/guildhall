@@ -15,10 +15,12 @@ Some example code for how the system will be used in this assignment;
 
 ## Checklist
 
+- [ ] Stop coloring objects red that are intersecting (it becomes a strobe light in this assignment otherwise)
+- [ ] Make sure your game creates polygons as `STATIC` by default, and discs create as `DYNAMIC` by default
 - [ ] Add support for `disc Collider2D::GetWorldBounds` for existing colliders
 	- [ ] **Easier Option**: Implement this using `AABB2` bounding boxes
     - [ ] **Challenge Option**: Implement this using a bounding `Disc`
-    - [ ] Update this bounds whenever you update the world shape of the object
+    - [ ] Update this bounds whenever you update the world shape of the object.
 - [ ] Switch `Collider2D::Intersects` to be non-virtual, and instead use a matrix lookup
     - [ ] Use a *mid-phase* check to early out of a collision by comparing the bounds first.
     - [ ] If passes the bounds check, lookup and call the appropriate callback
@@ -55,8 +57,6 @@ Some example code for how the system will be used in this assignment;
     - [ ] Impulse uses force to apply an instant change in velocity
         - `delta_velocity = impulse * inverse_mass`
     - [ ] Ignore `worldPos` for now, it is there for when we apply rotational forces
-- [ ] Make sure your game creates polygons as `STATIC` by default, and discs create as `DYNAMIC` by default
-
 
 ------
 

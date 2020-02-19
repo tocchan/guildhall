@@ -63,7 +63,7 @@ By the end of this, we will have a 5-DoF (Degree of Freedom) camera, allowing mo
     - [ ] `SetModelMatrix` should update this uniform buffer
     - [ ] `BeginCamera` should `SetModelMatrix` to the `IDENTITY`, and be sure to bind the buffer.
 - [ ] Be able to draw a cube mesh at `(1, 0.5, -12.0)`
-    - [ ] Create a `Mesh` class
+    - [ ] Create a `GPUMesh` class
         - [ ] Implement `IndexBuffer`
         - [ ] Be able to construct a mesh from a vertex and index array
         - [ ] Add `RenderContext::BindIndexBuffer`
@@ -112,6 +112,8 @@ By the end of this, we will have a 5-DoF (Degree of Freedom) camera, allowing mo
 
 ### Links
 - [Scratchapixel: Projection Matrices](https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/projection-matrix-introduction)  Walkthrough of various projection matrix construction 
+- [Cramer's Rule for Inverting a Matrix](http://pi.math.cornell.edu/~andreim/Lec17.pdf)
+- [GLU's Inversion Code](matrixinvert.cpp)
 
 
 ------
