@@ -1,6 +1,3 @@
-
-
-
 class Transform
 {
    public:
@@ -13,5 +10,4 @@ class Transform
       vec3 m_position                     = vec3(0.0f);
       vec3 m_rotationPitchRollYawDegrees  = vec3(0.0f);  
       vec3 m_scale                        = vec3(1.0f); 
-
-}
+};
