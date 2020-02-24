@@ -15,10 +15,10 @@ This works off the knowledge...
 // -> do **not** span zero here.
 
 // Goal is to...
-// - setup a default "depth" where (1, 1) == (1, 1) after proejction (1 / tan(fov * .5f))
-// - map z to w, so the z divide happens
-// - map nearZ to 0, farZ to farZ, since a Z divide will happen
-//   and this will result in mapping nearZ to 0, and farZ to 1. 
+// - setup a default "depth" where (1, 1) == (1, 1) after projection (1 / tan(fov * .5f))
+// - map z to w, so the z divide happens (we go along negative, so we want a negative w-divide)
+// - map nearZ to 0, farZ to -farZ, since a -Z divide will happen
+//   and this will result in mapping nearZ to 0, and farZ to 1 in NDC space 
 //   -> ((z - nz) / (fz - nz)) * fz + 0
 //   -> fz / (fz - nz) * z      + (-fz * nz) / (fz - nz)
 
@@ -29,8 +29,8 @@ float q = 1.0f / zrange;
 mat44 proj( 
    height / aspect,          0,        0,            0,
                  0,     height,        0,            0, 
-                 0,          0,   fz * q, -nz * fz * q,
-                 0,          0,        1,            0 
+                 0,          0,  -fz * q,  nz * fz * q,
+                 0,          0,       -1,            0 
 ;       
 ```
 

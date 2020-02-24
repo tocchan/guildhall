@@ -1,4 +1,4 @@
-class Mesh // A04
+class GPUMesh // A04
 {
 	public:
 		void UpdateVertices( uint vcount, void const* vertexData, uint vertexStride, buffer_attribute_t const* layout ); 
@@ -15,4 +15,4 @@ class Mesh // A04
 	public:
 		VertexBuffer* m_vertices; 
 		IndexBuffer* m_indices; 
-}
+};

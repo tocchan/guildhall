@@ -28,6 +28,10 @@ class Camera
       Mat44 GetViewMatrix() const;           // A03, A04 
       Mat44 GetProjectionMatrix() const;     // A03
 
+      // Helpers
+      vec3 ClientToWorld( vec2 client, float ndcZ ); // A04
+      vec3 WorldToClient( vec3 worldPos );           // A04
+
    public:
       Transform m_transform; 
 
