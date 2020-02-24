@@ -12,6 +12,7 @@ A half matrix only fills out the diaganol, and one side of the diagnol.
 
 typedef bool (*collision_check_cb)( Collider2D const*, Collider2D const* ); 
 
+// Static - local to Collider2D.cpp
 static bool DiscVDiscCollisionCheck( Collider2D const* col0, Collider2D* const* col1 )
 {
    // this function is only called if the types tell me these casts are safe - so no need to a dynamic cast or type checks here.
@@ -42,6 +43,10 @@ bool Collider2D::Intersects( Collider2D const* other ) const
 {
    eColliderType myType = get_type();
    eColliderType otherType = other->get_type();
+
+   // bounddisc a
+   // boundingdisc of b
+   // if those don't intersect, return
 
    if (myType <= otherType) {
       int idx = otherType * NUM_COLLIDER_TYPES + myType; 
@@ -78,3 +83,20 @@ static bool PolygonVDiscCollisionCheck( Collider2D const* col0, Collider2D* cons
 Very similar, but the callback looks different (must have some way to return a manifold and let you know if it succeeded). 
 
 The other consideration is that if you have to flip the matrix, or reverse the call, make sure you also invert the result (flip the normal); 
+
+`typedef bool (*manifold_cb)( manifold2* out, Collider2D const*, Collider2D const* );`
+
+```cpp
+// What I don't want
+bool Collider2D::GetManifold( manifold2* out, Collider2D* other )
+{
+   // mid-phase check
+   if (MidphaseCheckFails( this, other )) {
+      return false; 
+   }
+
+
+   manifold_cb cb = GetManifoldFunction( this, other ); 
+   return cb( out, this, other ); 
+}
+```
