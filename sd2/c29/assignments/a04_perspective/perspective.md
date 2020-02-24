@@ -27,11 +27,11 @@ float zrange = farZ - nearZ;
 float q = 1.0f / zrange; 
 
 mat44 proj( 
-   height / aspect,          0,        0,            0,
-                 0,     height,        0,            0, 
-                 0,          0,  -fz * q,  nz * fz * q,
-                 0,          0,       -1,            0 
-;       
+   height / aspect,          0,           0,         0,
+                 0,     height,           0,         0, 
+                 0,          0,     -fz * q,        -1,
+                 0,          0, nz * fz * q,         0 
+);       
 ```
 
 ### Dealing with Aspect
