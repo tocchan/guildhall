@@ -8,11 +8,12 @@ class Timer
 
       void Stop();                                    // stops the timer
 
-      double GetElapsedSeconds() const;                  // return amoutn of time accrued on this timer
-      double GetSecondsRemaining() const;                // returns amount of time until HasElapsed() will return true (0 or negative numbers means it has already elapsed)
+      double GetElapsedSeconds() const;               // return amount of time accrued on this timer
+      double GetSecondsRemaining() const;             // returns amount of time until HasElapsed() will return true (0 or negative numbers means it has already elapsed)
 
       bool HasElapsed() const;                        // timer has elapsed the timer
       bool CheckAndDecrement();                       // if has elapsed, removes one interval of time and returns true, otherwise returns false
+      int  CheckAndDecrementAll();                    // returns how many intervals have passed and removes them  
       bool CheckAndReset();                           // if has elapsed, resets and returns true, otherwise returns false; 
 
       bool IsRunning() const;                         // timer is accruing time
@@ -20,7 +21,7 @@ class Timer
 
       // OPTIONAL - useful on a timer, but not needed for anything we're doing.
 
-      // Pause and Resume require some extra bookkeeping, but can be usefaul
+      // Pause and Resume require some extra bookkeeping, but can be useful
       // void Pause(); 
       // void Resume(); 
 
@@ -36,3 +37,6 @@ class Timer
       // ...a way to track an interval duration
       // ...a way to track when the timer has elapsed (hopefully can give us remaining time and elapsed time)
 }; 
+
+
+bool 

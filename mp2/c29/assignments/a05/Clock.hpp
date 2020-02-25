@@ -2,11 +2,11 @@ class Clock
 {
    public:
       Clock();                   // defaults to being owned by master
-      Clock( Clock* parent );    // passing nullptr will create a root clock
+      Clock( Clock* parent );    // passing nullptr will create a root clock (root clock is something you'd have to advance yourself)
       ~Clock();                  // be sure to correcty re-parent my children to my parent
 
-      void Update( double deltaTime );    // usually do not need to call unless you create a new root clock
-      void Reset();                       // set total time back to 0.0
+      void Update( double deltaSeconds );    // usually do not need to call unless you create a new root clock
+      void Reset();                       // set total time back to 0.0, does not reset children
 
       // Controls
       void Pause(); 
@@ -14,8 +14,8 @@ class Clock
       void SetScale( double scale ); 
 
       // accessors
-      double GetTotalElapsedTime() const; 
-      double GetFrameElapsedTime() const; 
+      double GetTotalElapsedSeconds() const; 
+      double GetLastDeltaSeconds() const; 
 
       double GetScale() const; 
       bool IsPaused() const; 
@@ -31,15 +31,17 @@ class Clock
 
    public:
       // need a way to...
+      // ...current state
       // ...track pause state
       // ...track scale
       // ...know my parent
       // ...know my children
 
    public: // accessor for the master clock of our engine
+      static void SystemStartup();  // create/reset master clock
+      static void SystemShutdown();
+      static void BeginFrame();     // advance master clock (which immediately propogates to children)
+
       static Clock* GetMaster(); 
 };
 
-void ClockSystemStartup();    // create/reset master clock
-void ClockSystemShutdown();   
-void ClockSystemBeginFrame(); // update master clock
