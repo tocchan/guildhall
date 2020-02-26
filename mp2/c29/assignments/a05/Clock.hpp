@@ -31,7 +31,7 @@ class Clock
 
    public:
       // need a way to...
-      // ...current state
+      // ...current time state (current time, delta, etc...)
       // ...track pause state
       // ...track scale
       // ...know my parent
@@ -45,3 +45,51 @@ class Clock
       static Clock* GetMaster(); 
 };
 
+
+
+
+// Example Usage
+void Game::Startup()
+{
+   m_game_clock = new Clock(); // automatically is master
+}
+
+void Game::Update()
+{
+   double dt = m_game_clock->GetLastDeltaSeconds(); 
+   double totalTime = m_game_clock->GetTotalElapsedSeconds(); 
+}
+
+void RenderContext::Setup( Clock* game_clock )
+{
+   m_game_clock = game_clock; 
+   if (m_game_clock == nullptr) {
+      m_game_clock = Clock::GetMaster();
+   }
+}
+
+void RenderContext::BeginFrame()
+{
+   // update frame ubo with with time
+   time_data.system_time = master_clock->GetTotalElapsedSeconds();
+   time_data.game_time = game_clock->GetTotalElapsedSeconds(); 
+}
+
+void DevConsole::Startup()
+{
+   m_clock = new Clock();
+}
+
+void DevConsole::Render()
+{
+   double seconds = m_clock->GetTotalElapsedSeconds();
+   int iseconds = (int)seconds;
+   if ((i % 2) == 0) {
+      DrawCarrot();
+   }
+}
+
+void DevCosole::OnInputChanged()
+{
+   m_clock->Reset(); 
+}

@@ -13,11 +13,18 @@ There is more more limit on tangent impulse though - in that the impulse due to 
 
 ```cpp
    // Coulumb's Law
-   if (Abs(tangent_impulse) > friction * normal_impulse) {
-      tangent_impulse = Sign(tangent_impulse) * normal_impulse * friction; 
+   if (AbsFloat(tangent_impulse) > friction * normal_impulse) {
+      tangent_impulse = SignFloat(tangent_impulse) * normal_impulse * friction; 
    } else {
       tangent_impulse *= friction; 
    }
+```
+
+```cpp
+float SignFloat( float val )
+{
+   return (val >= 0.0f) ? 1.0f : -1.0f;  
+}
 ```
 
 - Getting the frictional coefficient between two objects is not an exact science, and can really depend on how you want to think of it.  The tutorial listed with this assignment uses a circular combination, but that means that if either object has friction, there is going to be a frictional component to the collision.  If you want your game to have "ice" that always causes objects to slide on it, you may want to do a product combination similar to restitution.

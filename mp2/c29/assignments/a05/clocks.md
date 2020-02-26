@@ -22,7 +22,12 @@ so a system doesn't have to have delta time passed to it - it will have delta ti
 ```cpp
 void Clock::Update( double dt ) 
 {
-   dt = TransformBasedOnOptions( dt ); // scale and paused may affect how much time passes for this clock
+   if (IsPaused()) {
+      dt = 0.0; 
+      // DO NOT EARLY RETURN
+   } else {
+      dt *= m_scale; 
+   }
 
    // update my closk concept of time
    frameTime = dt; 
@@ -49,6 +54,8 @@ node from any other tree sturcture be sure to...
 ## `Timer`
 A timer, also commonly referred to an `Interval` or `Stopwatch`, is a way to track eitehr how long something has been running, or how long until something is done.  
 
+- Leave Timer
+  - Inactivity Timer
 - Activity Timer
 - Level Timer
 - Power Timer
@@ -57,7 +64,38 @@ A timer, also commonly referred to an `Interval` or `Stopwatch`, is a way to tra
 - ...
 
 ### Implementing A Timer
-- Class Thought Excercise -
+
+```cpp 
+// powerup example
+float m_startSeconds;         // set when I start 
+float m_durationSeconds;      // set how long I want it
+
+Update()
+{
+   // how do I check it?
+   if ((m_startSeconds + m_durationSeconds) < currentTimeSeconds) {
+      // not have!
+   } else {
+      // have!
+   }
+}
+```
+
+```cpp
+Timer m_powerupTimer;
+
+void ApplyPowerup()
+{
+   m_powerupTimer.Set( m_gameClock, 10.0f ); 
+}
+
+void Update()
+{
+   if (!m_powerupTimer.HasElapsed()) {
+      // apply powerup
+   }
+}
+```
 
 
 ### Pausing a Timer
