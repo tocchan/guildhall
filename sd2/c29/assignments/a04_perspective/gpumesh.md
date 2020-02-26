@@ -22,9 +22,29 @@ See [`GPUMesh.hpp`](./GPUMesh.hpp) for details;
 
 ```cpp
 
+void RenderContext::UpdateLayoutIfNeeded()
+{
+   // buffer_attribute_t const* m_currentLayout; 
+   // buffer_attribute_t const* m_previouslyBoundLayout;
+
+   if ((m_previouslyBoundLayout != m_currentLayout) 
+      || (m_shaderHasChanged))  {
+
+      ID3D11InputLayout* layout = m_currentShader->GetOrCreateInputLayout( m_currentLayout );
+      m_context->IASetInputLayout( layout );
+
+      m_previouslyBoundLayout = m_currentLayout; 
+      m_shaderHasChanged = false; 
+   }
+}
+
+
 void RenderContext::DrawMesh( GPUMesh* mesh )
 {
    BindVertexBuffer( 0, mesh->GetVertexBuffer() );  
+
+   // m_context->IASetInputLayout
+   // this needs both a shader and a vertex format
    UpdateLayoutIfNeeded(); // based on current vertex buffer and current shader
 
    bool hasIndices = mesh->GetIndexCount() > 0; 
@@ -36,6 +56,8 @@ void RenderContext::DrawMesh( GPUMesh* mesh )
       Draw( mesh->GetVertexCount(), 0, 0 ); 
    }
 }
+
+
 
 ```
 
@@ -50,13 +72,44 @@ Your cube is a `GPUMesh`
 
 ```cpp
 
+std::vector<VertexPCU> m_vertices; 
+AppendAABBToVerts( m_vertices, 
+   aabb2::FromPoints( vec2(-1.0f), vec2(1.0f) ), 
+   aabb2::ZERO_TO_ONE ); 
+
 void Game::Startup()
 {
    // GPUMesh* m_meshCube;
    m_meshCube = new GPUMesh(); 
-   m_meshCube->AddVertices( 24, cubeVerts ); 
-   m_meshCube->AddIndices( 36, indices );  
+
+   std::vector<VertexPCU> vertices;
+   std::vector<uint> indices; 
+   AppendIndexedCubeToVerts( vertices, indices, 
+      aabb3(vec3(-1.0f), vec3(1.0f)) ); 
+
+   // MeshUtilAddBounds( m_meshCube, aabb3( vec3(-1.0f), vec3(1.0f) ) ); 
+   m_meshCube->UpdateVertices( vertices ); 
+   m_meshCube->UpdateIndices( indices );  
+
 }
+
+void GameObject
+{
+   public:
+      // 2D thing
+      SpriteDefinition* definition; // equivalent of this, 3d object
+      vec2 position;
+      float rotation; 
+
+      // 3D equivalent
+      GPUMesh* m_mesh; 
+      vec3 position; 
+      vec3 eulerRotation; 
+      
+      // 3D equivalent using transform
+      GPUMesh* m_mesh;
+      transform3 m_transform; 
+};
 
 void Game::Render()
 {
@@ -64,7 +117,26 @@ void Game::Render()
    // ...
 
    mat44 model = m_cubeTransform->ToMatrix(); 
-   g_theRenderer->SetModelMatrix( model ); 
-   g_theRenderer->DrawMesh( m_meshCube ); 
+
+   for (uint i = 0; i < numObjects; ++i) {
+      GameObject* go = m_gameObjects[i]; 
+      g_theRenderer->SetModelMatrix( go->m_transform.AsMatrix() ); 
+      g_theRenderer->DrawMesh( go->m_mesh ); 
+   }
 }
 ```
+
+
+
+
+## Removing `VertexBuffer m_immedateVBO`
+
+```cpp
+RenderContext::DrawVertexArray( ... )
+{
+   // Mesh m_immediateMesh; 
+   m_immediateMesh->UpdateVertex( vertexCount, vertices ); 
+   m_immediateMesh->UpdateIndices( 0, nullptr );  // ClearIndices()
+
+   DrawMesh( m_immediateMesh ); 
+}

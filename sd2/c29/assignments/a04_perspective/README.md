@@ -138,8 +138,10 @@ void DevConsole::OnClose()
 
 And it would then revert to the next highest state on the stack, which would likely be your game.  
 
-- [ ] *X04.11: 02%*: **Requires X04.10** - Mouse options are disabled when window loses focus, and re-applied when gaining focus.
-re-applied when gaining focus.
+### X04.11
+Listen for `WM_ACTIVATE`, apply top most state if gaining focus, unapply state if losing focus; 
+
+// todo
 - [ ] *X04.15: 04%*: CPU Mesh Subdivide (tesselation)
 - [ ] *X04.20: 02%*: Cube Sphere Generation
 - [ ] *X04.30: 04%*: IcoSphere Generation (No UV)
