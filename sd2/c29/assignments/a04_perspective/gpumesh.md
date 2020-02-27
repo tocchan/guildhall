@@ -132,7 +132,7 @@ void Game::Render()
 ## Removing `VertexBuffer m_immedateVBO`
 
 ```cpp
-RenderContext::DrawVertexArray( ... )
+void RenderContext::DrawVertexArray( ... )
 {
    // Mesh m_immediateMesh; 
    m_immediateMesh->UpdateVertex( vertexCount, vertices ); 
@@ -140,3 +140,4 @@ RenderContext::DrawVertexArray( ... )
 
    DrawMesh( m_immediateMesh ); 
 }
+```
