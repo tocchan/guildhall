@@ -45,6 +45,26 @@ class Clock
       static Clock* GetMaster(); 
 };
 
+// Clock.cpp
+static Clock gMasterClock( nullptr ); 
+
+void Clock::SystemStartup()
+{
+   gMasterClock.Reset(); 
+}
+
+void Clock::BeginFrame()
+{
+   static double timePreviousFrame = GetCurrentTimeSeconds; 
+   double timeThisFrame = GetCurrentTimeSeconds(); 
+
+   dt = timeThisFrame - timePreviousFrame; 
+   timePreviousFrame = timeThisFrame; 
+
+   // need to call gMasterClock.Update(dt);   
+   gMasterClock.Update(dt); 
+}
+
 
 
 
