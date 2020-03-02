@@ -1,3 +1,12 @@
+enum eCompareFunc
+{
+   COMPARE_FUNC_NEVER,           // D3D11_COMPARISON_NEVER
+   COMPARE_FUNC_ALWAYS,          // D3D11_COMPARISON_ALWAYS
+   COMPARE_FUNC_LEQUAL,          // D3D11_COMPARISON_LESS_EQUAL
+   COMPARE_FUNC_GEQUAL,          // D3D11_COMPARISON_GREATER_EQUAL
+};
+
+
 // RenderContext encompasses
 // the device and immediate context of D3D11
 // controlling drawing
@@ -15,6 +24,9 @@ class RenderContext
 
       Texture* GetFrameColorTarget();           // A01
 
+      void ClearColor( Texture* colorTarget, RGBA color );        // A01
+      void ClearDepth( Texture* depthTarget, float depth );       // A04
+
       void BeginCamera( Camera* camera );       // A01, A02, A03
       void EndCamera();                         // A01
 
@@ -29,6 +41,10 @@ class RenderContext
       void BindSampler( uint slot, Sampler* sampler ); // A03
 
       void BindConstantBuffer( uint slot, RenderBuffer* cbo ); // A03
+
+      void SetBlendMode( eBlendMode mode );     // A03
+
+      void SetDepthTest( eCompareFunc compare, bool writeDepthOnPass ); // A04
 
       // Resource Creation
       Shader* GetOrCreateShader( char const* filename ); // A02
@@ -47,6 +63,32 @@ class RenderContext
 
    private:
 
-
+      ID3D11DepthStencilState* m_currentDepthStencilState = nullptr; 
 
 };
+
+
+//-------------------------------------------------------------------------------
+// Clearing Depth
+//-------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
+void RenderContext::ClearDepth( Texture* depthStencilTexture, float depth )
+{
+    TextureView* view = depthStencilTexture->CreateOrGetDepthStencilView(); 
+    ID3D11DepthStencilView* dsv = view->GetAsDSV(); 
+    m_Context->ClearDepthStencilView( dsv, D3D11_CLEAR_DEPTH, depth, 0 ): 
+}
+
+//-------------------------------------------------------------------------------
+void RenderContext::SetDepthTest( eCompareFunc func, bool writeDepthOnPass ) 
+{
+   D3D11_DEPTH_STENCIL_DESC desc; 
+   // TODO: fill out desc based on func and writeDepthOnPass - keep everything else default
+   // ...
+
+   // TODO: release old one
+   // ...
+
+   m_device->CreateDepthStencilState( desc, &m_currentDepthStencilState ); 
+   m_context->OMSetDepthStencilState( m_currentDepthStencilState );
+}

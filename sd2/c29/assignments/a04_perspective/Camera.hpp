@@ -15,7 +15,7 @@ class Camera
       void SetColorTarget( Texture* texture );           // A02
       void SetDepthStencilTarget( Texture* texture );    // A04
       
-      void SetClearMode( eCameraClearFlags flags, rgba color, float depth = 0.0f, uint8_t stencil = 0 ); // A01
+      void SetClearMode( eCameraClearFlags flags, rgba color, float depth = 0.0f, uint8_t stencil = 0 ); // A01, A04
 
       void SetPosition( Vec3 pos );                      // A04 
       void Translate( Vec3 pos );                        // A04
@@ -43,3 +43,19 @@ class Camera
       float m_clearDepth               = 1.0f;  // A04
       float m_clearStencil             = 0;        // A04
 };
+
+
+// Creating the target?
+void Game::Startup()
+{
+   m_gameCamera = new Camera(); 
+
+   // option A
+   m_gameCamera->SetColorTarget( nullptr ); // set default 
+   m_gameCamera->CreateMatchingDepthStencilTarget();  // create a depth target that matches our current color target, 
+                                                      // and set it as our color target
+
+   // option B
+   Texture2D* dsTex = Texture::CreateDepthStencil( outputDimensions ); 
+   m_gameCamera->SetDepthSTencilTarget( dsTex );  // up to me to delete dsTex when program closes
+} 
