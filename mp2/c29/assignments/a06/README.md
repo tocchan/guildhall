@@ -22,6 +22,7 @@ Add in rotation.
 
 
 ### Links
+- http://chrishecker.com/images/e/e7/Gdmphys3.pdf : Link from previous article explaining the equations;
 - Deriving Moments of Inertia (Ring/Rod/Disc/Cylindar): https://www.youtube.com/watch?v=9cuKlt15yCo
 - Parallel Axis Theorem: https://en.wikipedia.org/wiki/Parallel_axis_theorem
 - Moments for a Triangle: https://www.efunda.com/math/areas/triangle.cfm

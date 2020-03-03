@@ -22,7 +22,7 @@ class RenderContext
       void BeginFrame();                        // A01
       void EndFrame();                          // A01
 
-      Texture* GetFrameColorTarget();           // A01
+      Texture* GetFrameColorTarget();           // A01 // GetDefaultColorTarget
 
       void ClearColor( Texture* colorTarget, RGBA color );        // A01
       void ClearDepth( Texture* depthTarget, float depth );       // A04
@@ -82,13 +82,22 @@ void RenderContext::ClearDepth( Texture* depthStencilTexture, float depth )
 //-------------------------------------------------------------------------------
 void RenderContext::SetDepthTest( eCompareFunc func, bool writeDepthOnPass ) 
 {
-   D3D11_DEPTH_STENCIL_DESC desc; 
-   // TODO: fill out desc based on func and writeDepthOnPass - keep everything else default
-   // ...
+   if (State Matches) {
+      // just bind m_currentDepthStencilState
+   } else {
+      // Release Old State, make a new one (see below)
 
-   // TODO: release old one
-   // ...
+      D3D11_DEPTH_STENCIL_DESC desc; 
+      memset( &desc, sizeof(desc), 0 ); 
+      
+      // TODO: fill out desc based on func and writeDepthOnPass - keep everything else default
+      // ...
 
-   m_device->CreateDepthStencilState( desc, &m_currentDepthStencilState ); 
+      // TODO: release old one
+      // ...
+
+      m_device->CreateDepthStencilState( desc, &m_currentDepthStencilState ); 
+   }
+
    m_context->OMSetDepthStencilState( m_currentDepthStencilState );
 }
