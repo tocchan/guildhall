@@ -13,10 +13,11 @@ There is more more limit on tangent impulse though - in that the impulse due to 
 
 ```cpp
    // Coulumb's Law
+   // https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-friction-scene-and-jump-table--gamedev-7756
    if (AbsFloat(tangent_impulse) > friction * normal_impulse) {
       tangent_impulse = SignFloat(tangent_impulse) * normal_impulse * friction; 
    } else {
-      tangent_impulse *= friction; 
+      // just leave tangent impulse alone 
    }
 ```
 
