@@ -61,10 +61,17 @@ Some example code for how the system will be used in this assignment;
 ## Extras
 - [ ] Screen Basis functions implemented
 - [ ] Message functions implemented
+- [ ] Border Around Text (one or two texel black border around text drawn in the world)
+- [ ] Option to include a background behind rendered text (color with alpha)
+- [ ] Option to pass bounds to text, and pass an alignment.  Text should wrap and align to within the box.  If the text
+      would be larger than the box, you may handle this in your preferred way (clip overflow, center it, or shrink to fit)
 - [ ] `DebugAddWorldLineStrip`
 - [ ] `DebugAddWireMeshToWorld( mat44 mode, GPUMesh* mesh, rgba start_tint, rgba end_tint, float duration, eDebugRenderMode mode );` 
 - [ ] `DebugRenderAddGrid`, see notes.
     - [ ] Grid is clipped to area the camera can potentially see (allowing for an infinitly large grid)
+- [ ] MeshUtils: `AddCylindarToIndexedVertexArray`
+- [ ] MeshUtils: `AddConeToIndexedVertexArray`
+- [ ] `RGBA LerpAsHSL( RGBA const &a, RGBA const &b, float t );` 
 
 ------
 
