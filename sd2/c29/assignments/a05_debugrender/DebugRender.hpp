@@ -23,12 +23,13 @@ enum eDebugRenderMode
 //  System
 //------------------------------------------------------------------------
 // setup
-void DebugRenderSystemStartup();
-void DebugRenderSystemShutdown();
+void DebugRenderSystemStartup();    // may be used to allocate resources to the system
+void DebugRenderSystemShutdown();   // cleans up the system to prevent leaks.
 
 // control
 void EnableDebugRendering(); 
 void DisableDebugRendering(); 
+void ClearDebugRendering(); 
 
 // output
 void DebugRenderBeginFrame();                   // Does nothing, here for completeness.
@@ -40,7 +41,7 @@ void DebugRenderEndFrame();                     // Clean up dead objects
 // World Rendering
 //------------------------------------------------------------------------
 // points
-void DebugAddWorldPoint( vec3 pos, float size, rgba start_color, rgba end_color, float duration, eDebugRenderMode mode ); 
+void DebugAddWorldPoint( vec3 pos, float size, rgba start_color, rgba end_color, float duration, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
 void DebugAddWorldPoint( vec3 pos, float size, rgba color, float duration = 0.0f, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
 void DebugAddWorldPoint( vec3 pos, rgba color, float duration = 0.0f, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
 
@@ -151,6 +152,3 @@ void DebugAddScreenBasis( vec2 screen_origin_location, mat44 basis_to_render, rg
 // message log system [extra]
 void DebugAddMessage( float duration, rgba color, char const* format, ... ); 
 void DebugAddMessage( rgba color, char const* format, ... ); 
-
-
-#endif 

@@ -77,8 +77,10 @@ By the end of this, we will have a 5-DoF (Degree of Freedom) camera, allowing mo
 - [ ] Support a depth buffer
     - [ ] `Texture::CreateDepthStencilBuffer` added
     - [ ] `Camera::SetDepthStencilBuffer` added
-    - [ ] `RenderContext` now automatcially creates a depth buffer during init matching the swap chain's size
-    - [ ] `RenderContext::BeginCamera`, now binds the camera's back buffer as well.
+    - [ ] Implement one of the two;
+        - [ ] OPTION A: `RenderContext` now automatcially creates a depth buffer during init matching the swap chain's size.  You can bind this manually to your camera (by default don't use it)
+        - [ ] OPTION B: Have `Camera::CreateMatchingDepthStencilTarget` that gets or creates a depth target matching your current color target; 
+    - [ ] `RenderContext::BeginCamera`, now binds the camera's depth-stencil buffer as well as the color-target.
         - [ ] **IMPORANT:  Do not bind the default one automatically if the camera doesn't have one set.  There are reasons a camera may not want a depth buffer!**
     - [ ] Camera's clear options should now store off the `depth` and `stencil` clear values.
     - [ ] If camera has a depth buffer and says it should clear depth, also clear the depth buffer.
