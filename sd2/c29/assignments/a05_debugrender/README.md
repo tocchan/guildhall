@@ -50,7 +50,7 @@ Some example code for how the system will be used in this assignment;
 - [ ] Controls
     - [ ] Console command: `debug_render enabled=bool` 
     - [ ] Console command: `debug_add_world_point position=vec3 duration=float`
-    - [ ] Console command: `debug_add_world_wire_disc position=vec3 radius=float duration=float`
+    - [ ] Console command: `debug_add_world_wire_sphere position=vec3 radius=float duration=float`
     - [ ] Console command: `debug_add_world_wire_bounds min=vec3 max=vec3 duration=float`
     - [ ] Console command: `debug_add_world_billboard_text position=vec3 pivot=vec2 text=string`
     - [ ] Console command: `debug_add_screen_point position=vec2 duration=float`
@@ -192,9 +192,10 @@ X-Ray is a trick.  We want to show objects always, but still inform the user if 
 
 To do this, we'll render the object twice.
 
-1. Render the object using depth, and only if it would fail the depth test.  We do not write depth in this case.  Useful to also possibly tint the object or use a special shader to make it look different. 
+1. Render the object again with normal depth rules.  Render this as normal.
 
-2. Render the object again with normal depth rules.  Render this as normal.
+2. Render the object using depth, and only if it would fail the depth test.  We do not write depth in this case.  Useful to also possibly tint the object or use a special shader to make it look different. 
+
 
 
 ### Removing from Production Builds

@@ -139,10 +139,10 @@ void DebugAddScreenTexturedQuad( aabb2 bounds, Texture* tex, aabb2 uvs, rgba tin
 void DebugAddScreenTexturedQuad( aabb2 bounds, Texture* tex, rgba tint = rgba::WHITE, float duration = 0.0f ); // assume UVs are full texture
 
 // text
-void DebugAddScreenText( vec4 pos, vec2 pivot, float size, rgba start_color, rgba end_color, float duration, char const* text ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float size, rgba start_color, rgba end_color, float duration, char const* format, ... ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float size, rgba color, float duration, char const* format, ... ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float size, rgba color, char const* format, ... ); 
+void DebugAddScreenText( vec4 pos, vec2 pivot, float textSize, rgba start_color, rgba end_color, float duration, char const* text ); 
+void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba start_color, rgba end_color, float duration, char const* format, ... ); 
+void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba color, float duration, char const* format, ... ); 
+void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba color, char const* format, ... ); 
 void DebugAddScreenTextf( vec4 pos, vec2 pivot, rgba color, char const* format, ... ); 
 
 // screen basis [extra]
