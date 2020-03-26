@@ -37,6 +37,10 @@ void DebugRenderWorldToCamera( Camera* cam );   // Draws all world objects to th
 void DebugRenderScreenTo( Texture* output );    // Draws all screen objects onto this texture (screen coordinate system is up to you.  I like a 1080p default)
 void DebugRenderEndFrame();                     // Clean up dead objects
 
+// alternative option for render world to camera - called
+// when a BeginCamera call is already active
+void DebugRenderWorldToCurrentCamera( RenderContext* ctx ); 
+
 //------------------------------------------------------------------------
 // World Rendering
 //------------------------------------------------------------------------
@@ -67,7 +71,7 @@ void DebugAddWorldArrow( vec3 p0, rgba p0_start_color, rgba p0_end_color,
 void DebugAddWorldArrow( vec3 start, vec3 end, rgba color, float duration, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
 
 // Quads
-void DebugAddWorldQuad( vec3 p0, vec3 p1, vec3 p2, vec3 p4, rgba start_color, rgba end_color, float duration, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
+void DebugAddWorldQuad( vec3 p0, vec3 p1, vec3 p2, vec3 p4, aabb2 uvs, rgba start_color, rgba end_color, float duration, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
 
 // bounds
 void DebugAddWorldWireBounds( obb3 bounds, rgba start_color, rgba end_color, float duration, eDebugRenderMode mode = DEBUG_RENDER_USE_DEPTH ); 
@@ -139,11 +143,11 @@ void DebugAddScreenTexturedQuad( aabb2 bounds, Texture* tex, aabb2 uvs, rgba tin
 void DebugAddScreenTexturedQuad( aabb2 bounds, Texture* tex, rgba tint = rgba::WHITE, float duration = 0.0f ); // assume UVs are full texture
 
 // text
-void DebugAddScreenText( vec4 pos, vec2 pivot, float textSize, rgba start_color, rgba end_color, float duration, char const* text ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba start_color, rgba end_color, float duration, char const* format, ... ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba color, float duration, char const* format, ... ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, float textSize, rgba color, char const* format, ... ); 
-void DebugAddScreenTextf( vec4 pos, vec2 pivot, rgba color, char const* format, ... ); 
+void DebugAddScreenText( vec4 ratioOffset, vec2 pivot, float size, rgba start_color, rgba end_color, float duration, char const* text ); 
+void DebugAddScreenTextf( vec4 ratioOffset, vec2 pivot, float size, rgba start_color, rgba end_color, float duration, char const* format, ... ); 
+void DebugAddScreenTextf( vec4 ratioOffset, vec2 pivot, float size, rgba color, float duration, char const* format, ... ); 
+void DebugAddScreenTextf( vec4 ratioOffset, vec2 pivot, float size, rgba color, char const* format, ... ); 
+void DebugAddScreenTextf( vec4 ratioOffset, vec2 pivot, rgba color, char const* format, ... ); 
 
 // screen basis [extra]
 void DebugAddScreenBasis( vec2 screen_origin_location, mat44 basis_to_render, rgba start_tint, rgba end_tint, float duration ); 
