@@ -65,7 +65,7 @@ Some example code for how the system will be used in this assignment;
 - [ ] *X05.00: 03%*: Option to include a background behind rendered text (color with alpha)
 - [ ] *X05.00: 05%*: Option to pass bounds to text, and pass an alignment.  Text should wrap and align to within the box.  If the text would be larger than the box, you may handle this in your preferred way (clip overflow, center it, or shrink to fit)
 - [ ] *X05.00: 02%*: `DebugAddWorldLineStrip`
-- [ ] *X05.00: 02%*: `DebugAddWireMeshToWorld( mat44 mode, GPUMesh* mesh, rgba start_tint, rgba end_tint, float duration, eDebugRenderMode mode );` 
+- [ ] *X05.00: 02%*: `DebugAddWireMeshToWorld( mat44 modelMatrix, GPUMesh* mesh, rgba start_tint, rgba end_tint, float duration, eDebugRenderMode mode );` 
 - [ ] *X05.00: 02%*: `DebugRenderAddGrid`, see notes.
     - [ ] *X05.00: 03%*: Grid is clipped to area the camera can potentially see (allowing for an infinitly large grid)
 - [ ] *X05.00: 03%*: MeshUtils: `AddCylinderToIndexedVertexArray`
