@@ -1,49 +1,68 @@
-MP2.A06 Friction
+MP2.A06 Rotation
 ======
 
 ## Overview
-Add in Polygon Intersection.  
+Add in rotation.  
 
 **Turn-In Branch Name: `mp2/turnin/a06`**
 
-**Due Date: Apr 02, 2020**
+**Due Date: Mar 12, 2020**
 
 ### Goal 
 
+------
 
-- [ ] Polygon-v-Polygon Intersection Check (using GJK)
-- [ ] Polygon-v-Polygon Manifold (normal/penetration) - object push out correctly
-- [ ] Polygon-v-Polygon Contacts - Objects generate one or two contact points.  
-    - [ ] Manifold now returns a contact edge (two points) instead of just a single contact point.  For cases where only one contact exists, 
-          return an edge with the start and end point being the same. 
-- [ ] Apply Impulse using contact points
-    - [ ] Calculate impulse using the center of the contact edge.
-    - [ ] When applying impulse, use the point on the edge closest to each body's center of mass.
-- [ ] To make friction/bounce more stable - calculate normal impulse first, apply it, and then generate tangent impulse, and apply it. 
+## Checklist
+- [ ] Angular Update - Add members to `Rigidbody2D`
+    - [ ] Add `float m_rotationInRadians`
+    - [ ] Add `float m_angularVelocity`   
+    - [ ] Add `float m_frameTorque`       
+    - [ ] Add `float m_moment`
+    - [ ] Add appropriate getter/setter methods
+- [ ] `Rigidbody2D::CalculateMoment` to calculate moment based on attached collider and mass
+    - [ ] `virtual float Collider2D::CalculateMoment( float mass )`
+    - [ ] Implement `DiscCollider::CalculateMoment`
+    - [ ] Implement `PolygonCollider::CalculateMoment`
+    - [ ] When setting **mass** or **collider** on a rigidbody - recalculate your moment.
+        - *Note: When setting mass, you can do less work by taking advantage of the ratio of new mass to old mass should match the ratios of the moments*. 
+- [ ] Rotating a `Rigidbody2D` properly updates the **world shape** of the collider.
+    - [ ] Add controls to rotate a selected object
+        - Suggest **R** and **F** 
+    - [ ] Add controls to update the rotational velocity of an object
+        - Suggest **T**, **G**, and **V** to increase, decrease, and reset
+- [ ] `Rigidbody2D` now do angular calculations during their update.
+    - [ ] Use torque to compute an angular acceleration
+    - [ ] Apply angular acceleration to update angular velocity
+    - [ ] Apply angular velocity to update rotation
+- [ ] Update `Rigidbody2D::GetImpactVelocity` to take into account rotational velocity.
+- [ ] Update `ApplyImpulseAt` to apply impulse to torque based on positions. 
+- [ ] Update impulse calculations to take into account rotational forces, see PDF in lnks
+- [ ] Update tooltip to show...
+    - [ ] Moment of Inertia
+    - [ ] Current Rotation (degrees)
+    - [ ] Current Angular Velocity
+
 
 ------
 
 ## Resources
 
-### Applying Impulse
-With our current system, we can calculate impulse once, and apply it once.  This doesn't work well with a contact region
-as we have now, but we can get something fairly close by trying to apply the impulse as close as possible to the center of mass
-of each object.
-
-When calculating the impulse, just use the center of your contact points.  Somehwat like taking an average of all contacts.
-
-When applying an impulse to an object, apply it at the point along the contact edge closest to each center of mass.  Meaning
-each object may apply it using a different point.  
-
-This may add or remove energy from the system, but will result in something that looks passable, and will work for the project we'll be
-making with it. 
-
-If you're curious on a more robust approach, you can switch to a sequential impulse approach (Erin Catto - GDC 2006)
-
 ### Notes
+- I suggest using radians as your unit of rotation within the system.  You can have 
+methods to take Degrees, such as `SetRotationDegrees( float deg )`, but when calculating
+impact velocities, radians translate to linear space directly (since a radian is a relation to how are radius relates to distance traveled when rotating). 
+
+- Calculating moment is easier to do in local space for each shape.  Once calculated, you can use **Parallel Axis Theorem** to  get the moment of the rigidbody based on the colliders local offset.  This is useful if want to use a different center of mass. 
+
+- Calculating the moment of a polygon is the sum of the moments of its triangles, and then
+translated to their corresponding position using the parallel axis theorem.
+
+
 
 
 ### Links
-- GJK - Detecting Intersections in 2D: https://blog.hamaluik.ca/posts/building-a-collision-engine-part-1-2d-gjk-collision-detection/
-- GJK - Penetration Vectors: https://blog.hamaluik.ca/posts/building-a-collision-engine-part-2-2d-penetration-vectors/
-- Sequential Impulse: https://box2d.org/files/ErinCatto_SequentialImpulses_GDC2006.pdf
+- http://chrishecker.com/images/e/e7/Gdmphys3.pdf : Link from previous article explaining the equations;
+- Deriving Moments of Inertia (Ring/Rod/Disc/Cylindar): https://www.youtube.com/watch?v=9cuKlt15yCo
+- Parallel Axis Theorem: https://en.wikipedia.org/wiki/Parallel_axis_theorem
+- Moments for a Triangle: https://www.efunda.com/math/areas/triangle.cfm
+- Deriving Moment of Inertia of a Triangle: https://www.youtube.com/watch?v=2SkQy-GVTRk  
