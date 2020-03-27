@@ -51,3 +51,4 @@ If you're curious on a more robust approach, you can switch to a sequential impu
 - GJK - Detecting Intersections in 2D: https://blog.hamaluik.ca/posts/building-a-collision-engine-part-1-2d-gjk-collision-detection/
 - GJK - Penetration Vectors: https://blog.hamaluik.ca/posts/building-a-collision-engine-part-2-2d-penetration-vectors/
 - Sequential Impulse: https://box2d.org/files/ErinCatto_SequentialImpulses_GDC2006.pdf
+- GJK-Intersection in 200 lines of C: https://github.com/kroitor/gjk.c
