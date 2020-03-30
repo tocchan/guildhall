@@ -52,6 +52,35 @@ No extras for this assignment.  Initial goal is worth the full 100 points.
 
 ## Resources
 
+### End Goal `Game::Render`
+This interface is just a suggestion - if you want to handle your light information
+differently but can still support everything I'm asking for above, that is fine. 
+
+```cpp
+m_renderer->BeginCamera( m_game_camera ); 
+
+// setup for rendering opaque boecjts
+m_renderer->SetCullMode( CULL_BACK, WIND_COUNTER_CLOCKWISE ); 
+m_renderer->SetDepthMode( COMPARE_GREATER_EQUAL, true ); 
+
+// setup lights for the scene
+m_renderer->DisableAllLights(); 
+m_renderer->SetAmbientLight( m_ambient_light, m_ambient_light.a ); 
+m_renderer->EnableLight( 0, m_point_light ); 
+
+// set to use our lit shader
+m_renderer->BindShaderByName( "shaders/lit" ); 
+
+// bind our textures for the object
+m_renderer->BindSamplerByMode( 0, SAMPLE_LINEAR ); 
+m_renderer->BindDiffuseTextureByName( m_diffuse_map.c_str() ); 
+
+// bind the model matrix & draw
+m_renderer->SetModelMatrix( m_plane_model ); 
+m_renderer->DrawMesh( m_mesh_plane ); 
+
+m_renderer->EndCamera(); 
+```
 
 
 ### Links
