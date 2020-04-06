@@ -139,7 +139,7 @@ float4 FragmentFunction( v2f_t input ) : SV_Target0
    // use the uv to sample the texture
    float4 texture_color = tDiffuse.Sample( sSampler, input.uv );
    float3 surface_color = (input.color * texture_color).xyz; // multiply our tint with our texture color to get our final color; 
-   float3 surface_alpha = (input.color.a * texture_color.a); 
+   float surface_alpha = (input.color.a * texture_color.a); 
 
    float3 diffuse = AMBIENT.xyz * AMBIENT.w; // ambient color * ambient intensity
 
@@ -157,7 +157,7 @@ float4 FragmentFunction( v2f_t input ) : SV_Target0
    // just diffuse lighting
    diffuse = min( float3(1,1,1), diffuse ); 
    diffuse = saturate(diffuse); // saturate is clamp01(v)
-   float final_color = diffuse * surface_color; 
+   float3 final_color = diffuse * surface_color; 
 
    
    return float4( final_color, surface_alpha );  
