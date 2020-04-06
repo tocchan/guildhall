@@ -109,10 +109,10 @@ v2f_t VertexFunction( vs_input_t input )
    v2f_t v2f = (v2f_t)0;
 
    // move the vertex through the spaces
-   vec4 local_pos = float4( input.position, 1.0f );               // passed in position is usually inferred to be "local position", ie, local to the object
-   vec4 world_pos =  mul( MODEL, local_pos );               // world pos is the object moved to its place int he world by the model, not used yet
+   vec4 local_pos  = float4( input.position, 1.0f );               // passed in position is usually inferred to be "local position", ie, local to the object
+   vec4 world_pos  =  mul( MODEL, local_pos );               // world pos is the object moved to its place int he world by the model, not used yet
    vec4 camera_pos = mul( VIEW, world_pos ); 
-   vec4   = mul( PROJECTION, camera_pos ); 
+   vec4 clip_pos   = mul( PROJECTION, camera_pos ); 
 
    // normal is currently in model/local space
    vec4 local_normal = float4( input.normal, 0.0f );
