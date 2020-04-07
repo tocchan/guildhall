@@ -49,6 +49,10 @@ cbuffer model_constants : register(b2)         // constant buffer slot 1
 {
    float4x4 MODEL;          
    float4 TINT;    
+
+   float SPECULAR_FACTOR; // poor-man version of shininess or wetness
+   float SPECULAR_POWER;  // poor-man version smoothness
+   float2 unused_pad00; 
 };
 
 struct light_t
@@ -72,16 +76,23 @@ struct light_t
 */
 
 // buffer telling us information about our camera
-cbuffer light_constants : register(b3)         // constant buffer slot 1
+cbuffer light_constants : register(b3)         // constant buffer slot 3
 {
    float4 AMBIENT; 
    light_t LIGHT; 
 };
 
 
+cbuffer material_constants : register(b4) 
+{
+
+};
+
+
 // Textures & Samplers are also a form of constant
 // data - uniform/constant across the entire call
 Texture2D <float4> tDiffuse   : register(t0);   // color of the surface
+Texture2D <float4> tNormal   : register(t1);    // normals of the surface
 SamplerState sSampler : register(s0);           // sampler are rules on how to sample (read) from the texture.
 
 
@@ -145,7 +156,11 @@ float4 FragmentFunction( v2f_t input ) : SV_Target0
 
    // get my surface normal - this comes from the vertex format
    // We now have a NEW vertex format
-   float3 surface_normal = normalize( input.world_normal ); 
+   float3 normal_color = tNormal.Sample( sSampler, input.uv );
+   float3 surface_normal = convert color to vector; // (0 to 1) space to (-1, -1, 0),(1, 1, 1) space
+   surface_normal = mul( surface_normal, TBN ); 
+
+   // float3 surface_normal = normalize( input.world_normal ); 
 
    // for each light, we going to add in dot3 factor it
    float3 light_position = LIGHT.world_position; 

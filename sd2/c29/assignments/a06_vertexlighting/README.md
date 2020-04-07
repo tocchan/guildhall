@@ -74,6 +74,7 @@ m_renderer->BindShaderByName( "shaders/lit" );
 // bind our textures for the object
 m_renderer->BindSamplerByMode( 0, SAMPLE_LINEAR ); 
 m_renderer->BindDiffuseTextureByName( m_diffuse_map.c_str() ); 
+m_renderer->BindNormalMapByName( m_normal_map.c_str() ); 
 
 // bind the model matrix & draw
 m_renderer->SetModelMatrix( m_plane_model ); 

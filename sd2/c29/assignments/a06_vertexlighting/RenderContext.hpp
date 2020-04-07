@@ -15,6 +15,9 @@ struct light_t
 class RenderContext
 {
    public:
+      void SetDiffuseTexture( Texture* tex ); // if nullptr, what are you doing?  You bind white!
+      void SetNormalTexture( Texture* tex ); // if nullptr, what do you think we should bind?  (.5, .5, 1) - "flat"
+
       // Lighting Methods
       void SetAmbientColor( RGBA color ); 
       void SetAmbientIntensity( float intensity ); 
@@ -59,3 +62,31 @@ m_renderer->SetModelMatrix( m_plane_model );
 m_renderer->DrawMesh( m_mesh_plane ); 
 
 m_renderer->EndCamera(); 
+
+
+class GameTile
+{
+   public:
+      void Render()
+      {
+         m_renderer->SetSpecularConstants( m_spec_factor, m_spec_power ); 
+         m_renderer->SetModelMatrix( m_transform.GetAsMatrix() ); 
+
+         // bind all textures
+         // ...
+
+         m_renderer->DrawMesh( m_mesh ); 
+      }
+
+   public:
+      // rendering information
+      Transform3D m_transform; // model matrix
+      GPUMesh* m_mesh; 
+
+      Texture* m_diffuse;
+      Texture* m_normal;
+      Texture* m_specular; 
+
+      float m_spec_factor;
+      float m_spec_power;
+}; 
