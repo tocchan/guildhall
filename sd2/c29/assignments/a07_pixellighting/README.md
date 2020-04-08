@@ -49,7 +49,7 @@ Some more adanced shading techniques and more supported lights.
     - [ ] *X07.32: 03%*: Support reflections into a skybox (can use specular factor to determine how shiny something is)
 
 ## Resources
-- [CubeMap in D3D11 Notes](./cubemap_creation.md)    
+- [CubeMap in D3D11 Notes](./cubemap_notes.md)    
 
 ### Links
 - https://catlikecoding.com/unity/tutorials/advanced-rendering/triplanar-mapping/ : Triplanar Mapping Tutorial
