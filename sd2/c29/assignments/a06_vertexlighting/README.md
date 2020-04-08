@@ -2,7 +2,7 @@ C29.SD2.A06 Blinn-Phong Lighting
 ======
 
 ## Overview
-Implement Per-Pixel Lighting using a hsader; 
+Implement Per-Pixel Lighting using a shader; 
 
 **Turn-In Branch Name: `sd2/turnin/a06`**
 
