@@ -83,11 +83,6 @@ cbuffer light_constants : register(b3)         // constant buffer slot 3
 };
 
 
-cbuffer material_constants : register(b4) 
-{
-
-};
-
 
 // Textures & Samplers are also a form of constant
 // data - uniform/constant across the entire call

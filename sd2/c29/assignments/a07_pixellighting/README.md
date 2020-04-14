@@ -42,6 +42,7 @@ Some more adanced shading techniques and more supported lights.
 - [ ] *X07.10: 05%*: Triplanar Shader
 - [ ] *X07.11: 05%*: Projected Texture Effect
 - [ ] *X07.12: 05%*: Interior Mapping Shader
+- [ ] *X07.13: 03%*: Fresnel or Highlight Shader
 - [ ] *X07.20: 05%*: Parallax Mapping Shader
     - [ ] *X07.21 05%*: Self Occluding Parallax Shader, aka Deep/Steep Parallax Shader
 - [ ] *X07.30: 05%*: Support a Cube Map
