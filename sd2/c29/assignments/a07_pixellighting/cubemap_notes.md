@@ -1,5 +1,3 @@
-STUB - will add in during lecture.
-
 ```cpp
 //------------------------------------------------------------------------
 enum eTextureCubeSide : uint
@@ -189,8 +187,6 @@ float4 FragmentFunction() : SV_TARGET0
    float3 incident = worldPosition - CAMERA_POSITION; 
    float3 reflection = reflect( incident, normal ); 
    float4 color =  tSkybox.Sample( sampDefault, reflection ); 
-
-
 
    return color; 
 }
