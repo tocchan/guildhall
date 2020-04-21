@@ -7,7 +7,8 @@ register to a single event to be notified.
 This gives us some design wiggle room.  Some personal choices I make when creating a `Delegate` style class 
 (called an `Event` in my own engine). 
 
-- I don't allow a `Delegate` to return a value.  My design allows for purely a one way relationship.  The publisher can tell me about things, but I can't tell them anything back.  
+- I don't allow a `Delegate` to return a value.  My design allows for purely a one way relationship.  The publisher 
+  can tell me about things, but I can't tell them anything back.  
   - Don't have to worry about what to do if multiple people return different results
   - Makes the class signature easier
   - That said, there's nothing stopping me from passing an out variable forward that people can change.
