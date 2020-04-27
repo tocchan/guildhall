@@ -1,17 +1,5 @@
-
-// standalone C function?
-// StringUtils.hpp (Squirrel... I think...)
-// parse.h (Forseth... I'm pretty sure...)
-float GetValueFromString( std::string const& str, float const& defValue ); 
-RGBA GetValueFromString( std::string const& str, RGBA const& defValue ); 
-FloatRange GetValueFromString( std::string const& str, FloatRange const& defValue );
-// ...
-
-std::string ToString( float value ); 
-std::string ToString( RGBA value ); 
-std::string ToString( FloatRange const& range ); // "a~b"
-
-
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 class TypedPropertyBase
 {
    public:
@@ -21,54 +9,45 @@ class TypedPropertyBase
       virtual void const* GetUniqueID() const = 0; 
 
       template <typename T>
-      bool Is() const 
-      {
-         return GetUniqueID() == TypedProperty<T>::UNIQUE_ID; 
-      }
-
+      bool Is() const;
 };
 
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 template <typename VALUE_TYPE>
 class TypedProperty : public TypedPropertyBase
 {
    public: 
-      virtual std::string GetAsString() const final { return ToString(m_value); }
-      virtual void const* GetUniqueID() const final { return UniqueID; }
+      virtual std::string GetAsString() const final { return ToString(m_value).c_str(); }
+      virtual void const* GetUniqueID() const final { return StaticUniqueID(); }
 
    public:
       // std::string m_key;
       VALUE_TYPE m_value; 
 
    public: 
-      static int s_Whatever; 
-      static void const*const UNIQUE_ID = &s_Whatever;  
+      static void const*const StaticUniqueID() 
+      { 
+         static int s_local = 0; 
+         return &s_local; 
+      }  
 };
 
-TypedProperty<int>::UNIQUE_ID != TypedProeprty<float>::UNIQUE_ID
 
-
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 class NamedProperties
 {
    public:
       //------------------------------------------------------------------------
       ~NamedProperties()
       {
-         // TODO
-         TEXT TO BE AN ERROR SO YOU DONT FORGET TO DO THIS!
-         // make sure you delete all the properties here
-         // now... cause you newed them
+         for (auto iter : m_keyValuePairs) {
+            delete iter.second;
+         }
+
+         m_keyValuePairs.clear(); 
       }
-
-      //------------------------------------------------------------------------
-      void PopulateFromXMLAttributes( XMLElement const& element ); 
-      void PopulateFromKeyValuePairs( std::string const& str ); // key=value key1="some string" key2=value3
-
-      //------------------------------------------------------------------------
-      void SetValue( std::string const& keyName, std:;string const& valueName ); 
-
-      //------------------------------------------------------------------------
-      // base string version
-      std::string GetValue( std::string const& keyName, std::string const& defValue ) const; 
 
       //------------------------------------------------------------------------
       // for everything else, there's templates!
@@ -104,27 +83,50 @@ class NamedProperties
       template <typename T>
       T GetValue( std::string const& keyName, T const& defValue ) const
       {
-         TypedPropetyBase* base = nullptr; 
-         auto iter = m_keyValuePairs.find( keyName ); 
-         if (iter != m_keyValuePairs.end()) {
-            base = *iter; 
+         TypedPropertyBase* base = FindInMap(keyName); 
+         if (nullptr != base) {
 
             // this works WITHOUT RTTI enabled
             // but will not work if prop is inherited from T
-            if (prop->GetUniqueID() == TypedProperty<T>::UNIQUE_ID) {
+            if (base->Is<T>()) {
                // make sure this is safe!  how....?
                TypedProperty<T>* prop = (TypedProperty<T>*)base; 
                return prop->m_value; 
             } else {
-               std::string strValue = prop->GetAsString(); 
-               return GetValueFromString( strValue, defValue ); 
+               std::string strValue = base->GetAsString(); 
+               return StringConvert( strValue.c_str(), defValue ); 
             }
          } else { // failed to find
             return defValue; 
          }
       }
 
+      //------------------------------------------------------------------------
+      // specialized for char const
+      void SetValue( std::string const& keyname, char const* val )
+      {
+         SetValue<std::string>( keyname, val ); 
+      }
+
+      //------------------------------------------------------------------------
+      std::string GetValue( std::string const& keyName, char const* val ) const
+      {
+         return GetValue<std::string>( keyName, val ); 
+      }
+
    private: 
+      //------------------------------------------------------------------------
+      TypedPropertyBase* FindInMap( std::string const& key ) const
+      {
+         auto iter = m_keyValuePairs.find(key); 
+         if (iter != m_keyValuePairs.end()) {
+            return iter->second; 
+         } else {
+            return nullptr; 
+         }
+      }
+
+
       // this is going to be different
       // std::map<std::string, std::string> m_keyValuePairs;
       // std::map<std::string, void*> m_keyValuePointers;
@@ -133,7 +135,6 @@ class NamedProperties
       // But we can't store the temlate argument... or can we?
       std::map<std::string,TypedPropertyBase*> m_keyValuePairs; 
 };
-
 
 
 
@@ -151,5 +152,8 @@ Actor* pointerToObject = m_player;
 m_rigidbody.m_userArgs.SetValue( "owner", pointerToObject ); 
 Actor* owner = args.GetValue<Actor*>( "owner", nullptr );      // succeed
 Material* mat = args.GetValue<material*>( "owner", nullptr );  // fail
+
+// make generic ToString/FromString for pointer types to get
+// around any template workers; 
 
 
