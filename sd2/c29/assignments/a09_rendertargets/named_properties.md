@@ -1,4 +1,4 @@
-Named Properties
+`NamedProperties`
 ======
 
 ## Goals
@@ -34,7 +34,7 @@ void UseArgs( NamedProperties& args )
 
    // pasre it, I use a function called `FromString` that I assume 
    // we wrote, that takes the default value as a second parameter
-   FloatRange range = FromString(hp_range, FloatRange(1.0f, 10.0f));  
+   FloatRange range = GetValue(hp_range, FloatRange(1.0f, 10.0f));  
 
    float actual_hp = hp_range.roll_inclusive(); 
    my_actor->set_hp( actual_hp, actual_hp );  // set current and max
@@ -85,6 +85,9 @@ void DevConsole::OnSubmit( char const* raw_line )
 }
 ```
 
+So a command like
+`"LoadLevel map=level_intro save_slot=3 gamepad_index=7"`
+
 ...or...
 
 ```cpp
@@ -93,8 +96,8 @@ void Button::OnClick()
    NamedProperties args; 
    args.set( "source", this ); 
    args.set( "map", "level_intro" ); 
-   args.set( "save_slot", 0 );
-   args.set( "gamepad_index", 0 ); 
+   args.set( "save_slot", 2 );
+   args.set( "gamepad_index", 4 ); 
 
    FireEvent( "LoadLevel", args ); 
 }
@@ -105,11 +108,10 @@ Now, we can have an event...
 ```cpp
 void OnLoadLevel( NamedProperties& args )
 {
-   int save_slot = args.get_as<int>( "save_slot", 0 ); 
-   int gamepad_index = args.get_as<int>( "gamepad_index", 0 ); 
+   int save_slot = args.GetValue<int>( "save_slot", 0 ); 
+   int gamepad_index = args.GetValue<int>( "gamepad_index", 0 ); 
    std::string level = args.get( "map" ); 
    
-
    Button* btn = args.get_as<Button*>( "source", nullptr );
    if (btn != nullptr) {
       btn->SetLabelText( "LOADING..." ); 
@@ -127,6 +129,22 @@ Couple things to point out;
 
 ------
 ### CPP Header
+What we had before...
+
+```cpp
+class NamedStrings
+{
+  ...
+}
+```
+
+... and what we'll end up with...
+
+```cpp
+typedef NamedProperties EventArgs;
+``` 
+
+
 ```cpp
 class NamedProperties
 {
@@ -147,10 +165,52 @@ Common Base
 
 Determining Type
   - Options to Talk Through
-    - RTTI (Run-Time Type Information)
+    - RTTI (Run-Time Type Information) <- `dynamic_cast` requires this!
     - Virtual Method
     - Global Type ID (templates and statics!)
       - Want to use this one as lots of good knowledge is involved
+    - ... maybe more, not sure... don't know myself...
+
+### RTTI
+```cpp
+TypedProperty<T>* prop = dynamic_cast<TypedProperty<T>*>( base ); 
+if (prop != nullptr) {
+```
+
+### Virtual
+```cpp
+if (prop->GetUniqueID() == TypedProperty<T>::UNIQUE_ID) {
+  // legal - does not support inheritance, but whatever...
+}
+```
+
+Does not work for inherited objects, for example;
+
+```cpp
+class Actor 
+{
+  ...
+};
+
+class Player : public Actor
+{
+
+};
+
+void Game::Foo()
+{
+  NamedProperties args;
+  // Player* m_player; 
+  args.SetValue<Player*>( "target", m_player );
+
+  // would be nullptr in this case, as
+  // "Actor" is not a "Player" exactly
+  // where a dynamic cast could catch this; 
+  Actor* target = args.GetValue<Actor*>( "target", nullptr ); 
+}
+
+
+
 
 Specializing for Pointers
 
