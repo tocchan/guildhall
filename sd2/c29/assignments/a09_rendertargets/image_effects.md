@@ -79,9 +79,77 @@ class RenderContext
 - [ ] Implement `ApplyEffect`
     - [ ] Some variants if you don't have materials yet
 
+### Creating the Render Target
+Same as before - but notice I make the texture as
+usable as both a RenderTarget and a Shader Resource. 
+
+```cpp
+Texture* RenderContext::CreateRenderTarget( IntVec2 texelSize )
+{
+   D3D11_TEXTURE2D_DESC desc;
+   desc.Width = texelSize.x;
+   desc.Height = texelSize.y;
+   desc.MipLevels = 1;
+   desc.ArraySize = 1;
+   desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+   desc.SampleDesc.Count = 1; // MSAA
+   desc.SampleDesc.Quality = 0;
+   desc.Usage = D3D11_USAGE_DEFAULT; // if you do mip-chians, we need this to be GPU/DEFAULT
+   desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+   desc.CPUAccessFlags = 0;
+   desc.MiscFlags = 0;
+
+   //DirectX Creation
+   ID3D11Texture2D* texHandle = nullptr;
+   m_device->CreateTexture2D( &desc, nullptr, &texHandle );
+
+   Texture* newTexture = new Texture( this, texHandle, nullptr );
+   return newTexture;
+}
+```
+
+### Copying a Texture
+```cpp
+void RenderContext::CopyTexture( Texture* dst, Texture* src )
+{
+   m_context->CopyResource( dst->GetHandle(), src->GetHandle() );  
+}
+```
 
 ### `Texture` Pooling
-...
+```cpp
+Texture* RenderContext::AcquireRenderTargetMatching( Texture* texture )
+{
+   IntVec2 size = texture->GetTexelSize(); 
+
+   for (int i = 0; i < m_renderTargetPool.size(); ++i) 
+   {
+      Texture* rt = m_renderTargetPool[i]; 
+      if (rt->GetTexelSize() == size)
+      {
+         // fast remove at index
+         m_renderTargetPool[i] = m_renderTargetPool[ m_renderTargetPool.size() - 1 ]; 
+         m_renderTargetPool.pop_back(); 
+
+         // return the object from the pool
+         return rt; 
+      }
+   }
+
+   // nothing in the pool that matches - make a new one
+   ++m_totalRenderTargetMade;
+   Texture* newRenderTarget = CreateRenderTarget( size ); 
+   return newRenderTarget; 
+}
+
+void RenderContext::ReleaseRenderTarget( Texture* tex )
+{
+   m_renderTargetPool.push_back( tex ); 
+}
+```
+
+And don't forget to free these up when the system shuts down...
+
 
 ### `RenderContext::ApplyEffect`
 Effects happen OUTSIDE of `BeingCamera` and `EndCamera`, so you may want to confirm you do
