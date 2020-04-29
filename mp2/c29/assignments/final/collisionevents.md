@@ -24,6 +24,16 @@ We currently have two tools at our disposal for implementing this.
 Both of these can solve our problem, and which one you use is up to you.
 
 
+### Collider -vs- Rigidbody
+Some choice you have here - is do you consider a collision as between rigidbodies or colliders.  That is, if a rigidbody is made up of multiple colliders, would you consider the `OverlapStart` per each rigidbody pair, or per each collider pair between the objects.  
+
+Neither choice is right-or-wrong, but it will determine some choices as you implement the system.
+
+Doing it per rigidbody can make the system a little easier to use at the cost of some fidelity. 
+
+Doing it per collider allows you to setup different parts of an object (armored vs weak-point) for example, and have different reactions for each.  (this is still doable in the above model, but requires more work in the callback to determine the collider).  
+
+
 ### If Using Delegates
 Each rigidbody and/or collider will have three delegates, one for each event listed above.
 
@@ -43,7 +53,7 @@ The arguments passed will be passed through a `NamedProperties` object, so would
 
 In this case, you can fire the event only once since the user's event will have to determine how to handle it anyway from context.  
 
-Another option is you make unique events by combining the object (rigidbody) name with the event name, such as "RB0.OnOverlapStart" so users can have per-object events.  For this to work you must be able to give your objects a unique name (either auto-generated or user defined).  I would also recommend firing the event twice like before.
+Another option is you make unique events by combining the object (collider) name with the event name, such as "RB0.OnOverlapStart" so users can have per-object events.  For this to work you must be able to give your objects a unique name (either auto-generated or user defined).  I would also recommend firing the event twice like before.
 
 This approach does have the added overhead of using a `NamedProperties`, but again this should not really register since collisions per frame will likely be low.  And again, you can also improve `NamedProperties` later and get knock-on effects in other systems. 
 
@@ -51,7 +61,7 @@ Your GA Danny Durio I believe did this approach in his final DFS, and may be a g
 
 
 ### Keeping Track of Collisions
-When detecting collisions, you will now need to track them frame to frame.  Since A-v-B and B-v-A should be considered the same collision, I recommend giving your colliders a unique ID (for example, their index into the rigidbody array, or just a number that is incremented each time a rigidbody is created (confirming it is not already in use). 
+When detecting collisions, you will now need to track them frame to frame.  Since A-v-B and B-v-A should be considered the same collision, I recommend giving your colliders a unique ID (for example, their index into the collider array, or just a number that is incremented each time a collider is created (confirming it is not already in use). 
 
 Either way, once they have a unique index, you can create a unique key for the collision using the two ids, for example...
 
