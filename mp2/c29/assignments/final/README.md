@@ -5,9 +5,9 @@ MP2.Final : Fleshing Out the System
 Just going to flesh out the physics system so it can easily be used for a game.
 
 
-### Checklist 
+## Checklist 
 
-- [ ] Be able to attach user data to a rigidbody and/or collider
+- [ ] Be able to attach user data to a rigidbody and/or collider to hook the physics system up to game code.
 
 - [ ] Add collision/contact events
     - [ ] `OnOverlapBegin`
@@ -31,12 +31,24 @@ Just going to flesh out the physics system so it can easily be used for a game.
 
 
 ------
+## Implementation Notes
+I'm going to leave a lot of lee-way in how you implement the above features, but will discuss some options below.
+
+- [./userdata.md](./userdata.md)
+- [./collisionevents.md](./userdata.md)
+- [./triggerevents.md](./triggerevents.md)
+- [./layers.md](./layers.md)
+- [./axislock.md](./axislock.md)
 
 
-### Next Steps
+------
+## Next Steps
 This assignmetn just fleshes out the features of the system, but still has a lot of room for improvement.
 
 If you find yourself using it in DFS or Ludum Dares, some areas of improvement are...
+- `Transform2D`
+  - Have a transform object that a rigidbody can watch/modify instead of having to copy back out.
+  - That or allow transforms be parent/child relationships so that your game object can just child itself to the rigidbody.
 - Optimization 
   - Better Memory Management
   - Scene Management
