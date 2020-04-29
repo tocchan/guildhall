@@ -7,6 +7,8 @@ Just going to flesh out the physics system so it can easily be used for a game.
 
 ### Checklist 
 
+- [ ] Be able to attach user data to a rigidbody and/or collider
+
 - [ ] Add collision/contact events
     - [ ] `OnOverlapBegin`
     - [ ] `OnOverlapStay`
