@@ -35,7 +35,7 @@ Just going to flesh out the physics system so it can easily be used for a game.
 I'm going to leave a lot of lee-way in how you implement the above features, but will discuss some options below.
 
 - [./userdata.md](./userdata.md)
-- [./collisionevents.md](./userdata.md)
+- [./collisionevents.md](./collisionevents.md)
 - [./triggerevents.md](./triggerevents.md)
 - [./layers.md](./layers.md)
 - [./axislock.md](./axislock.md)
