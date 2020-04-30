@@ -155,6 +155,23 @@ And don't forget to free these up when the system shuts down...
 Effects happen OUTSIDE of `BeingCamera` and `EndCamera`, so you may want to confirm you do
 not have an active camera.
 
+What we want to finally get to is a...
+
+```cpp
+void RenderContext::ApplyEffect( Texture* dst, Texture* src, Material* mat ); 
+```
+
+This will be implemented using the following two methods if a material class is not available (or if you just don't want to use it...)
+
+```cpp
+void RenderContext::BeginEffect( Texture* dst, Texture* src, Shader* shader ); 
+void RenderContext::EndEffect(); 
+```
+
+
+
+
+
 ...
 
 ### The Full Screen Triangle
@@ -187,8 +204,6 @@ instead of only letting it exist on the camera.
 
 
 ## Effect Notes
-### The Full Screen Triangle
-
 
 ### Color Transform (Grayscale)
 ...
