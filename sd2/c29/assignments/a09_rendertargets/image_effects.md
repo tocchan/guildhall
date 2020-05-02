@@ -169,12 +169,67 @@ void RenderContext::EndEffect();
 ```
 
 
+#### Begin Efffect
+An effect at the most basic level is just rendering to a texture "something" (the shader), usually
+using another `src` texture, plus other data, as the input.
 
+So this would need to...
+- [ ] Set a render target to be the `dst`
+- [ ] Setup to render to it (we will use a camera here to handle most of the details, but you 
+      could also do this manually). 
+- [ ] Bind our shader.
+- [ ] Bind the input data (`src`) texture in this case... though this is mostly for 
+      convenience as the user could have bound this themselves before `EndEffect`
 
+```cpp
+void RenderContext::BeginEffect( Texture* dst, Texture* src, Shader* shader ) 
+{
+   // this should have identiy project, view, and model at this point
+   // Could just do this with "BindColorTarget" if available
+   m_effectCamera->SetColorTarget( dst ); 
 
-...
+   BeginCamera( *m_effectCamera ); 
+   BindShader( shader ); 
+   BindTexture( src ); 
+}
+```
+
+#### End Effect
+
+Ending an effect is going to draw the quad (in this case, a "full screen triangle").
+
+Before `EndEffect` is called, it is up to the user to set any other data this effect may need, such
+as other uniform values or supplementary textures. 
+
+```cpp
+void RenderContext::EndEffect()
+{
+   m_context->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST ); 
+   m_context->Draw( 3, 0 );
+   EndCamera( *m_effectCamera ); 
+}
+```
+
+### Apply Effect
+Now `ApplyEffect` is just using `Begin` and `End`, since the material can
+store all the suppementary effect data needed.  So once you have materials
+you can move into a slightly simpler syntax, but still support the non-material version!
+
+```cpp
+void RenderContext::ApplyEffect( Texture* dst, Texture* src, Material* mat )
+{
+   BeginEffect(...);
+   // bind material data
+   EndEffect(); 
+}
+```
 
 ### The Full Screen Triangle
+
+When rendering, we'll use baked in vertex data (hence the `Draw(3,0)` with no vertex data bound), 
+similar to the very first shader we did in class.
+
+See [./ImageEffect.hlsl](./ImageEffect.hlsl) for an example.  
 
 
 ------
@@ -202,14 +257,3 @@ It is a way to automate the steps demonstrated in `Game::Render` above, but
 would suggest only doing so once you have the proper infastructure in place 
 instead of only letting it exist on the camera.
 
-
-## Effect Notes
-
-### Color Transform (Grayscale)
-...
-
-### Bloom
-...
-
-### ShadowMaps
-...

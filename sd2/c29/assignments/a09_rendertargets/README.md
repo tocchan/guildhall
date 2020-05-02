@@ -4,8 +4,8 @@ C29.SD2.A09 Render Targets
 ## Tasks
 - [ ] `NamedProperties`
     - [ ] Switch named properties over to use `TypedProperty` instead of just strings
-    - [ ] Add ability to subscribe methods to your event system. 
-    - [ ] Add ability to unsubscribe an object from the event system (unsubscribes all methods on that object)
+- [ ] Add ability to subscribe methods to your event system. 
+- [ ] Add ability to unsubscribe an object from the event system (unsubscribes all methods on that object)
 
 - [ ] Color Transform (ex: Grayscale) Effect
     - [ ] Create/Recycle a color target matching your swapchain's output.
@@ -27,13 +27,12 @@ C29.SD2.A09 Render Targets
         - [ ] Shader has a secondary output specified
     - [ ] When done, be able to blur the bloom target
         - [ ] Create/Recycle a matching color/render target
-        - [ ] Run a guassian blur pass N times, each pass consisting of one horizontal and one vertical pass
-            - [ ] Each step in a pass will swap out the src/dst target and render a full screen blur shader
-                - [ ] Run once horizontally
-                - [ ] Run once vertically
+        - [ ] Can use any blur algorithm you can find online, some suggestions...
+            - Simple single pass box blur
+            - Single pass guassian blur
+            - Multiple pass guassian blur
     - [ ] Take the result of the blur, and the normal color output, and combine them
           into the final image.
-    - [ ] 
     - [ ] Be able to toggle blur on-and-off to see it working or not
         - [ ] Disabling the blur just doesn't run the blur and composite steps;
 
@@ -56,6 +55,6 @@ C29.SD2.A09 Render Targets
 
 ## Notes
 - [./named_properties.md](./named_properties.md)
-- [./render_targets.md](./render_targets.md)
-- [./object_pool.md](./object_pool.md)
 - [./image_effects.md](./image_effects.md)
+- [./multiple_targets.md](./multiple_targets.md)
+- [./bloom.md](./bloom.md)
