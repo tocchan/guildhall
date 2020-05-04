@@ -89,11 +89,114 @@ With 3D animation, you usually interpolate between key frames, generating the **
 In our code, a keyframe is going to be a known value at a known time.  So an initial implementation would look like...
 
 ```cpp
-/* work through in class */
+struct KeyFrame 
+{
+   float time; 
+   float value;
+
+   // float leftTangent;  // this has to do with cubic
+   // float rightTangent; 
+};
+
+class FloatCurve
+{
+   public:
+      // this mode affects to the LEFT of the keyframe
+      void AddKeyFrame( float time, float val, eInterpolationMode = INTERPOLATE_LINEAR )
+      {
+         // make sure keyframes stay in order of time
+      }
+
+      void SetLoopMode( eLoopMode mode ); 
+
+      float Evaluate( float time ) const
+      {
+         int prevKeyIndex = FindKeyframeIndexForTime( time ); 
+         int nextKeyIndex = prevKeyIndex + 1; 
+
+         // do valid boudns checking
+         // TODO
+
+         KeyFrame key0 = m_keyframes[prevKeyIndex]; 
+         KeyFrame key1 = m_keyframes[nextKeyIndex]; 
+
+         switch (key1.interpolation) {
+            case INTERPOLATE_CONSTANT: 
+               return key1.value; 
+
+            case INTERPOLATE_LINEAR:
+               return RangeMap( time, key0.time, key1.time, key0.value, key1.value ); 
+
+            case INTERPOLATE_CUBIC: 
+               // do cubic
+               return val; 
+
+         }
+
+      }  
+
+   private: 
+      int FindKeyframeIndexForTime( float time ) 
+      {
+         for (int i = ; i < m_keyframes.size(); ++i) {
+            if (i >= m_keyframes.time) {
+               return i; 
+            }
+         }
+
+         return m_keyframes.size(); 
+      }
+
+   public: 
+      std::vector<KeyFrame> m_keyframes; 
+}
 ```
 
+```cpp
+// alternative
+struct KeyFrame
+{
+   float time; 
+   float leftTangent; 
+   float rightTangent; 
+}
 
+class AnimationCurve
+{
+   std::vector<KeyFrame> m_keyframes; 
+};
 
+template <typename T>
+class TypedCurve : private AnimationCurve
+{
+   public:
+      T Evaluate( float time ) 
+      {
+         float animTime = CalculateTimeBasedOnLoopMode( time, m_loopMode, GetStartTime(), GetEndTime() ); 
+
+         // find two keyframes
+         // interplate between as if you were going between 0 and 1
+         float blend = InterplateBasedOnModeBetweenZeroAndOne(); 
+         return Lerp( m_keyValues[prevIndex], m_keyValues[nextIndex], blend ); 
+      }
+
+   std::vector<T> m_keyValues; 
+};
+```
+
+### Cubic  
+```cpp
+// This interpolate between 0 & 1 and 0 & 1, based on two given velocities
+// First derivitive will be v0 at t = 0, and v1 at t = 1
+inline float Cubic( float const v0, float const v1, float const t )
+{
+   float const t2 = t * t;
+   float const t3 = t2 * t;
+   return (-2.0f * t3 + 3.0f * t2) 
+      + (t3 - 2.0f * t2 + t) * v0
+      + (t3 - t2) * v1;
+}
+```
 
 
 ------
