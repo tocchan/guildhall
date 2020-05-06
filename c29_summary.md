@@ -1,0 +1,85 @@
+-----
+## Requested TODO
+- Clean up notes on Self-Registration, ie: `COMMAND` macro
+
+------
+## Overview of SD2
+- Removed OpenGL
+- Window Class
+- Creating D3D11 Objects
+  - Device
+  - Context 
+  - SwapChain
+- Creating a Render Target using the BackBuffer
+- Compiling a Shader Program 
+  - Compiling a Shader Stage
+- Drawing a fixed triangle
+  - Viewport
+  - Output Color Target
+- Shader Input
+  - Input Assembly Stage
+  - Input Layouts (Vertex Formats & Buffers)
+  - Textures
+  - Samplers
+    - Point
+    - Bilinear
+  - Uniform Buffers
+- Rasterization State
+  - Fill Mode
+  - Cull Mode
+- Output Merger State
+  - Blend Modes
+- Projection Matrices
+  - Orthographic
+  - Perspective
+- View Matrix
+  - Model Matrices
+    - Transform3 (Scale-Rotation-Translation)
+  - Matrix Inversion
+  - Fast Matrix Inversion (ie: Transpose)
+- Depth Buffers - Z-Buffering
+- Dev Console System
+  - Text Input
+  - Command Registration
+    - Auto Self-Registration `COMMAND` macro
+- Debug Render System
+- 3D Rendering
+  - UV Sphere
+  - Cube Generation
+  - OBJ Loading
+- Simple Lighting
+  - Dot3 Lighting (Lambert)
+  - Phong/Blinn-Phong Specular Highlights
+  - Tangent Spaces & Normal Maps (per-pixel lightnig)
+- Shaders
+  - Parallax, Projection, Dissolve, etc... 
+- Data Driving our Rendering
+  - `ShaderProgram` vs `Shader` vs `Material`
+- Render Targets
+  - Image Effects
+
+------
+## Overview of MP2
+- Point Mass Physics
+  - Acc/Vel/Pos updates
+- Disc Collider
+- Polygon Collider
+- Collision Detection
+  - Disc-v-Disc
+  - Disc-v-Polygon
+  - Polygon-v-Polygon
+    - GJK Intersection Test
+    - GJK Penetration Test
+- Collision Response
+  - Linear Impulse
+    - Normal Impulse
+    - Tangental Impulse
+  - Rotational Physics
+    - Torque/Rotational Velocity
+    - Rotational Impulse
+  - Friction
+- Clocks & Timers
+  - Fixed Step Updates
+- Layers 
+- Event Callbacks
+  - Methods/Event Registration
